@@ -1,0 +1,38 @@
+---
+interface Props {
+  href: string;
+  size?: "text" | "caption";
+}
+
+import { Icon } from "astro-icon/components";
+
+const { href, size = "text" } = Astro.props;
+---
+
+<a href={href} class:list={[{ caption: size === "caption" }]}>
+  <slot />
+  <Icon name="up-right" class="icon" />
+</a>
+
+<style>
+  a {
+    font-size: var(--font-size-text);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .icon {
+      width: var(--font-size-text);
+      height: var(--font-size-text);
+    }
+
+    &.caption {
+      font-size: var(--font-size-caption);
+
+      .icon {
+        width: var(--font-size-caption);
+        height: var(--font-size-caption);
+      }
+    }
+  }
+</style>

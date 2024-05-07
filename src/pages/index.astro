@@ -1,0 +1,104 @@
+---
+import ScrollSidebarLayout from "src/layouts/ScrollSidebarLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LinkButton from "@components/shared/LinkButton/LinkButton.astro";
+import FeaturedProject from "@components/features/FeaturedProject/FeaturedProject.astro";
+import { getCollection } from "astro:content";
+import FeaturedProjectContainer from "@components/features/FeaturedProject/FeaturedProjectContainer";
+
+const allFeaturedProjects = await getCollection("featured-projects");
+---
+
+<BaseLayout title="Nicolás Vera">
+  <ScrollSidebarLayout section="Home">
+    <section class="hero">
+      <h1>
+        <span>Analyze.</span>
+        <span>Design.</span>
+        <span>Build.</span>
+      </h1>
+
+      <figure class="img-container">
+        <img class="img-hero" src="/media/hero.jpg" alt="Artistic background" />
+        <figcaption>
+          <LinkButton
+            href="https://www.instagram.com/bumpofkevin/"
+            size="caption"
+          >
+            Photo by Kevin Gamba
+          </LinkButton>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="about-me">
+      <div class="top">
+        <p class="background-text">Currently based in Argentina</p>
+
+        <h2>
+          <span>Hey! 👋</span>
+          <span>I'm Nicolás Vera</span>
+          <span>a Software Engineer</span>
+        </h2>
+
+        <div class="cards-container">
+          <div class="card">
+            <p>
+              I am a
+              <span class="highlight">Computer Science graduate</span>
+              with a passion for technology.
+            </p>
+          </div>
+          <div class="card">
+            <p>
+              I understand the importance of
+              <span class="highlight">user experience</span> and always strive to
+              create intuitive and enjoyable experiences for the people using my
+              applications.
+            </p>
+          </div>
+          <div class="card">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+              <span class="highlight">vitae dictum sapien</span>. Nam mollis
+              pellentesque quam eget consequat.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div class="download-cv">
+          <LinkButton href=""> Download CV </LinkButton>
+        </div>
+        <div class="skills">
+          <img src="/media/skills/Docker.svg" />
+          <img src="/media/skills/java.svg" />
+          <img src="/media/skills/Javascript.svg" />
+          <img src="/media/skills/MongoDb.svg" />
+          <img src="/media/skills/nestjs.svg" />
+          <img src="/media/skills/NextJs.svg" />
+          <img src="/media/skills/NodeJs.svg" />
+          <img src="/media/skills/PostgreSQL.svg" />
+          <img src="/media/skills/React.svg" />
+          <img src="/media/skills/Typescript.svg" />
+        </div>
+      </div>
+    </section>
+
+    <section class="projects">
+      {
+        allFeaturedProjects.map((project, i) => (
+          <FeaturedProjectContainer client:idle>
+            <FeaturedProject
+              project={project}
+              direction={i % 2 == 0 ? "normal" : "reverse"}
+            />
+          </FeaturedProjectContainer>
+        ))
+      }
+    </section>
+  </ScrollSidebarLayout>
+</BaseLayout>
+
+<script src="@scripts/index.ts"></script>

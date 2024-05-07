@@ -1,0 +1,12 @@
+name: golog
+logoIcon: projects/golog-logo 
+about: Classic Go board-game with Next.js
+repository: https://github.com/nicoverali/golog
+demo: https://golog-nicoverali.netlify.app/
+screenshots:
+  - /projects/golog-1.png
+techs:
+  - next-js
+  - styled-components
+  - prolog
+  - storybook

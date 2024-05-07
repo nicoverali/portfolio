@@ -1,0 +1,20 @@
+---
+
+---
+
+<li><slot /></li>
+
+<style>
+  li {
+    text-wrap: nowrap;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-primary-light-border);
+    box-shadow: 0 2px 1px 0 var(--color-shadow);
+    transition: box-shadow 150ms ease-out;
+
+    &:hover {
+      box-shadow: 0 0px 0px 0 var(--color-shadow);
+    }
+  }
+</style>

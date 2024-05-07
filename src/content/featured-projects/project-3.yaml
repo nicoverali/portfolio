@@ -1,0 +1,8 @@
+name: galaxian
+about: 2D Shooter inspired by Galaxian
+repository: https://github.com/nicoverali/galaxian
+screenshots:
+  - /projects/galaxian-1.png
+techs:
+  - java
+  - libgdx
