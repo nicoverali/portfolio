@@ -1,4 +1,6 @@
 ---
+import ScrollIndicator from "@components/features/ScrollIndicator/ScrollIndicator";
+
 interface Props {
   section: string;
 }
@@ -10,7 +12,9 @@ const { section } = Astro.props;
   <div class="scroll-indicator-container">
     <div class="scroll-indicator">
       <p class="section-name">{section}</p>
-      <div class="progress-bar"></div>
+      <div class="progress-bar">
+        <ScrollIndicator />
+      </div>
       <a class="github" href="https://github.com/nicoverali" target="_blank">
         <svg
           width="24"
@@ -73,8 +77,12 @@ const { section } = Astro.props;
   }
 
   .content .scroll-indicator-container {
+    height: calc(100vh - var(--el-header-height));
     width: var(--el-scroll-indicator-width);
+    padding: 10% 0;
     margin-right: var(--spacing-xxl);
+    position: sticky;
+    top: var(--el-header-height);
     display: flex;
     justify-content: start;
   }
@@ -94,15 +102,20 @@ const { section } = Astro.props;
     margin: 0;
   }
 
-  .scroll-indicator a svg {
-    color: var(--color-text-lighter);
+  .scroll-indicator .progress-bar {
+    flex: 1;
+    padding: var(--spacing-md) 0;
   }
 
-  .scroll-indicator a.github:hover svg {
+  .scroll-indicator a svg * {
+    color: var(--color-text-light);
+  }
+
+  .scroll-indicator a.github:hover svg * {
     color: var(--color-github);
   }
 
-  .scroll-indicator a.linkedin:hover svg {
+  .scroll-indicator a.linkedin:hover svg * {
     color: var(--color-linkedin);
   }
 

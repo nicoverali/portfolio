@@ -145,7 +145,7 @@ section.about-me {
   display: flex;
   flex-direction: column;
   padding-bottom: 64px;
-  height: calc(100vh - var(--el-header-height) - 64px);
+  height: calc(100vh - var(--el-header-height));
 }
 
 section.about-me .background-text {
@@ -250,13 +250,4 @@ section.about-me .bottom .skills {
 section.about-me .bottom .skills img {
   width: 40px;
   height: 40px;
-}
-
-section.projects {
-  height: calc(100vh - var(--el-header-height));
-}
-
-section.projects .card {
-  width: 80%;
-  height: 80%;
 }
