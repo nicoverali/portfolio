@@ -1,0 +1,54 @@
+---
+type ColNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+type ColSize = ColNum | "auto";
+type GridSize = {
+  col?: ColSize;
+  offset?: ColNum;
+};
+
+interface Props {
+  row?: boolean;
+  reverse?: boolean;
+  xs?: ColSize | GridSize;
+  sm?: ColSize | GridSize;
+  md?: ColSize | GridSize;
+  lg?: ColSize | GridSize;
+}
+
+const props = Astro.props;
+const classList: string[] = [];
+
+if (props.row) classList.push("row");
+if (props.reverse) classList.push("reverse");
+
+const sizes = ["xs", "sm", "md", "lg"] as const;
+for (const size of sizes) {
+  if (!props[size]) continue;
+  const value = props[size];
+
+  let col: ColSize | undefined;
+  let offset: ColNum | undefined;
+
+  if (typeof value == "object") {
+    col = value.col;
+    offset = value.offset;
+  } else {
+    col = value;
+  }
+
+  if (col) {
+    classList.push(col === "auto" ? `col-${size}` : `col-${size}-${col}`);
+  }
+  if (offset) {
+    classList.push(`col-${size}-offset-${offset}`);
+  }
+}
+---
+
+<style>
+  @import url("./flexboxgrid.scss");
+</style>
+
+<div class:list={classList}>
+  <slot />
+</div>
