@@ -67,23 +67,28 @@ const allFeaturedProjects = await getCollection("featured-projects");
         </div>
       </div>
 
-      <div class="bottom">
-        <div class="download-cv">
-          <LinkButton href=""> Download CV </LinkButton>
-        </div>
-        <div class="skills">
-          <img src="/media/skills/Docker.svg" />
-          <img src="/media/skills/java.svg" />
-          <img src="/media/skills/Javascript.svg" />
-          <img src="/media/skills/MongoDb.svg" />
-          <img src="/media/skills/nestjs.svg" />
-          <img src="/media/skills/NextJs.svg" />
-          <img src="/media/skills/NodeJs.svg" />
-          <img src="/media/skills/PostgreSQL.svg" />
-          <img src="/media/skills/React.svg" />
-          <img src="/media/skills/Typescript.svg" />
-        </div>
-      </div>
+      <Grid row>
+        <Grid xs={2}>
+          <div class="download-cv">
+            <LinkButton href=""> Download CV </LinkButton>
+          </div>
+        </Grid>
+        <Grid xs="auto">
+          <div class="skills">
+            <img src="/media/skills/Docker.svg" />
+            <img src="/media/skills/java.svg" />
+            <img src="/media/skills/Javascript.svg" />
+            <img src="/media/skills/MongoDb.svg" />
+            <img src="/media/skills/nestjs.svg" />
+            <img src="/media/skills/NextJs.svg" />
+            <img src="/media/skills/NodeJs.svg" />
+            <img src="/media/skills/PostgreSQL.svg" />
+            <img src="/media/skills/React.svg" />
+            <img src="/media/skills/Typescript.svg" />
+          </div>
+        </Grid>
+        <Grid />
+      </Grid>
     </section>
 
     <section class="projects">

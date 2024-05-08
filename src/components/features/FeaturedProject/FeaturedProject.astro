@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import LinkButton from "@components/shared/LinkButton/LinkButton.astro";
 import TechChipGroup from "./elements/TechChipGroup.astro";
 import { Icon } from "astro-icon/components";
+import Grid from "@components/shared/Grid/Grid.astro";
 
 interface Props {
   project: CollectionEntry<"featured-projects">;
@@ -15,101 +16,78 @@ const isReversed = direction === "reverse";
 const logoAspectRatio = isReversed ? "xMaxYMid" : "xMinYMid";
 ---
 
-<div class:list={["container", { reversed: isReversed }]}>
-  <div class="images">
+<Grid row reverse={isReversed}>
+  <Grid xs={7}>
     <img src=`/media/${project.data.screenshots[0]}` />
-  </div>
-  <div class="info">
-    {
-      project.data.logoIcon != null ? (
-        <Icon
-          name={project.data.logoIcon}
-          class="logo"
-          preserveAspectRatio={logoAspectRatio}
-        />
-      ) : (
-        <h2 class="logo">{project.data.name}</h2>
-      )
-    }
+  </Grid>
+  <Grid xs={{ col: "auto", offset: 1 }}>
+    <div class="info">
+      {
+        project.data.logoIcon != null ? (
+          <Icon
+            name={project.data.logoIcon}
+            class="logo"
+            preserveAspectRatio={logoAspectRatio}
+          />
+        ) : (
+          <h2 class="logo">{project.data.name}</h2>
+        )
+      }
 
-    <p>{project.data.about}</p>
-    <TechChipGroup direction={direction} names={project.data.techs} />
-    <div class="links">
-      {
-        project.data.repository && (
-          <LinkButton href={project.data.repository}>Repository</LinkButton>
-        )
-      }
-      {
-        project.data.demo && (
-          <LinkButton href={project.data.demo}>Demo</LinkButton>
-        )
-      }
+      <p>{project.data.about}</p>
+      <TechChipGroup direction={direction} names={project.data.techs} />
+      <div class="links">
+        {
+          project.data.repository && (
+            <LinkButton href={project.data.repository}>Repository</LinkButton>
+          )
+        }
+        {
+          project.data.demo && (
+            <LinkButton href={project.data.demo}>Demo</LinkButton>
+          )
+        }
+      </div>
     </div>
-  </div>
+  </Grid>
+</Grid>
 
-  <style>
-    .container {
-      display: flex;
-      flex-direction: row;
+<style>
+  img {
+    width: 100%;
+    border: 1px solid var(--color-primary-light-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 4px 0 var(--color-shadow);
+  }
 
-      &.reversed {
-        flex-direction: row-reverse;
+  .info {
+    display: flex;
+    flex-direction: column;
 
-        .images {
-          margin-left: var(--spacing-xxl);
-          margin-right: 0;
-        }
-
-        .info {
-          align-items: end;
-          text-align: end;
-        }
-      }
-    }
-
-    .images {
-      flex: 7;
+    .logo {
+      height: var(--font-size-h1);
       width: 100%;
-      margin-right: var(--spacing-xxl);
 
-      img {
-        width: 100%;
-        border: 1px solid var(--color-primary-light-border);
-        box-shadow: 0 4px 4px 0 var(--color-shadow);
+      &:is(h2) {
+        color: var(--color-primary);
+        text-transform: capitalize;
+        font-size: var(--font-size-h1);
+        margin: 0;
+        margin-top: -8px; /* Fix small space on top of text */
       }
     }
 
-    .info {
-      flex: 5;
-      display: flex;
-      flex-direction: column;
+    p {
+      margin-top: var(--spacing-xs);
+      margin-bottom: var(--spacing-md);
+    }
 
-      .logo {
-        height: var(--font-size-h1);
-        width: 100%;
+    .links {
+      margin-top: var(--spacing-md);
 
-        &:is(h2) {
-          color: var(--color-primary);
-          text-transform: capitalize;
-          font-size: var(--font-size-h1);
-          margin: 0;
-          margin-top: -8px; /* Fix small space on top of text */
-        }
-      }
-
-      p {
-        margin-top: var(--spacing-xs);
-        margin-bottom: var(--spacing-md);
-      }
-
-      .links {
-        margin-top: var(--spacing-md);
-
-        *:not(:last-child) {
-          margin-bottom: var(--spacing-sm);
-        }
+      *:not(:last-child) {
+        margin-bottom: var(--spacing-sm);
       }
     }
-  </style>
-</div>
+  }
+</style>

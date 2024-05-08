@@ -226,28 +226,21 @@ section.about-me .card .highlight {
   font-weight: 600;
 }
 
-section.about-me .bottom {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
 
-section.about-me .bottom .download-cv {
-  padding-right: var(--spacing-xxl);
+section.about-me .download-cv {
   height: 100%;
   border-right: 1px solid var(--color-primary-light-border);
   display: flex;
   align-items: center;
 }
 
-section.about-me .bottom .skills {
-  padding-left: var(--spacing-xxl);
-  flex: 1;
+section.about-me .skills {
+  
   display: flex;
   justify-content: space-between;
 }
 
-section.about-me .bottom .skills img {
+section.about-me .skills img {
   width: 40px;
   height: 40px;
 }
