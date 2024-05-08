@@ -3,7 +3,9 @@ import type { CollectionEntry } from "astro:content";
 import LinkButton from "@components/LinkButton/LinkButton.astro";
 import TechChipGroup from "../TechChipGroup/TechChipGroup.astro";
 import { Icon } from "astro-icon/components";
-import Grid from "@components/Grid/Grid.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import GridCol from "@components/Grid/GridCol.astro";
+import GridOffset from "@components/Grid/GridOffset.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -16,11 +18,12 @@ const isReversed = direction === "reverse";
 const logoAspectRatio = isReversed ? "xMaxYMid" : "xMinYMid";
 ---
 
-<Grid row reverse={isReversed}>
-  <Grid xs={7}>
+<GridRow reverse={isReversed}>
+  <GridCol xs={7}>
     <img src=`/media/${project.data.screenshots[0]}` />
-  </Grid>
-  <Grid xs={{ col: "auto", offset: 1 }}>
+  </GridCol>
+  <GridOffset xs={1} />
+  <GridCol xs="auto">
     <div class="info">
       {
         project.data.logoIcon != null ? (
@@ -49,8 +52,8 @@ const logoAspectRatio = isReversed ? "xMaxYMid" : "xMinYMid";
         }
       </div>
     </div>
-  </Grid>
-</Grid>
+  </GridCol>
+</GridRow>
 
 <style>
   img {

@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import ProjectCard from "./elements/ProjectCard/ProjectCard.astro";
-import Grid from "@components/Grid/Grid.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import GridCol from "@components/Grid/GridCol.astro";
 
 const allNonFeaturedProjects = await getCollection(
   "projects",
@@ -10,11 +11,11 @@ const allNonFeaturedProjects = await getCollection(
 ---
 
 <section>
-  <Grid row>
-    <Grid xs={4}>
+  <GridRow>
+    <GridCol xs={4}>
       <h1>More<br />Work</h1>
-    </Grid>
-    <Grid xs={8}>
+    </GridCol>
+    <GridCol xs={8}>
       <div class="projects-container">
         {
           allNonFeaturedProjects.map((project) => (
@@ -24,8 +25,8 @@ const allNonFeaturedProjects = await getCollection(
           ))
         }
       </div>
-    </Grid>
-  </Grid>
+    </GridCol>
+  </GridRow>
 </section>
 
 <style>

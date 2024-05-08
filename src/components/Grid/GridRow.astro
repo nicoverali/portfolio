@@ -1,0 +1,30 @@
+---
+interface Props {
+  reverse?: boolean;
+  xAlign?: SizeProperty<XAlignment>;
+  yAlign?: SizeProperty<YAlignment>;
+}
+
+const props = Astro.props;
+const classList: string[] = ["row"];
+
+const sizes = ["xs", "sm", "md", "lg"] as const;
+for (const size of sizes) {
+  if (props.xAlign?.[size]) {
+    classList.push(`${props.xAlign[size]}-${size}`);
+  }
+  if (props.yAlign?.[size]) {
+    classList.push(`${props.yAlign[size]}-${size}`);
+  }
+}
+
+if (props.reverse) classList.push("reverse");
+---
+
+<div class:list={[classList]}>
+  <slot />
+</div>
+
+<style>
+  @import url("./GridRow.scss");
+</style>

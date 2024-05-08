@@ -1,10 +1,11 @@
 ---
-import Grid from "@components/Grid/Grid.astro";
+import GridCol from "@components/Grid/GridCol.astro";
+import GridRow from "@components/Grid/GridRow.astro";
 ---
 
 <section>
-  <Grid row>
-    <Grid xs={8}>
+  <GridRow>
+    <GridCol xs={8}>
       <div>
         <p>I'm always looking to level up my skills.</p>
         <p>
@@ -12,8 +13,8 @@ import Grid from "@components/Grid/Grid.astro";
         </p>
         <p>if you believe we could grow together.</p>
       </div>
-    </Grid>
-  </Grid>
+    </GridCol>
+  </GridRow>
 </section>
 
 <style>
