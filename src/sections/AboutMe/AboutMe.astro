@@ -86,6 +86,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 
 <style>
   section.about-me {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding-bottom: 64px;
@@ -197,9 +198,10 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
           y: 20,
           duration: 1,
           scrollTrigger: {
+            fastScrollEnd: true,
+            once: true,
             trigger: ".about-me",
-            start: "top top+=300px",
-            scrub: false,
+            start: "top top+=200px",
           },
         });
 
@@ -211,6 +213,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
             end: "+=200%",
             fastScrollEnd: true,
             preventOverlaps: true,
+            anticipatePin: 2,
             pin: true,
             scrub: 1,
           },
@@ -240,7 +243,16 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
           duration: 1,
           delay: 1,
         });
-        tl.to(".background-text", { opacity: 0, duration: 1 }, ">-1");
+        tl.to(
+          ".background-text",
+          {
+            overwrite: "auto",
+            immediateRender: false,
+            opacity: 0,
+            duration: 1,
+          },
+          ">-1"
+        );
 
         for (let i = 1; i <= 2; i++) {
           tl.fromTo(`.card:nth-child(${i + 1})`, cardsFrom, {
