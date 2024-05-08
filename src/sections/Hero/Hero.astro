@@ -1,0 +1,63 @@
+---
+import LinkButton from "@components/LinkButton/LinkButton.astro";
+---
+
+<section class="hero">
+  <h1>
+    <span>Analyze.</span>
+    <span>Design.</span>
+    <span>Build.</span>
+  </h1>
+
+  <figure>
+    <img src="/media/hero.jpg" alt="Artistic background" />
+    <figcaption>
+      <LinkButton href="https://www.instagram.com/bumpofkevin/" size="caption">
+        Photo by Kevin Gamba
+      </LinkButton>
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  section.hero {
+    height: calc(100vh - var(--el-header-height));
+    position: relative;
+  }
+
+  h1 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    line-height: 150%;
+    font-size: var(--font-size-display);
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+
+  figure {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  figure img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  figure figcaption {
+    color: var(--color-text-light);
+    font-size: var(--font-size-caption);
+    margin-top: var(--spacing-sm);
+  }
+</style>

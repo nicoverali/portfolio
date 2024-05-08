@@ -6,30 +6,12 @@ import Work from "@sections/Work/Work.astro";
 import MoreWork from "@sections/MoreWork/MoreWork.astro";
 import Contact from "@sections/Contact/Contact.astro";
 import AboutMe from "@sections/AboutMe/AboutMe.astro";
+import Hero from "@sections/Hero/Hero.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
   <ScrollSidebarLayout section="Home">
-    <section class="hero">
-      <h1>
-        <span>Analyze.</span>
-        <span>Design.</span>
-        <span>Build.</span>
-      </h1>
-
-      <figure class="img-container">
-        <img class="img-hero" src="/media/hero.jpg" alt="Artistic background" />
-        <figcaption>
-          <LinkButton
-            href="https://www.instagram.com/bumpofkevin/"
-            size="caption"
-          >
-            Photo by Kevin Gamba
-          </LinkButton>
-        </figcaption>
-      </figure>
-    </section>
-
+    <Hero />
     <AboutMe />
     <Work />
     <MoreWork />
