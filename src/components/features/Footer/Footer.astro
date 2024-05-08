@@ -1,0 +1,21 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>© {year} Nicolás Vera</p>
+  <div>image</div>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  p,
+  div {
+    font-size: var(--font-size-caption);
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+import Grid from "@components/shared/Grid/Grid.astro";
+---
+
+<section>
+  <Grid row>
+    <Grid xs={8}>
+      <div>
+        <p>I'm always looking to level up my skills.</p>
+        <p>
+          Contact me at <span>vera.nicolasalejandro@outlook.com</span>
+        </p>
+        <p>if you believe we could grow together.</p>
+      </div>
+    </Grid>
+  </Grid>
+</section>
+
+<style>
+  div {
+    height: calc(100vh - var(--el-header-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+  p {
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  span {
+    color: var(--color-primary);
+  }
+</style>

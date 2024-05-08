@@ -6,6 +6,7 @@ interface Props {
 import "@styles/normalize.css";
 import "@styles/global.scss";
 import Header from "@components/features/Header/Header.astro";
+import Footer from "@components/features/Footer/Footer.astro";
 
 const { title } = Astro.props;
 ---
@@ -27,7 +28,6 @@ const { title } = Astro.props;
   <body>
     <Header />
     <slot />
-
     <script src="@scripts/configGsap.ts"></script>
   </body>
 </html>

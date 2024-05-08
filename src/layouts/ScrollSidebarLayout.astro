@@ -1,4 +1,5 @@
 ---
+import Footer from "@components/features/Footer/Footer.astro";
 import ScrollIndicator from "@components/features/ScrollIndicator/ScrollIndicator";
 
 interface Props {
@@ -68,6 +69,7 @@ const { section } = Astro.props;
 
   <div class="main">
     <slot />
+    <Footer />
   </div>
 </div>
 
