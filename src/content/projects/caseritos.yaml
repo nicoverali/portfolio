@@ -1,0 +1,17 @@
+name: Caseritos
+logoIcon: projects/uns-flights-logo 
+about: Homemade meals market in React
+description: A homemade meals market were users would have seller and buyer roles. Sellers can publish their meals, set its price, stock, description, etc. Buyers can search for published meals and make a purchase.
+repository: https://github.com/nicoverali/caseritos
+featured: false
+screenshots:
+  - /projects/uns-flights-1.jpeg
+techs:
+  - laravel
+  - react
+  - nextjs
+  - typescript
+  - scss
+  - express
+  - storybook
+  - pwa

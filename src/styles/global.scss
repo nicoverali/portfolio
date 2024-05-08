@@ -24,6 +24,7 @@
   --font-size-text: 16px;
   --font-size-h1: 48px;
   --font-size-display: 96px;
+  --radius-md: 4px;
 
   --el-header-height: 80px;
   --el-scroll-indicator-width: 48px;
@@ -46,12 +47,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-.card {
-  padding: var(--spacing-lg);
-  border: 1px solid var(--color-primary-light-border);
-  background-color: var(--color-background);
 }
 
 body {
@@ -132,6 +127,7 @@ section.hero .img-container .img-hero {
   width: 100%;
   height: 80%;
   object-fit: cover;
+  border-radius: var(--radius-md);
 }
 
 section.hero .img-container figcaption {

@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import ProjectCard from "./elements/ProjectCard/ProjectCard.astro";
+import Grid from "@components/shared/Grid/Grid.astro";
+
+const allNonFeaturedProjects = await getCollection(
+  "projects",
+  (project) => !project.data.featured
+);
+---
+
+<section>
+  <Grid row>
+    <Grid xs={4}>
+      <h1>More<br />Work</h1>
+    </Grid>
+    <Grid xs={8}>
+      <div class="projects-container">
+        {
+          allNonFeaturedProjects.map((project) => (
+            <div>
+              <ProjectCard project={project} />
+            </div>
+          ))
+        }
+      </div>
+    </Grid>
+  </Grid>
+</section>
+
+<style>
+  .projects-container > div:not(:last-child) {
+    margin-bottom: var(--spacing-md);
+  }
+</style>

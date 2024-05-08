@@ -2,11 +2,10 @@
 import ScrollSidebarLayout from "src/layouts/ScrollSidebarLayout.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LinkButton from "@components/shared/LinkButton/LinkButton.astro";
-import FeaturedProject from "@components/features/FeaturedProject/FeaturedProject.astro";
-import { getCollection } from "astro:content";
-import FeaturedProjectContainer from "@components/features/FeaturedProject/FeaturedProjectContainer";
-
-const allFeaturedProjects = await getCollection("featured-projects");
+import Card from "@components/shared/Card/Card.astro";
+import Work from "@components/sections/Work/Work.astro";
+import MoreWork from "@components/sections/MoreWork/MoreWork.astro";
+import Grid from "@components/shared/Grid/Grid.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
@@ -42,28 +41,28 @@ const allFeaturedProjects = await getCollection("featured-projects");
         </h2>
 
         <div class="cards-container">
-          <div class="card">
+          <Card class="card">
             <p>
               I am a
               <span class="highlight">Computer Science graduate</span>
               with a passion for technology.
             </p>
-          </div>
-          <div class="card">
+          </Card>
+          <Card class="card">
             <p>
               I understand the importance of
               <span class="highlight">user experience</span> and always strive to
               create intuitive and enjoyable experiences for the people using my
               applications.
             </p>
-          </div>
-          <div class="card">
+          </Card>
+          <Card class="card">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
               <span class="highlight">vitae dictum sapien</span>. Nam mollis
               pellentesque quam eget consequat.
             </p>
-          </div>
+          </Card>
         </div>
       </div>
 
@@ -91,18 +90,8 @@ const allFeaturedProjects = await getCollection("featured-projects");
       </Grid>
     </section>
 
-    <section class="projects">
-      {
-        allFeaturedProjects.map((project, i) => (
-          <FeaturedProjectContainer client:idle>
-            <FeaturedProject
-              project={project}
-              direction={i % 2 == 0 ? "normal" : "reverse"}
-            />
-          </FeaturedProjectContainer>
-        ))
-      }
-    </section>
+    <Work />
+    <MoreWork />
   </ScrollSidebarLayout>
 </BaseLayout>
 

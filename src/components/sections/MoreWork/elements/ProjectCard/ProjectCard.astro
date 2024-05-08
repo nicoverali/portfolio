@@ -1,0 +1,54 @@
+---
+import Card from "@components/shared/Card/Card.astro";
+import LinkButton from "@components/shared/LinkButton/LinkButton.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+---
+
+<Card>
+  <h4>{project.data.name}</h4>
+  <p>{project.data.description}</p>
+  <div class="links">
+    {
+      project.data.repository && (
+        <LinkButton href={project.data.repository}>Repository</LinkButton>
+      )
+    }
+    {
+      project.data.demo && (
+        <LinkButton href={project.data.demo}>Demo</LinkButton>
+      )
+    }
+  </div>
+</Card>
+
+<style>
+  h4 {
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 0;
+  }
+
+  p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-top: var(--spacing-md);
+  }
+
+  .links {
+    margin-top: var(--spacing-sm);
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+  }
+</style>
