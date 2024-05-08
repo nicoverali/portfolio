@@ -4,7 +4,7 @@ interface Props {
   direction?: "normal" | "reverse";
 }
 
-import TechChip from "./TechChip.astro";
+import TechChip from "../TechChip/TechChip.astro";
 
 const { names, direction = "normal" } = Astro.props;
 const isReversed = direction === "reverse";

@@ -1,6 +1,6 @@
 ---
-import FeaturedProject from "@components/features/FeaturedProject/FeaturedProject.astro";
-import FeaturedProjectContainer from "@components/features/FeaturedProject/FeaturedProjectContainer";
+import FeaturedProject from "./elements/FeaturedProject/FeaturedProject.astro";
+import FeaturedProjectContainer from "./elements/FeatureProjectContainer/FeaturedProjectContainer";
 import { getCollection } from "astro:content";
 
 const allFeaturedProjects = await getCollection(
