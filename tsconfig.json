@@ -7,7 +7,8 @@
       "@sections/*": ["./src/sections/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@styles/*": ["./src/styles/*"],
-      "@scripts/*": ["./src/scripts/*"]
+      "@scripts/*": ["./src/scripts/*"],
+      "@assets/*": ["./src/assets/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
