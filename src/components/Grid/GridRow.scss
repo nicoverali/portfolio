@@ -12,6 +12,7 @@ $container-lg: calc($screen-lg-min + $gutter-width);
 
 .row {
   box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex: 0 1 auto;
   flex-direction: row;
