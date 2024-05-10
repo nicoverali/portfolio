@@ -6,12 +6,14 @@ import GridRow from "@components/Grid/GridRow.astro";
 import LinkButton from "@components/LinkButton/LinkButton.astro";
 ---
 
-<astro-about-me-animations-container>
-  <section class="about-me">
+<astro-about-me-anim-container>
+  <div class="about-me">
     <GridRow>
       <GridOffset xs={2} />
       <GridCol xs={10}>
-        <p class="background-text">Currently based in Argentina</p>
+        <div class="background-text-container">
+          <p class="background-text">Currently based in Argentina</p>
+        </div>
       </GridCol>
     </GridRow>
 
@@ -81,11 +83,11 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
         </div>
       </GridCol>
     </GridRow>
-  </section>
-</astro-about-me-animations-container>
+  </div>
+</astro-about-me-anim-container>
 
 <style>
-  section.about-me {
+  .about-me {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -105,6 +107,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
   }
 
   .top {
+    margin-top: var(--spacing-xxl);
     flex: 1;
   }
 
@@ -138,7 +141,6 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
   }
 
   .cards-container {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -159,14 +161,14 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 
   .cards-container .card:nth-child(3) {
     position: relative;
-    width: 60%;
+    width: 80%;
   }
 
   .cards-container .card .highlight {
     font-weight: 600;
   }
 
-  section.about-me .download-cv {
+  .download-cv {
     height: 100%;
     flex: 1;
     border-right: 1px solid var(--color-primary-light-border);
@@ -174,13 +176,13 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
     align-items: center;
   }
 
-  section.about-me .skills {
+  .skills {
     display: flex;
     flex: 1;
     justify-content: space-between;
   }
 
-  section.about-me .skills img {
+  .skills img {
     width: 40px;
     height: 40px;
   }
@@ -189,83 +191,97 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 <script>
   import { gsap } from "gsap";
 
-  class AboutMeAnimationsContainer extends HTMLElement {
+  class AboutMeAnimContainer extends HTMLElement {
     constructor() {
       super();
       gsap.context(() => {
-        gsap.from(".about-me *:not(.card)", {
-          opacity: 0,
-          y: 20,
-          duration: 1,
-          scrollTrigger: {
-            fastScrollEnd: true,
-            once: true,
-            trigger: ".about-me",
-            start: "top top+=200px",
-          },
-        });
-
         const tl = gsap.timeline({
-          delay: 1,
+          delay: 2,
           scrollTrigger: {
+            id: "pin",
+            markers: true,
             trigger: ".about-me",
-            start: "top top+=80px",
-            end: "+=200%",
-            fastScrollEnd: true,
-            preventOverlaps: true,
-            anticipatePin: 2,
+            start: "top top+=80",
+            end: "+=350%",
             pin: true,
             scrub: 1,
           },
         });
 
-        const cardsFrom = {
-          opacity: 0,
-          y: 32,
-          boxShadow: "0 4px 4px 0 var(--color-shadow)",
-        };
-        const cardsTo = function (i: number) {
-          return {
-            keyframes: [
-              {
-                opacity: 1,
-                y: 0 - i * 16,
-              },
-              {
-                boxShadow: `0 ${i * 2}px ${i * 2}px 0 var(--color-shadow)`,
-              },
-            ],
-          };
-        };
-
-        tl.fromTo(".card:first-child", cardsFrom, {
-          ...cardsTo(0),
-          duration: 1,
-          delay: 1,
-        });
-        tl.to(
-          ".background-text",
-          {
-            overwrite: "auto",
-            immediateRender: false,
-            opacity: 0,
-            duration: 1,
-          },
-          ">-1"
-        );
-
-        for (let i = 1; i <= 2; i++) {
-          tl.fromTo(`.card:nth-child(${i + 1})`, cardsFrom, {
-            ...cardsTo(i),
-            duration: 1,
-          });
-        }
+        tl.addLabel("start");
+        tl.add(getCardsTimeline(), "+=1");
+        tl.add(hideBackgroundText(), "<+=0.5");
+        tl.add(showAndHide(tl.totalDuration() + 2), "start");
+        tl.add(parallax(tl.totalDuration()), "start");
       }, this);
     }
   }
 
-  customElements.define(
-    "astro-about-me-animations-container",
-    AboutMeAnimationsContainer
-  );
+  function getCardsTimeline() {
+    const tl = gsap.timeline();
+    tl.fromTo(
+      ".card",
+      {
+        opacity: 0,
+        boxShadow: (_i, _c, all) => {
+          const maxElevation = (all.length - 1) * 2;
+          return `0 ${maxElevation}px ${maxElevation}px 0 var(--color-shadow)`;
+        },
+      },
+      {
+        stagger: 1,
+        keyframes: [
+          {
+            opacity: 1,
+            y: (i) => (-i - 1) * 16,
+          },
+          {
+            boxShadow: (i) => `0 ${i * 2}px ${i * 2}px 0 var(--color-shadow)`,
+          },
+        ],
+      }
+    );
+    return tl;
+  }
+
+  function hideBackgroundText() {
+    return gsap.to(".background-text-container", {
+      opacity: 0,
+      duration: 2,
+    });
+  }
+
+  function showAndHide(duration: number) {
+    return gsap.from(
+      ".background-text, .cards-container, h2 span, .download-cv, .skills img",
+      {
+        ease: "slow(0.7,0.9,true)",
+        opacity: 0,
+        duration,
+        stagger: 0.1,
+      }
+    );
+  }
+
+  function parallax(duration: number) {
+    const tl = gsap.timeline({
+      defaults: { duration, ease: "slow(0.2,0.9,false)" },
+    });
+    const distance = 800;
+    tl.fromTo(
+      ".background-text",
+      { y: distance / 2 },
+      { y: -distance / 2 },
+      "start"
+    );
+    tl.fromTo(
+      "h2, .download-cv, .skills, .cards-container",
+      { y: distance },
+      { y: -distance },
+      "start"
+    );
+    return tl;
+  }
+
+  customElements.define("astro-about-me-anim-container", AboutMeAnimContainer);
 </script>

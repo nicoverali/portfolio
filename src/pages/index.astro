@@ -11,10 +11,27 @@ import Hero from "@sections/Hero/Hero.astro";
 
 <BaseLayout title="Nicolás Vera">
   <ScrollSidebarLayout section="Home">
-    <Hero />
-    <AboutMe />
-    <Work />
-    <MoreWork />
-    <Contact />
+    <div class="container">
+      <Hero />
+      <div class="about-me">
+        <AboutMe />
+      </div>
+      <Work />
+      <MoreWork />
+      <Contact />
+    </div>
   </ScrollSidebarLayout>
 </BaseLayout>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    /* gap: 20vh; */
+  }
+
+  .about-me {
+    margin-top: 20vh;
+    margin-bottom: -20vh;
+  }
+</style>
