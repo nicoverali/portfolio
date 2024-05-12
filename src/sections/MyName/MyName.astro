@@ -1,0 +1,85 @@
+---
+import Button from "@components/Button/Button.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<astro-about-me-anim-container>
+  <div class="about-me">
+    <GridRow>
+      <div class="header">
+        <p>Hey there !</p>
+
+        <p class="address">
+          <Icon name="asterisk" />
+          Buenos Aires, Argentina
+        </p>
+      </div>
+    </GridRow>
+
+    <GridRow>
+      <h1>I'm Nicolás Vera.<br />Software Engineer.</h1>
+    </GridRow>
+
+    <GridRow>
+      <div class="buttons">
+        <Button href="">Download CV</Button>
+        <Button href="" outline>Contact me</Button>
+      </div>
+    </GridRow>
+  </div>
+</astro-about-me-anim-container>
+
+<style>
+  .about-me {
+    height: calc(100vh - var(--el-header-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header {
+    flex: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-size: var(--font-size-text);
+    }
+
+    .address {
+      font-size: var(--font-size-caption);
+      [data-icon] {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  h1 {
+    font-size: var(--font-size-display);
+    font-weight: 400;
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  class AboutMeAnimContainer extends HTMLElement {
+    constructor() {
+      super();
+      gsap.context(() => {}, this);
+    }
+  }
+  customElements.define("astro-about-me-anim-container", AboutMeAnimContainer);
+</script>

@@ -5,17 +5,21 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 import Work from "@sections/Work/Work.astro";
 import MoreWork from "@sections/MoreWork/MoreWork.astro";
 import Contact from "@sections/Contact/Contact.astro";
-import AboutMe from "@sections/AboutMe/AboutMe.astro";
+import MyName from "@sections/MyName/MyName.astro";
 import Hero from "@sections/Hero/Hero.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import { Image } from "astro:assets";
+import ArtImage from "@assets/images/art.jpg";
 ---
 
 <BaseLayout title="Nicolás Vera">
   <ScrollSidebarLayout section="Home">
     <div class="container">
       <Hero />
-      <div class="about-me">
-        <AboutMe />
-      </div>
+      <MyName />
+      <GridRow>
+        <Image class="art" src={ArtImage} alt={"Artistic background"} />
+      </GridRow>
       <Work />
       <MoreWork />
       <Contact />
@@ -30,8 +34,10 @@ import Hero from "@sections/Hero/Hero.astro";
     /* gap: 20vh; */
   }
 
-  .about-me {
-    margin-top: 20vh;
-    margin-bottom: -20vh;
+  .art {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
   }
 </style>

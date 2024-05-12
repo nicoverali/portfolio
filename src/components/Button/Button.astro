@@ -1,0 +1,61 @@
+---
+interface Props {
+  href: string;
+  outline?: boolean;
+  size?: "text" | "caption";
+}
+
+import { Icon } from "astro-icon/components";
+
+const { href, size = "text", outline } = Astro.props;
+---
+
+<a href={href} class:list={[{ caption: size === "caption", outline }]}>
+  <slot />
+  <Icon is:inline={true} name="up-right" class="icon" />
+</a>
+
+<style>
+  a {
+    padding: var(--spacing-md);
+    background-color: var(--color-text);
+    color: var(--color-background);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-text);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.outline {
+      color: var(--color-text);
+      background-color: transparent;
+      border: 1px solid var(--color-text);
+
+      svg path {
+        fill: var(--color-text);
+      }
+    }
+
+    svg {
+      width: var(--font-size-text);
+      height: var(--font-size-text);
+
+      path {
+        fill: var(--color-background);
+      }
+    }
+
+    &.caption {
+      font-size: var(--font-size-caption);
+
+      .icon {
+        width: var(--font-size-caption);
+        height: var(--font-size-caption);
+      }
+    }
+  }
+</style>
