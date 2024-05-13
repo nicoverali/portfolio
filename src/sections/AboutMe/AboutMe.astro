@@ -1,0 +1,190 @@
+---
+import GridCol from "@components/Grid/GridCol.astro";
+import GridOffset from "@components/Grid/GridOffset.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import { Icon } from "astro-icon/components";
+import BadgeCertification from "./elements/BadgeCertification/BadgeCertification.astro";
+
+const skills = [
+  "React",
+  "Typescript",
+  "Next.js",
+  "Node.js",
+  "Java",
+  "Docker",
+  "SQL",
+  "NoSQL",
+  "AWS",
+];
+---
+
+<div class="about-me">
+  <GridRow>
+    <h2>About.</h2>
+  </GridRow>
+  <GridRow>
+    <!-- <GridCol xs={5}>
+      <h2>Ab<br />out.</h2>
+    </GridCol> -->
+    <GridOffset xs={5} />
+    <GridCol xs="auto">
+      <div class="text">
+        <p>
+          I am a <span class="highlight">Computer Science graduate</span> with a
+          passion for technology. I have developed a strong foundation in computer
+          science concepts and programming languages, which helps me quickly learn
+          new skills and technologies.
+        </p>
+        <p class="highlight">
+          — I understand the importance of user experience and always strive to
+          create intuitive and enjoyable interfaces for the people using my
+          applications.
+          <Icon name={"red-brush"} />
+        </p>
+      </div>
+    </GridCol>
+  </GridRow>
+  <!-- <GridRow>
+    <div class="skills">
+      {
+        skills.map((skill, i, all) =>
+          i === all.length - 1 ? (
+            <p>{skill}</p>
+          ) : (
+            <Fragment>
+              <>
+                <p>{skill}</p>
+                <Icon name={"asterisk"} />
+              </>
+            </Fragment>
+          )
+        )
+      }
+    </div>
+  </GridRow> -->
+
+  <GridRow>
+    <GridOffset xs={3} />
+    <GridCol xs={6}>
+      <div class="skills">
+        <p class="title">SKILLS</p>
+        <p class="text">
+          I feel comfortable working with both backend and frontend technologies
+        </p>
+        <div class="certifications">
+          <BadgeCertification>AWS Cloud Practitioner</BadgeCertification>
+          <BadgeCertification>Azure Fundamentals</BadgeCertification>
+        </div>
+      </div>
+    </GridCol>
+  </GridRow>
+  <GridRow>
+    <GridOffset xs={3} />
+    <GridCol xs={6}>
+      <div class="skill-icons">
+        <img src="/media/skills/Docker.svg" />
+        <img src="/media/skills/java.svg" />
+        <img src="/media/skills/Javascript.svg" />
+        <img src="/media/skills/MongoDb.svg" />
+        <img src="/media/skills/nestjs.svg" />
+        <img src="/media/skills/NextJs.svg" />
+        <img src="/media/skills/NodeJs.svg" />
+        <img src="/media/skills/PostgreSQL.svg" />
+        <img src="/media/skills/React.svg" />
+        <img src="/media/skills/Typescript.svg" />
+      </div>
+    </GridCol>
+  </GridRow>
+</div>
+
+<style>
+  .about-me {
+    position: relative;
+    margin-top: 10vh;
+  }
+
+  h2 {
+    /* opacity: 0.2; */
+    text-shadow:
+      -1px -1px 0 var(--color-text),
+      1px -1px 0 var(--color-text),
+      -1px 1px 0 var(--color-text),
+      1px 1px 0 var(--color-text);
+    font-size: var(--font-size-display-xl);
+    font-weight: 400;
+    color: var(--color-background);
+    margin: 0;
+    line-height: 80%;
+  }
+
+  .text {
+    position: relative;
+    line-height: 160%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size-h3);
+
+    .highlight {
+      font-weight: 600;
+    }
+  }
+
+  [data-icon="red-brush"] {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    bottom: -150px;
+    right: -50px;
+  }
+
+  /* .skills {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+
+    [data-icon="asterisk"] {
+      vertical-align: middle;
+      width: var(--font-size-caption);
+      height: var(--font-size-caption);
+    }
+  } */
+
+  .skills {
+    margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+
+    .title {
+      font-size: var(--font-size-caption);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+  }
+
+  .skill-icons {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+
+    img {
+      height: 64px;
+      width: 64px;
+    }
+  }
+
+  .certifications {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-lg);
+  }
+</style>
