@@ -2,10 +2,9 @@
 import type { CollectionEntry } from "astro:content";
 import LinkButton from "@components/LinkButton/LinkButton.astro";
 import TechChipGroup from "../TechChipGroup/TechChipGroup.astro";
-import { Icon } from "astro-icon/components";
 import GridRow from "@components/Grid/GridRow.astro";
 import GridCol from "@components/Grid/GridCol.astro";
-import GridOffset from "@components/Grid/GridOffset.astro";
+import ProjectImages from "../ProjectImages/ProjectImages.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -15,30 +14,22 @@ interface Props {
 const { project, direction = "normal" } = Astro.props;
 
 const isReversed = direction === "reverse";
-const logoAspectRatio = isReversed ? "xMaxYMid" : "xMinYMid";
 ---
 
 <GridRow reverse={isReversed}>
-  <GridCol xs={7}>
-    <img src=`/media/${project.data.screenshots[0]}` />
+  <GridCol xs={isReversed ? 7 : 6}>
+    <ProjectImages project={project} />
   </GridCol>
-  <GridOffset xs={1} />
   <GridCol xs="auto">
-    <div class="info">
-      {
-        project.data.logoIcon != null ? (
-          <Icon
-            name={project.data.logoIcon}
-            class="logo"
-            preserveAspectRatio={logoAspectRatio}
-          />
-        ) : (
-          <h2 class="logo">{project.data.name}</h2>
-        )
-      }
-
-      <p>{project.data.about}</p>
-      <TechChipGroup direction={direction} names={project.data.techs} />
+    <div class:list={["info", { reverse: isReversed }]}>
+      <h2 class="logo">{project.data.name}</h2>
+      <p class="description">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos doloremque
+        unde repellendus veniam laborum ipsa totam earum exercitationem quaerat,
+        eius excepturi. Sit magni quibusdam quos temporibus facere aliquam ipsam
+        quisquam?
+      </p>
+      <TechChipGroup names={project.data.techs} />
       <div class="links">
         {
           project.data.repository && (
@@ -58,7 +49,7 @@ const logoAspectRatio = isReversed ? "xMaxYMid" : "xMinYMid";
 <style>
   img {
     width: 100%;
-    border: 1px solid var(--color-primary-light-border);
+    border: 1px solid var(--color-light-border);
     border-radius: var(--radius-sm);
     box-shadow: 0 4px 4px 0 var(--color-shadow);
   }
@@ -66,27 +57,32 @@ const logoAspectRatio = isReversed ? "xMaxYMid" : "xMinYMid";
   .info {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    padding-left: var(--spacing-md);
 
-    .logo {
-      height: var(--font-size-h1);
-      width: 100%;
-
-      &:is(h2) {
-        color: var(--color-primary);
-        text-transform: capitalize;
-        font-size: var(--font-size-h1);
-        margin: 0;
-        margin-top: -8px; /* Fix small space on top of text */
-      }
+    &.reverse {
+      padding-left: 0;
+      padding-right: var(--spacing-md);
+      text-align: end;
+      align-items: flex-end;
     }
 
-    p {
-      margin-top: var(--spacing-xs);
+    .logo {
+      color: var(--color-text);
+      font-size: var(--font-size-h3);
+      font-weight: 600;
+      margin: 0;
+      margin-top: -4px; /* Fix small space on top of text */
+    }
+
+    .description {
+      margin-top: var(--spacing-sm);
       margin-bottom: var(--spacing-md);
+      line-height: 140%;
     }
 
     .links {
-      margin-top: var(--spacing-md);
+      margin-top: var(--spacing-lg);
 
       *:not(:last-child) {
         margin-bottom: var(--spacing-sm);

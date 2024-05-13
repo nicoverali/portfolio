@@ -1,13 +1,16 @@
-name: uns-flights
+name: UNS Flights
 logoIcon: projects/uns-flights-logo 
 about: A Java/React app for flights reservation
 description: A Java/React app for flights reservation
 repository: https://github.com/nicoverali/uns-flights
 featured: true
 screenshots:
-  - /projects/uns-flights-1.jpeg
+  - ../../assets/images/projects/uns-flights-3.jpeg
+  - ../../assets/images/projects/uns-flights-2.jpeg
+  - ../../assets/images/projects/uns-flights-1.jpeg
+  
 techs:
-  - mysql
-  - react
-  - java
-  - scss
+  - MySQL
+  - React
+  - Java
+  - SCSS

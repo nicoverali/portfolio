@@ -10,6 +10,8 @@ import Hero from "@sections/Hero/Hero.astro";
 import GridRow from "@components/Grid/GridRow.astro";
 import { Image } from "astro:assets";
 import ArtImage from "@assets/images/art.jpg";
+import AboutMe from "@sections/AboutMe/AboutMe.astro";
+import WorkIntro from "@sections/WorkIntro/WorkIntro.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
@@ -17,9 +19,13 @@ import ArtImage from "@assets/images/art.jpg";
     <div class="container">
       <Hero />
       <MyName />
-      <GridRow>
+      <!-- <GridRow>
         <Image class="art" src={ArtImage} alt={"Artistic background"} />
-      </GridRow>
+      </GridRow> -->
+      <div class="about-me">
+        <AboutMe />
+      </div>
+      <!-- <WorkIntro /> -->
       <Work />
       <MoreWork />
       <Contact />
@@ -36,8 +42,12 @@ import ArtImage from "@assets/images/art.jpg";
 
   .art {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
     border-radius: var(--radius-md);
+  }
+
+  .about-me {
+    margin-bottom: 20vh;
   }
 </style>

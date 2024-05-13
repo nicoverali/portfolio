@@ -1,6 +1,5 @@
 ---
 import FeaturedProject from "./elements/FeaturedProject/FeaturedProject.astro";
-import FeaturedProjectContainer from "./elements/FeatureProjectContainer/FeaturedProjectContainer";
 import { getCollection } from "astro:content";
 
 const allFeaturedProjects = await getCollection(
@@ -10,23 +9,35 @@ const allFeaturedProjects = await getCollection(
 ---
 
 <section class="work">
-  <h2>Work</h2>
+  <h2>Work.</h2>
 
   {
     allFeaturedProjects.map((project, i) => (
-      <FeaturedProjectContainer client:idle>
+      <div class="project-container">
         <FeaturedProject
           project={project}
           direction={i % 2 == 0 ? "normal" : "reverse"}
         />
-      </FeaturedProjectContainer>
+      </div>
     ))
   }
 </section>
 
 <style>
   h2 {
-    font-size: var(--font-size-h1);
-    font-weight: 600;
+    opacity: 0.6;
+    font-size: var(--font-size-display-xl);
+    font-weight: 400;
+    color: var(--color-background);
+    text-shadow:
+      -1px -1px 0 var(--color-text),
+      1px -1px 0 var(--color-text),
+      -1px 1px 0 var(--color-text),
+      1px 1px 0 var(--color-text);
+    margin: var(--spacing-lg) 0;
+  }
+
+  .project-container {
+    margin-bottom: var(--spacing-5xl);
   }
 </style>

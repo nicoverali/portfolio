@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { name, screenshots } = project.data;
+if (screenshots.length < 3) {
+  throw new Error(
+    "Projects must have at least 3 screenshots to be displayed as featured"
+  );
+}
+---
+
+<div class="container">
+  {
+    screenshots.map((Screenshot) => (
+      <Image src={Screenshot} alt={`Screenshot of ${name} app`} />
+    ))
+  }
+</div>
+
+<style>
+  .container {
+    position: relative;
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-light-border);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+
+      &:nth-child(1) {
+        width: calc(100% - var(--spacing-md));
+        position: absolute;
+        top: var(--spacing-md);
+        z-index: -1;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &:nth-child(2) {
+        width: calc(100% - var(--spacing-md) * 2);
+        position: absolute;
+        top: calc(var(--spacing-md) * 2);
+        z-index: -2;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+</style>

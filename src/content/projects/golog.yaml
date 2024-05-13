@@ -1,4 +1,4 @@
-name: golog
+name: Golog
 logoIcon: projects/golog-logo 
 about: Classic Go board-game with Next.js
 description: Classic Go board-game with Next.js
@@ -6,9 +6,11 @@ repository: https://github.com/nicoverali/golog
 demo: https://golog-nicoverali.netlify.app/
 featured: true
 screenshots:
-  - /projects/golog-1.png
+  - ../../assets/images/projects/golog-2.png
+  - ../../assets/images/projects/golog-3.png
+  - ../../assets/images/projects/golog-6.png
 techs:
-  - next-js
-  - styled-components
-  - prolog
-  - storybook
+  - Next.js
+  - StyledComponents
+  - Prolog
+  - Storybook

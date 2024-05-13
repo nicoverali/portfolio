@@ -5,7 +5,7 @@
   --color-primary: #19aec8;
   --color-primary-light: #40acbf;
   --color-primary-lightest: #d4f2f7;
-  --color-primary-light-border: #deebed;
+  --color-light-border: #dddddd;
   --color-text: #171b1c;
   --color-text-light: #616a6b;
   --color-text-lighter: #d7dadb;
@@ -18,15 +18,21 @@
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
-  --spacing-xxl: 64px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+  --spacing-4xl: 128px;
+  --spacing-5xl: 256px;
   --font-size-caption: 12px;
   --font-size-text-small: 14px;
   --font-size-text: 16px;
   --font-size-h1: 48px;
+  --font-size-h3: 30px;
   --font-size-h4: 24px;
   --font-size-display: 96px;
+  --font-size-display-xl: 300px;
   --radius-sm: 4px;
   --radius-md: 10px;
+  --radius-lg: 20px;
 
   --el-header-height: 80px;
   --el-scroll-indicator-width: 48px;
