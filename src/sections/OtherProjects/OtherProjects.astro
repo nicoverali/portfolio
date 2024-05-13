@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import ProjectCard from "./elements/ProjectCard/ProjectCard.astro";
+import ProjectCard from "./elements/ProjectRow/ProjectRow.astro";
 import GridRow from "@components/Grid/GridRow.astro";
 import GridCol from "@components/Grid/GridCol.astro";
 
@@ -12,16 +12,16 @@ const allNonFeaturedProjects = await getCollection(
 
 <section>
   <GridRow>
-    <GridCol xs={4}>
-      <h1>More<br />Work</h1>
+    <GridCol xs={12}>
+      <h3>Other Projects</h3>
     </GridCol>
-    <GridCol xs={8}>
+  </GridRow>
+  <GridRow>
+    <GridCol xs={12}>
       <div class="projects-container">
         {
           allNonFeaturedProjects.map((project) => (
-            <div>
-              <ProjectCard project={project} />
-            </div>
+            <ProjectCard project={project} />
           ))
         }
       </div>
@@ -30,7 +30,18 @@ const allNonFeaturedProjects = await getCollection(
 </section>
 
 <style>
-  .projects-container > div:not(:last-child) {
-    margin-bottom: var(--spacing-md);
+  .projects-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: var(--font-size-text);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+    margin-bottom: var(--spacing-xl);
   }
 </style>

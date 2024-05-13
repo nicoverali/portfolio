@@ -1,5 +1,5 @@
 name: Nicofy
-about: A URL shorting app. Short your links, short your share.
+short: URL shorting app
 description: This is an old project I made back in 2017 when I was learning about backend frameworks and databases. It's made with Python and Flask, using MySQL as database. It allows you to short long URLs by generating a short ID that then redirects to the long URL
 repository: https://github.com/nicoverali/nicofy
 featured: false

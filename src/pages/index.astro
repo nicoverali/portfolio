@@ -1,17 +1,12 @@
 ---
 import ScrollSidebarLayout from "@layouts/ScrollSidebarLayout.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import LinkButton from "@components/LinkButton/LinkButton.astro";
 import Work from "@sections/Work/Work.astro";
-import MoreWork from "@sections/MoreWork/MoreWork.astro";
+import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
 import MyName from "@sections/MyName/MyName.astro";
 import Hero from "@sections/Hero/Hero.astro";
-import GridRow from "@components/Grid/GridRow.astro";
-import { Image } from "astro:assets";
-import ArtImage from "@assets/images/art.jpg";
 import AboutMe from "@sections/AboutMe/AboutMe.astro";
-import WorkIntro from "@sections/WorkIntro/WorkIntro.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
@@ -27,7 +22,7 @@ import WorkIntro from "@sections/WorkIntro/WorkIntro.astro";
       </div>
       <!-- <WorkIntro /> -->
       <Work />
-      <MoreWork />
+      <OtherProjects />
       <Contact />
     </div>
   </ScrollSidebarLayout>

@@ -1,5 +1,5 @@
 name: VSCode SimplON language support 
-about: A very simple VSCode extension that supports SimplON (UNS flavor 📚🎓) implementation of Simplesem.
+short: Extension marketplace
 description: VSCode extension that provides basic support for SimplON implementation, a variant of the SimpleSem abstract processor.
 repository: https://github.com/nicoverali/vscode-simplon-language-support
 featured: false

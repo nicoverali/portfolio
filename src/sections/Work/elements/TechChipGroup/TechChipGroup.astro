@@ -3,12 +3,13 @@ import { Icon } from "astro-icon/components";
 
 interface Props {
   names: string[];
+  filled?: boolean;
 }
 
-const { names } = Astro.props;
+const { names, filled = true } = Astro.props;
 ---
 
-<div class="chip">
+<div class:list={["chip", { filled }]}>
   {
     names.map((name, i, all) =>
       i === all.length - 1 ? (
@@ -17,7 +18,7 @@ const { names } = Astro.props;
         <Fragment>
           <>
             <p class="chip-tech">{name}</p>
-            <Icon name={"asterisk"} />
+            <Icon is:inline={true} name={"asterisk"} />
           </>
         </Fragment>
       )
@@ -31,16 +32,27 @@ const { names } = Astro.props;
     flex-direction: row;
     flex: 0;
     gap: var(--spacing-md);
+    grid-row-gap: var(--spacing-xs);
     align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
+
     margin: 0;
     flex-wrap: wrap;
-    background-color: var(--color-text);
-    border-radius: var(--radius-lg);
+
+    &.filled {
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: var(--color-text);
+      border-radius: var(--radius-lg);
+
+      p.chip-tech,
+      [data-icon] path {
+        color: var(--color-background);
+        fill: var(--color-background);
+      }
+    }
 
     p.chip-tech {
       font-size: var(--font-size-caption);
-      color: var(--color-background);
+      color: var(--color-text);
       vertical-align: middle;
       margin: 0;
     }
@@ -52,7 +64,7 @@ const { names } = Astro.props;
       margin: 0;
 
       path {
-        fill: var(--color-background);
+        fill: var(--color-text);
       }
     }
   }
