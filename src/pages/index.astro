@@ -10,22 +10,20 @@ import AboutMe from "@sections/AboutMe/AboutMe.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <ScrollSidebarLayout section="Home">
-    <div class="container">
-      <Hero />
-      <MyName />
-      <!-- <GridRow>
+  <div class="container">
+    <Hero />
+    <MyName />
+    <!-- <GridRow>
         <Image class="art" src={ArtImage} alt={"Artistic background"} />
       </GridRow> -->
-      <div class="about-me">
-        <AboutMe />
-      </div>
-      <!-- <WorkIntro /> -->
-      <Work />
-      <OtherProjects />
-      <Contact />
+    <div class="about-me">
+      <AboutMe />
     </div>
-  </ScrollSidebarLayout>
+    <!-- <WorkIntro /> -->
+    <Work />
+    <OtherProjects />
+    <Contact />
+  </div>
 </BaseLayout>
 
 <style>
