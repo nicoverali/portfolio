@@ -1,37 +1,40 @@
 ---
 import GridCol from "@components/Grid/GridCol.astro";
+import GridOffset from "@components/Grid/GridOffset.astro";
 import GridRow from "@components/Grid/GridRow.astro";
 ---
 
 <section>
   <GridRow>
-    <GridCol xs={8}>
+    <GridOffset xs={5} />
+    <GridCol xs="auto">
       <div>
         <p>I'm always looking to level up my skills.</p>
         <p>
-          Contact me at <span>vera.nicolasalejandro@outlook.com</span>
+          Contact me at <span>vera.nicolasalejandro@outlook.com</span> if you believe
+          we could grow together.
         </p>
-        <p>if you believe we could grow together.</p>
       </div>
     </GridCol>
+
+    <style>
+      div {
+        height: calc(100vh - var(--el-header-height));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+      }
+      p {
+        font-size: var(--font-size-h3);
+        font-weight: 400;
+        line-height: 150%;
+        margin: 0;
+      }
+
+      span {
+        color: var(--color-primary);
+      }
+    </style>
   </GridRow>
 </section>
-
-<style>
-  div {
-    height: calc(100vh - var(--el-header-height));
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-  }
-  p {
-    font-size: var(--font-size-h4);
-    font-weight: 600;
-    margin: 0;
-  }
-
-  span {
-    color: var(--color-primary);
-  }
-</style>
