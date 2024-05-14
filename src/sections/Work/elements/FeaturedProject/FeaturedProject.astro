@@ -22,7 +22,7 @@ const isReversed = direction === "reverse";
   </GridCol>
   <GridCol xs="auto">
     <div class:list={["info", { reverse: isReversed }]}>
-      <h2 class="logo">{project.data.name}</h2>
+      <h2 class="name">{project.data.name}</h2>
       <p class="description">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos doloremque
         unde repellendus veniam laborum ipsa totam earum exercitationem quaerat,
@@ -67,7 +67,7 @@ const isReversed = direction === "reverse";
       align-items: flex-end;
     }
 
-    .logo {
+    .name {
       color: var(--color-text);
       font-size: var(--font-size-h3);
       font-weight: 600;
@@ -76,9 +76,9 @@ const isReversed = direction === "reverse";
     }
 
     .description {
-      margin-top: var(--spacing-sm);
-      margin-bottom: var(--spacing-md);
-      line-height: 140%;
+      margin-top: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      line-height: 160%;
     }
 
     .links {
