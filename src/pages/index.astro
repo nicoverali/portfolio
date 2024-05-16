@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@sections/Hero/Hero.astro";
+import MyName from "@sections/MyName/MyName.astro";
+import AboutMe from "@sections/AboutMe/AboutMe.astro";
+import Skills from "@sections/Skills/Skills.astro";
 import Work from "@sections/Work/Work.astro";
 import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
-import MyName from "@sections/MyName/MyName.astro";
-import Hero from "@sections/Hero/Hero.astro";
-import AboutMe from "@sections/AboutMe/AboutMe.astro";
-import Skills from "@sections/Skills/Skills.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
@@ -21,8 +21,9 @@ import Skills from "@sections/Skills/Skills.astro";
     <section class="skills">
       <Skills />
     </section>
-    <!-- <WorkIntro /> -->
-    <Work />
+    <section class="work">
+      <Work />
+    </section>
     <OtherProjects />
     <Contact />
   </div>
@@ -37,11 +38,10 @@ import Skills from "@sections/Skills/Skills.astro";
 
   section.my-name {
     margin-top: var(--spacing-5xl);
-    min-height: calc(100vh - var(--el-header-height));
   }
 
   section.about-me {
-    /* margin-top: 100px; */
+    margin-top: var(--spacing-5xl);
   }
 
   section.skills {
