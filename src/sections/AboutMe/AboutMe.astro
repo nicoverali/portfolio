@@ -2,41 +2,18 @@
 import GridCol from "@components/Grid/GridCol.astro";
 import GridOffset from "@components/Grid/GridOffset.astro";
 import GridRow from "@components/Grid/GridRow.astro";
-import { Icon } from "astro-icon/components";
-import BadgeCertification from "./elements/BadgeCertification/BadgeCertification.astro";
-
-const skills = [
-  "React",
-  "Typescript",
-  "Next.js",
-  "Node.js",
-  "Java",
-  "Docker",
-  "SQL",
-  "NoSQL",
-  "AWS",
-];
 ---
 
 <astro-about-me-anim-container>
-  <GridRow>
-    <GridCol xs={12}>
-      <div class="line"></div>
-    </GridCol>
-  </GridRow>
   <div class="about-me">
     <GridRow>
       <GridCol xs={12}>
         <div class="title">
           <h2>About.</h2>
-          <Icon class="about-art" name="about-art" />
         </div>
       </GridCol>
     </GridRow>
     <GridRow>
-      <!-- <GridCol xs={5}>
-      <h2>Ab<br />out.</h2>
-    </GridCol> -->
       <GridOffset xs={5} />
       <GridCol xs="auto">
         <div class="text">
@@ -50,64 +27,39 @@ const skills = [
             — I understand the importance of user experience and always strive
             to create intuitive and enjoyable interfaces for the people using my
             applications.
-            <Icon class="red-brush" name={"red-brush"} />
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+            quasi veritatis corrupti dicta eaque. Saepe, sequi vel. Magni
+            voluptates quaerat sint dolore? Odio sapiente qui temporibus ab
+            quas, eos beatae?
           </p>
         </div>
       </GridCol>
     </GridRow>
-    <!-- <GridRow>
-    <div class="skills">
-      {
-        skills.map((skill, i, all) =>
-          i === all.length - 1 ? (
-            <p>{skill}</p>
-          ) : (
-            <Fragment>
-              <>
-                <p>{skill}</p>
-                <Icon name={"asterisk"} />
-              </>
-            </Fragment>
-          )
-        )
-      }
-    </div>
-  </GridRow> -->
   </div>
 </astro-about-me-anim-container>
 
 <style>
   .about-me {
     position: relative;
-    margin-top: 10vh;
   }
 
   .title {
-    position: relative;
+    position: sticky;
+    top: 0;
     width: 100%;
-    margin-bottom: var(--spacing-4xl);
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-bottom: var(--spacing-2xl);
+  }
 
-    h2 {
-      display: inline-block;
-      font-size: var(--font-size-display-xl);
-      font-weight: 400;
-      -webkit-text-stroke: 1px var(--color-text);
-      color: transparent;
-      /* color: var(--color-text); */
-      margin: 0;
-      margin-bottom: var(--spacing-xl);
-      line-height: 80%;
-    }
-
-    .about-art {
-      width: 600px;
-      height: 500px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -100px;
-      z-index: -1;
-    }
+  h2 {
+    font-size: var(--font-size-display-xl);
+    font-weight: 400;
+    color: var(--color-text);
+    margin: 0;
   }
 
   .text {
@@ -118,27 +70,18 @@ const skills = [
     flex-direction: column;
     font-size: var(--font-size-h3);
 
+    /* p {
+      margin: 0;
+    } */
+
     .highlight {
       font-weight: 600;
     }
   }
-
-  [data-icon="red-brush"] {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    bottom: -150px;
-    right: -50px;
-  }
-
-  /* .line {
-    border-bottom: 1px solid var(--color-text);
-    width: 100%;
-    margin-bottom: var(--spacing-xl);
-  } */
 </style>
 
 <script>
+  import { vhPercent } from "@scripts/utils/gsap";
   import { gsap } from "gsap";
 
   class AboutMeAnimContainer extends HTMLElement {
@@ -146,68 +89,29 @@ const skills = [
       super();
 
       gsap.context(() => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: "h2",
-            markers: true,
-            start: "center center",
-            end: "center center+=10",
-            toggleActions: "play none reverse none",
-          },
-        });
-
-        tl.to(".about-art", { opacity: 0, duration: 0.1 }, 0);
-        tl.fromTo(
-          "h2",
-          {
-            position: "relative",
-            left: "50%",
-            xPercent: -50,
-            color: "black",
-          },
-          {
-            ease: "power3.inOut",
-            left: "0",
-            color: "transparent",
-            xPercent: 0,
-            duration: 0.5,
-          },
-          0
-        );
-        tl.to("h2", { opacity: 0.4, duration: 0.1 }, ">-=0.1");
-        tl.from(
-          ".text",
-          {
-            opacity: 0,
-            // y: 50,
-          },
-          0.1
-        );
-
-        gsap.from(".red-brush", {
-          opacity: 0,
+        gsap.from(".title", {
+          ease: "expo.inOut",
           duration: 0.4,
+          x: -20,
+          opacity: 0,
           scrollTrigger: {
-            trigger: ".red-brush",
-            start: "bottom bottom",
-            end: "bottom bottom",
-            toggleActions: "play none reverse none",
+            trigger: ".title",
+            start: "top " + vhPercent(40),
+            toggleActions: "play none none reverse",
           },
         });
 
-        // const moveTl = gsap.timeline({
-        //   scrollTrigger: { trigger: ".about-me", scrub: 1 },
-        // });
-
-        // moveTl.to("h2", { y: 800 }, 0);
-        // moveTl.to(
-        //   ".text",
-        //   {
-        //     y: -100,
-        //     // scrollTrigger: { trigger: ".about-me", scrub: 1 },
-        //   },
-        //   0
-        // );
+        gsap.from(".text", {
+          ease: "expo.inOut",
+          duration: 0.4,
+          x: -20,
+          opacity: 0,
+          scrollTrigger: {
+            trigger: ".title",
+            start: "top " + vhPercent(40),
+            toggleActions: "play none none reverse",
+          },
+        });
       }, this);
     }
   }
