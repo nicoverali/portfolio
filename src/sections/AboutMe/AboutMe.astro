@@ -129,7 +129,7 @@ const skills = [
       color: transparent;
       /* color: var(--color-text); */
       margin: 0;
-      margin-bottom: var(--spacing-2xl);
+      margin-bottom: var(--spacing-xl);
       line-height: 80%;
     }
 
@@ -218,13 +218,14 @@ const skills = [
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: "h2",
-            // markers: true,
+            markers: true,
             start: "center center",
-            end: "center center+=80",
+            end: "center center+=10",
             toggleActions: "play none reverse none",
           },
         });
 
+        tl.to(".about-art", { opacity: 0, duration: 0.1 }, 0);
         tl.fromTo(
           "h2",
           {
@@ -234,7 +235,7 @@ const skills = [
             color: "black",
           },
           {
-            ease: "power2.inOut",
+            ease: "power3.inOut",
             left: "0",
             color: "transparent",
             xPercent: 0,
@@ -242,17 +243,14 @@ const skills = [
           },
           0
         );
-        tl.to("h2", { opacity: 0.4, duration: 0.1 });
-
-        tl.to(".about-art", { opacity: 0, duration: 0.1 }, 0);
-
+        tl.to("h2", { opacity: 0.4, duration: 0.1 }, ">-=0.1");
         tl.from(
           ".text",
           {
             opacity: 0,
             // y: 50,
           },
-          0.5
+          0.1
         );
 
         gsap.from(".red-brush", {
@@ -266,10 +264,19 @@ const skills = [
           },
         });
 
-        gsap.to(".text", {
-          y: -100,
-          scrollTrigger: { trigger: ".about-me", scrub: 1 },
-        });
+        // const moveTl = gsap.timeline({
+        //   scrollTrigger: { trigger: ".about-me", scrub: 1 },
+        // });
+
+        // moveTl.to("h2", { y: 800 }, 0);
+        // moveTl.to(
+        //   ".text",
+        //   {
+        //     y: -100,
+        //     // scrollTrigger: { trigger: ".about-me", scrub: 1 },
+        //   },
+        //   0
+        // );
       }, this);
     }
   }
