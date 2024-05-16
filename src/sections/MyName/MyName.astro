@@ -38,11 +38,6 @@ import { Icon } from "astro-icon/components";
         </div>
       </GridCol>
     </GridRow>
-    <GridRow>
-      <GridCol xs={12}>
-        <div class="line"></div>
-      </GridCol>
-    </GridRow>
   </div>
 </astro-my-name-anim-container>
 
@@ -165,11 +160,11 @@ import { Icon } from "astro-icon/components";
         );
       });
 
-      tl.to(
-        spans,
-        { duration: 0.5, opacity: 1, filter: "grayscale(0)" },
-        ">-=0.3"
-      );
+      // tl.to(
+      //   spans,
+      //   { duration: 0.5, opacity: 1, filter: "grayscale(0)" },
+      //   ">-=0.3"
+      // );
     }
   }
 
