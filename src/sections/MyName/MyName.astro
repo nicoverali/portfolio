@@ -1,85 +1,227 @@
 ---
 import Button from "@components/Button/Button.astro";
+import GridCol from "@components/Grid/GridCol.astro";
 import GridRow from "@components/Grid/GridRow.astro";
 import { Icon } from "astro-icon/components";
 ---
 
-<astro-about-me-anim-container>
-  <div class="about-me">
+<astro-my-name-anim-container>
+  <div class="my-name">
+    <!-- <GridRow>
+      <GridCol xs={12}>
+        <div class="line"></div>
+      </GridCol>
+    </GridRow> -->
     <GridRow>
-      <div class="header">
-        <p>Hey there !</p>
-
-        <p class="address">
-          <Icon name="asterisk" />
-          Buenos Aires, Argentina
-        </p>
-      </div>
+      <GridCol xs={12}>
+        <div class="content">
+          <!-- <h1>Nicolás Vera.</h1> -->
+          <h2 class="subtitle">
+            <span>Hey ! I'm Nicolás Vera</span><br />
+            <span>I design and develop</span>
+            <span>thoughtful solutions</span>
+            <span
+              >centered on <span class="subtitle-highlight"
+                >user's experience.</span
+              >—</span
+            >
+          </h2>
+          <div class="asterisk-list">
+            <p>Software Engineer</p>
+            <Icon name="asterisk" />
+            <p>Buenos Aires</p>
+            <Icon name="asterisk" />
+            <p>Argentina</p>
+          </div>
+        </div>
+      </GridCol>
     </GridRow>
 
     <GridRow>
-      <h1>I'm Nicolás Vera.<br />Software Engineer.</h1>
+      <GridCol xs={12}>
+        <div class="buttons">
+          <Button href="">Download CV</Button>
+          <Button href="" outline>Contact me</Button>
+        </div>
+      </GridCol>
     </GridRow>
-
     <GridRow>
-      <div class="buttons">
-        <Button href="">Download CV</Button>
-        <Button href="" outline>Contact me</Button>
-      </div>
+      <GridCol xs={12}>
+        <div class="line"></div>
+      </GridCol>
     </GridRow>
   </div>
-</astro-about-me-anim-container>
+</astro-my-name-anim-container>
 
 <style>
-  .about-me {
-    height: calc(100vh - var(--el-header-height));
+  .my-name {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
   }
 
-  .header {
-    flex: 100%;
+  .content {
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
 
-    p {
-      font-size: var(--font-size-text);
+    h1 {
+      font-size: 200px;
+      font-weight: 400;
+      position: absolute;
+      bottom: 0;
+      margin: 0;
     }
 
-    .address {
-      font-size: var(--font-size-caption);
-      [data-icon] {
-        vertical-align: middle;
+    h2.subtitle {
+      text-align: start;
+      margin-top: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      font-size: var(--font-size-display);
+      font-weight: 600;
+
+      .subtitle-highlight {
+        color: var(--color-secondary);
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .asterisk-list {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--spacing-md);
+      font-size: var(--font-size-h4);
+
+      svg {
+        width: 8px;
+        height: 8px;
       }
     }
   }
 
-  h1 {
-    font-size: var(--font-size-display);
-    font-weight: 400;
-    margin-top: var(--spacing-sm);
-    margin-bottom: var(--spacing-xl);
-  }
-
   .buttons {
+    width: 100%;
     flex: 1;
     display: flex;
     flex-direction: row;
+    justify-content: start;
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
     gap: var(--spacing-md);
+  }
+
+  .art-container {
+    margin-top: var(--spacing-4xl);
+    width: 100%;
+    height: 180px;
+    overflow: visible;
+    filter: url(#round);
+  }
+
+  .art-clip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+    clip-path: polygon(0% 0%, 100% 0%, 105% 50%, -5% 50%);
+  }
+
+  .art {
+    width: calc(100% + 10% * 2);
+    height: 100%;
+    left: -10%;
+    position: absolute;
+    bottom: 0;
+    object-fit: cover;
+  }
+
+  .line {
+    width: 100%;
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid black;
   }
 </style>
 
 <script>
   import { gsap } from "gsap";
 
-  class AboutMeAnimContainer extends HTMLElement {
+  class MyNameAnimContainer extends HTMLElement {
     constructor() {
       super();
-      gsap.context(() => {}, this);
+      gsap.context(() => {
+        const tl = gsap.timeline({
+          defaults: { ease: "expo.inOut" },
+          scrollTrigger: {
+            trigger: ".my-name",
+            start: "top center",
+            end: "bottom top",
+          },
+        });
+
+        // tl.from(".line", { opacity: 0, duration: 0.2 }, 0);
+        // tl.fromTo(
+        //   ".line",
+        //   { width: "0%" },
+        //   { width: "100%", duration: 0.5 },
+        //   0
+        // );
+        tl.fromTo(
+          ".my-name > *",
+          { opacity: 0, x: -20 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.1,
+          }
+        );
+
+        const partsTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".my-name",
+            start: "top top+=280",
+            end: "+=300%",
+            scrub: true,
+            pin: true,
+          },
+        });
+
+        const subtitleParts =
+          gsap.utils.toArray<HTMLElement>("h2.subtitle > span");
+        subtitleParts.map((part, i, all) => {
+          let ease = "slow(0.2, 0, true)";
+          if (i === all.length - 1) ease = "power4.out";
+          partsTl.fromTo(
+            part,
+            { opacity: 0.2, filter: "grayscale(1)" },
+            { ease, opacity: 1, filter: "grayscale(0)" }
+            // "<"
+          );
+        });
+
+        partsTl.to(subtitleParts, {
+          opacity: 1,
+          filter: "grayscale(0)",
+        });
+
+        partsTl.to(
+          ".my-name",
+          {
+            ease: "slow(0.3, 0.8, false)",
+            y: -200,
+            duration: partsTl.totalDuration(),
+          },
+          0
+        );
+      }, this);
     }
   }
-  customElements.define("astro-about-me-anim-container", AboutMeAnimContainer);
+  customElements.define("astro-my-name-anim-container", MyNameAnimContainer);
 </script>

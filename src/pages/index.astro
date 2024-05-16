@@ -1,5 +1,4 @@
 ---
-import ScrollSidebarLayout from "@layouts/ScrollSidebarLayout.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Work from "@sections/Work/Work.astro";
 import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
@@ -12,13 +11,12 @@ import AboutMe from "@sections/AboutMe/AboutMe.astro";
 <BaseLayout title="Nicolás Vera">
   <div class="container">
     <Hero />
-    <MyName />
-    <!-- <GridRow>
-        <Image class="art" src={ArtImage} alt={"Artistic background"} />
-      </GridRow> -->
-    <div class="about-me">
+    <section class="my-name">
+      <MyName />
+    </section>
+    <section class="about-me">
       <AboutMe />
-    </div>
+    </section>
     <!-- <WorkIntro /> -->
     <Work />
     <OtherProjects />
@@ -33,14 +31,16 @@ import AboutMe from "@sections/AboutMe/AboutMe.astro";
     /* gap: 20vh; */
   }
 
-  .art {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
+  section.my-name {
+    margin-top: var(--spacing-5xl);
+    min-height: calc(100vh - var(--el-header-height));
   }
 
-  .about-me {
-    margin-bottom: 20vh;
+  section.about-me {
+    /* margin-top: 100px; */
+  }
+
+  .hero {
+    margin-bottom: 80px;
   }
 </style>

@@ -1,6 +1,5 @@
 $gutter-width: 24px;
 $outer-margin: 0;
-$gutter-compensation: calc($gutter-width * 0.5 * -1);
 $half-gutter-width: calc($gutter-width * 0.5);
 $screen-xs-min: 30em;
 $screen-sm-min: 48em;
@@ -17,8 +16,6 @@ $container-lg: calc($screen-lg-min + $gutter-width);
   flex: 0 1 auto;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-right: $gutter-compensation;
-  margin-left: $gutter-compensation;
 }
 
 .row.reverse {

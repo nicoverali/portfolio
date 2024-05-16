@@ -18,33 +18,44 @@ const skills = [
 ];
 ---
 
-<div class="about-me">
+<astro-about-me-anim-container>
   <GridRow>
-    <h2>About.</h2>
-  </GridRow>
-  <GridRow>
-    <!-- <GridCol xs={5}>
-      <h2>Ab<br />out.</h2>
-    </GridCol> -->
-    <GridOffset xs={5} />
-    <GridCol xs="auto">
-      <div class="text">
-        <p>
-          I am a <span class="highlight">Computer Science graduate</span> with a
-          passion for technology. I have developed a strong foundation in computer
-          science concepts and programming languages, which helps me quickly learn
-          new skills and technologies.
-        </p>
-        <p class="highlight">
-          — I understand the importance of user experience and always strive to
-          create intuitive and enjoyable interfaces for the people using my
-          applications.
-          <Icon name={"red-brush"} />
-        </p>
-      </div>
+    <GridCol xs={12}>
+      <div class="line"></div>
     </GridCol>
   </GridRow>
-  <!-- <GridRow>
+  <div class="about-me">
+    <GridRow>
+      <GridCol xs={12}>
+        <div class="title">
+          <h2>About.</h2>
+          <Icon class="about-art" name="about-art" />
+        </div>
+      </GridCol>
+    </GridRow>
+    <GridRow>
+      <!-- <GridCol xs={5}>
+      <h2>Ab<br />out.</h2>
+    </GridCol> -->
+      <GridOffset xs={5} />
+      <GridCol xs="auto">
+        <div class="text">
+          <p>
+            I am a <span class="highlight">Computer Science graduate</span> with
+            a passion for technology. I have developed a strong foundation in computer
+            science concepts and programming languages, which helps me quickly learn
+            new skills and technologies.
+          </p>
+          <p class="highlight">
+            — I understand the importance of user experience and always strive
+            to create intuitive and enjoyable interfaces for the people using my
+            applications.
+            <Icon class="red-brush" name={"red-brush"} />
+          </p>
+        </div>
+      </GridCol>
+    </GridRow>
+    <!-- <GridRow>
     <div class="skills">
       {
         skills.map((skill, i, all) =>
@@ -63,39 +74,41 @@ const skills = [
     </div>
   </GridRow> -->
 
-  <GridRow>
-    <GridOffset xs={3} />
-    <GridCol xs={6}>
-      <div class="skills">
-        <p class="title">SKILLS</p>
-        <p class="text">
-          I feel comfortable working with both backend and frontend technologies
-        </p>
-        <div class="certifications">
-          <BadgeCertification>AWS Cloud Practitioner</BadgeCertification>
-          <BadgeCertification>Azure Fundamentals</BadgeCertification>
+    <GridRow>
+      <GridOffset xs={3} />
+      <GridCol xs={6}>
+        <div class="skills">
+          <p class="title">SKILLS</p>
+          <p class="text">
+            I feel comfortable working with both backend and frontend
+            technologies
+          </p>
+          <div class="certifications">
+            <BadgeCertification>AWS Cloud Practitioner</BadgeCertification>
+            <BadgeCertification>Azure Fundamentals</BadgeCertification>
+          </div>
         </div>
-      </div>
-    </GridCol>
-  </GridRow>
-  <GridRow>
-    <GridOffset xs={3} />
-    <GridCol xs={6}>
-      <div class="skill-icons">
-        <img src="/media/skills/Docker.svg" />
-        <img src="/media/skills/java.svg" />
-        <img src="/media/skills/Javascript.svg" />
-        <img src="/media/skills/MongoDb.svg" />
-        <img src="/media/skills/nestjs.svg" />
-        <img src="/media/skills/NextJs.svg" />
-        <img src="/media/skills/NodeJs.svg" />
-        <img src="/media/skills/PostgreSQL.svg" />
-        <img src="/media/skills/React.svg" />
-        <img src="/media/skills/Typescript.svg" />
-      </div>
-    </GridCol>
-  </GridRow>
-</div>
+      </GridCol>
+    </GridRow>
+    <GridRow>
+      <GridOffset xs={3} />
+      <GridCol xs={6}>
+        <div class="skill-icons">
+          <img src="/media/skills/Docker.svg" />
+          <img src="/media/skills/java.svg" />
+          <img src="/media/skills/Javascript.svg" />
+          <img src="/media/skills/MongoDb.svg" />
+          <img src="/media/skills/nestjs.svg" />
+          <img src="/media/skills/NextJs.svg" />
+          <img src="/media/skills/NodeJs.svg" />
+          <img src="/media/skills/PostgreSQL.svg" />
+          <img src="/media/skills/React.svg" />
+          <img src="/media/skills/Typescript.svg" />
+        </div>
+      </GridCol>
+    </GridRow>
+  </div>
+</astro-about-me-anim-container>
 
 <style>
   .about-me {
@@ -103,18 +116,32 @@ const skills = [
     margin-top: 10vh;
   }
 
-  h2 {
-    /* opacity: 0.2; */
-    text-shadow:
-      -1px -1px 0 var(--color-text),
-      1px -1px 0 var(--color-text),
-      -1px 1px 0 var(--color-text),
-      1px 1px 0 var(--color-text);
-    font-size: var(--font-size-display-xl);
-    font-weight: 400;
-    color: var(--color-background);
-    margin: 0;
-    line-height: 80%;
+  .title {
+    position: relative;
+    width: 100%;
+    margin-bottom: var(--spacing-4xl);
+
+    h2 {
+      display: inline-block;
+      font-size: var(--font-size-display-xl);
+      font-weight: 400;
+      -webkit-text-stroke: 1px var(--color-text);
+      color: transparent;
+      /* color: var(--color-text); */
+      margin: 0;
+      margin-bottom: var(--spacing-2xl);
+      line-height: 80%;
+    }
+
+    .about-art {
+      width: 600px;
+      height: 500px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -100px;
+      z-index: -1;
+    }
   }
 
   .text {
@@ -137,21 +164,6 @@ const skills = [
     bottom: -150px;
     right: -50px;
   }
-
-  /* .skills {
-    margin-top: 48px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-
-    [data-icon="asterisk"] {
-      vertical-align: middle;
-      width: var(--font-size-caption);
-      height: var(--font-size-caption);
-    }
-  } */
 
   .skills {
     margin-top: 30vh;
@@ -187,4 +199,80 @@ const skills = [
     justify-content: center;
     gap: var(--spacing-lg);
   }
+
+  /* .line {
+    border-bottom: 1px solid var(--color-text);
+    width: 100%;
+    margin-bottom: var(--spacing-xl);
+  } */
 </style>
+
+<script>
+  import { gsap } from "gsap";
+
+  class AboutMeAnimContainer extends HTMLElement {
+    constructor() {
+      super();
+
+      gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "h2",
+            // markers: true,
+            start: "center center",
+            end: "center center+=80",
+            toggleActions: "play none reverse none",
+          },
+        });
+
+        tl.fromTo(
+          "h2",
+          {
+            position: "relative",
+            left: "50%",
+            xPercent: -50,
+            color: "black",
+          },
+          {
+            ease: "power2.inOut",
+            left: "0",
+            color: "transparent",
+            xPercent: 0,
+            duration: 0.5,
+          },
+          0
+        );
+        tl.to("h2", { opacity: 0.4, duration: 0.1 });
+
+        tl.to(".about-art", { opacity: 0, duration: 0.1 }, 0);
+
+        tl.from(
+          ".text",
+          {
+            opacity: 0,
+            // y: 50,
+          },
+          0.5
+        );
+
+        gsap.from(".red-brush", {
+          opacity: 0,
+          duration: 0.4,
+          scrollTrigger: {
+            trigger: ".red-brush",
+            start: "bottom bottom",
+            end: "bottom bottom",
+            toggleActions: "play none reverse none",
+          },
+        });
+
+        gsap.to(".text", {
+          y: -100,
+          scrollTrigger: { trigger: ".about-me", scrub: 1 },
+        });
+      }, this);
+    }
+  }
+
+  customElements.define("astro-about-me-anim-container", AboutMeAnimContainer);
+</script>
