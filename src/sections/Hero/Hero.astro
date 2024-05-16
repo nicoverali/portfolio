@@ -102,13 +102,12 @@ import { Image } from "astro:assets";
             id: "hero",
             trigger: ".hero",
             start: "top top+=80px",
-            scrub: 1,
+            scrub: true,
           },
         });
         tl.addLabel("start");
-        tl.to("figure", { y: -300 }, "start");
-        tl.to("img", { y: 100 }, "start");
-        tl.to("h1", { y: -450 }, "start");
+        tl.to("img", { y: 300 }, "start");
+        tl.to("h1", { y: -80 }, "start");
       }, this);
     }
   }
