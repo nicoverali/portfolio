@@ -7,30 +7,23 @@ import { Icon } from "astro-icon/components";
 
 <astro-my-name-anim-container>
   <div class="my-name">
-    <!-- <GridRow>
-      <GridCol xs={12}>
-        <div class="line"></div>
-      </GridCol>
-    </GridRow> -->
     <GridRow>
       <GridCol xs={12}>
         <div class="content">
-          <!-- <h1>Nicolás Vera.</h1> -->
-          <h2 class="subtitle">
+          <h1>
             <span>Hey ! I'm Nicolás Vera</span><br />
             <span>I design and develop</span>
             <span>thoughtful solutions</span>
             <span
-              >centered on <span class="subtitle-highlight"
-                >user's experience.</span
+              >centered on <span class="highlight">user's experience.</span
               >—</span
             >
-          </h2>
+          </h1>
           <div class="asterisk-list">
             <p>Software Engineer</p>
-            <Icon name="asterisk" />
+            <Icon is:inline={true} name="asterisk" />
             <p>Buenos Aires</p>
-            <Icon name="asterisk" />
+            <Icon is:inline={true} name="asterisk" />
             <p>Argentina</p>
           </div>
         </div>
@@ -68,27 +61,15 @@ import { Icon } from "astro-icon/components";
     align-items: start;
 
     h1 {
-      font-size: 200px;
-      font-weight: 400;
-      position: absolute;
-      bottom: 0;
-      margin: 0;
-    }
-
-    h2.subtitle {
       text-align: start;
       margin-top: var(--spacing-lg);
       margin-bottom: var(--spacing-lg);
       font-size: var(--font-size-display);
       font-weight: 600;
 
-      .subtitle-highlight {
+      .highlight {
         color: var(--color-secondary);
       }
-    }
-
-    p {
-      margin: 0;
     }
 
     .asterisk-list {
@@ -98,6 +79,10 @@ import { Icon } from "astro-icon/components";
       align-items: center;
       gap: var(--spacing-md);
       font-size: var(--font-size-h4);
+
+      p {
+        margin: 0;
+      }
 
       svg {
         width: 8px;
@@ -117,112 +102,76 @@ import { Icon } from "astro-icon/components";
     gap: var(--spacing-md);
   }
 
-  .art-container {
-    margin-top: var(--spacing-4xl);
-    width: 100%;
-    height: 180px;
-    overflow: visible;
-    filter: url(#round);
-  }
-
-  .art-clip {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: var(--radius-md);
-    clip-path: polygon(0% 0%, 100% 0%, 105% 50%, -5% 50%);
-  }
-
-  .art {
-    width: calc(100% + 10% * 2);
-    height: 100%;
-    left: -10%;
-    position: absolute;
-    bottom: 0;
-    object-fit: cover;
-  }
-
   .line {
     width: 100%;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
     border-bottom: 1px solid black;
   }
 </style>
 
 <script>
   import { gsap } from "gsap";
+  import { vhPercent } from "@scripts/utils/gsap";
 
   class MyNameAnimContainer extends HTMLElement {
     constructor() {
       super();
       gsap.context(() => {
-        const tl = gsap.timeline({
-          defaults: { ease: "expo.inOut" },
+        this.getShowSectionAnim(75);
+        this.getTextHighlightAnim(50, 70);
+      }, this);
+    }
+
+    getShowSectionAnim(startPercent: number) {
+      gsap.fromTo(
+        ".my-name > *",
+        { opacity: 0, x: -20 },
+        {
+          ease: "expo.inOut",
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          stagger: 0.1,
           scrollTrigger: {
             trigger: ".my-name",
-            start: "top center",
+            start: () => "top " + vhPercent(startPercent),
             end: "bottom top",
             toggleActions: "play none none reverse",
           },
-        });
+        }
+      );
+    }
 
-        // tl.from(".line", { opacity: 0, duration: 0.2 }, 0);
-        // tl.fromTo(
-        //   ".line",
-        //   { width: "0%" },
-        //   { width: "100%", duration: 0.5 },
-        //   0
-        // );
+    getTextHighlightAnim(startPercent: number, endPercent: number) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "h1",
+          start: () => "top " + vhPercent(startPercent),
+          end: "bottom " + vhPercent(endPercent),
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      const spans = gsap.utils.toArray<HTMLElement>("h1 > span");
+
+      spans.map((span, i, all) => {
+        const ease = i === all.length - 1 ? "power4.out" : "slow(0.3, 0, true)";
         tl.fromTo(
-          ".my-name > *",
-          { opacity: 0, x: -20 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.5,
-            stagger: 0.1,
-          }
+          span,
+          { opacity: 0.2, filter: "grayscale(1)" },
+          { ease, duration: 1, opacity: 1, filter: "grayscale(0)" },
+          ">-=0.3"
         );
+      });
 
-        const partsTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".my-name",
-            start: "top top+=280",
-            end: "+=300%",
-            scrub: true,
-            pin: true,
-          },
-        });
-
-        const subtitleParts =
-          gsap.utils.toArray<HTMLElement>("h2.subtitle > span");
-        subtitleParts.map((part, i, all) => {
-          let ease = "slow(0.2, 0, true)";
-          if (i === all.length - 1) ease = "power4.out";
-          partsTl.fromTo(
-            part,
-            { opacity: 0.2, filter: "grayscale(1)" },
-            { ease, opacity: 1, filter: "grayscale(0)" }
-            // "<"
-          );
-        });
-
-        partsTl.to(subtitleParts, {
-          opacity: 1,
-          filter: "grayscale(0)",
-        });
-
-        partsTl.to(
-          ".my-name",
-          {
-            ease: "slow(0.3, 0.8, false)",
-            y: -200,
-            duration: partsTl.totalDuration(),
-          },
-          0
-        );
-      }, this);
+      tl.to(
+        spans,
+        { duration: 0.5, opacity: 1, filter: "grayscale(0)" },
+        ">-=0.3"
+      );
     }
   }
+
   customElements.define("astro-my-name-anim-container", MyNameAnimContainer);
 </script>
