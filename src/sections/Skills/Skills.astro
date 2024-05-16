@@ -1,0 +1,106 @@
+---
+import GridCol from "@components/Grid/GridCol.astro";
+import GridOffset from "@components/Grid/GridOffset.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import BadgeCertification from "@sections/Skills/elements/BadgeCertification/BadgeCertification.astro";
+---
+
+<div class="skills-container">
+  <GridRow>
+    <GridOffset xs={3} />
+    <GridCol xs={6}>
+      <div class="skills">
+        <p class="title">SKILLS</p>
+        <p class="text">
+          I feel comfortable working with both backend and frontend technologies
+        </p>
+        <div class="certifications">
+          <BadgeCertification>AWS Cloud Practitioner</BadgeCertification>
+          <BadgeCertification>Azure Fundamentals</BadgeCertification>
+        </div>
+      </div>
+    </GridCol>
+  </GridRow>
+  <GridRow>
+    <GridOffset xs={3} />
+    <GridCol xs={6}>
+      <div class="skill-icons">
+        <img src="/media/skills/Docker.svg" />
+        <img src="/media/skills/java.svg" />
+        <img src="/media/skills/Javascript.svg" />
+        <img src="/media/skills/MongoDb.svg" />
+        <img src="/media/skills/nestjs.svg" />
+        <img src="/media/skills/NextJs.svg" />
+        <img src="/media/skills/NodeJs.svg" />
+        <img src="/media/skills/PostgreSQL.svg" />
+        <img src="/media/skills/React.svg" />
+        <img src="/media/skills/Typescript.svg" />
+      </div>
+    </GridCol>
+  </GridRow>
+</div>
+
+<style>
+  .skills-container {
+    width: 100%;
+    padding: var(--spacing-4xl) 0;
+    border-radius: var(--radius-md);
+    background-color: var(--color-text);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p,
+    h2,
+    div {
+      color: white;
+    }
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+
+    .title {
+      font-size: var(--font-size-caption);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin: 0;
+    }
+  }
+
+  .text {
+    position: relative;
+    line-height: 160%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    margin: var(--spacing-sm) 0 var(--spacing-lg) 0;
+    font-size: var(--font-size-h3);
+  }
+
+  .skill-icons {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+
+    img {
+      height: 64px;
+      width: 64px;
+    }
+  }
+
+  .certifications {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-lg);
+  }
+</style>

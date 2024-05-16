@@ -6,6 +6,7 @@ import Contact from "@sections/Contact/Contact.astro";
 import MyName from "@sections/MyName/MyName.astro";
 import Hero from "@sections/Hero/Hero.astro";
 import AboutMe from "@sections/AboutMe/AboutMe.astro";
+import Skills from "@sections/Skills/Skills.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
@@ -16,6 +17,9 @@ import AboutMe from "@sections/AboutMe/AboutMe.astro";
     </section>
     <section class="about-me">
       <AboutMe />
+    </section>
+    <section class="skills">
+      <Skills />
     </section>
     <!-- <WorkIntro /> -->
     <Work />
@@ -38,6 +42,11 @@ import AboutMe from "@sections/AboutMe/AboutMe.astro";
 
   section.about-me {
     /* margin-top: 100px; */
+  }
+
+  section.skills {
+    margin-top: var(--spacing-5xl);
+    margin-bottom: var(--spacing-5xl);
   }
 
   .hero {
