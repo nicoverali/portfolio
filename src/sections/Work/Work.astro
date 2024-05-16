@@ -1,6 +1,7 @@
 ---
 import FeaturedProject from "./elements/FeaturedProject/FeaturedProject.astro";
 import { getCollection } from "astro:content";
+import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
 
 const allFeaturedProjects = await getCollection(
   "projects",
@@ -8,36 +9,47 @@ const allFeaturedProjects = await getCollection(
 );
 ---
 
-<section class="work">
-  <h2>Work.</h2>
+<astro-work-anim-container>
+  <div class="work">
+    <div class="title">
+      <SectionTitle>Work.</SectionTitle>
+    </div>
 
-  {
-    allFeaturedProjects.map((project, i) => (
-      <div class="project-container">
-        <FeaturedProject
-          project={project}
-          direction={i % 2 == 0 ? "normal" : "reverse"}
-        />
-      </div>
-    ))
-  }
-</section>
+    {
+      allFeaturedProjects.map((project, i) => (
+        <div class="project-container">
+          <FeaturedProject
+            project={project}
+            direction={i % 2 == 0 ? "normal" : "reverse"}
+          />
+        </div>
+      ))
+    }
+  </div>
+</astro-work-anim-container>
 
 <style>
-  h2 {
-    opacity: 0.6;
-    font-size: var(--font-size-display-xl);
-    font-weight: 400;
-    color: var(--color-background);
-    text-shadow:
-      -1px -1px 0 var(--color-text),
-      1px -1px 0 var(--color-text),
-      -1px 1px 0 var(--color-text),
-      1px 1px 0 var(--color-text);
-    margin: var(--spacing-lg) 0;
+  .title {
+    position: relative;
+    width: 100%;
+    margin-bottom: var(--spacing-5xl);
+    padding-top: var(--spacing-5xl);
   }
 
   .project-container {
     margin-bottom: var(--spacing-5xl);
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+
+  class WorkAnimContainer extends HTMLElement {
+    constructor() {
+      super();
+      gsap.context(() => {}, this);
+    }
+  }
+
+  customElements.define("astro-work-anim-container", WorkAnimContainer);
+</script>

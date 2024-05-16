@@ -6,15 +6,25 @@
   <h2>
     <slot />
   </h2>
+  <div class="line"></div>
 </astro-section-title-anim-container>
 
 <style>
-  h2 {
+  astro-section-title-anim-container {
     width: 100%;
-    font-size: var(--font-size-display-xl);
+    display: flex;
+    flex-direction: column;
+  }
+  h2 {
+    font-size: 100px;
     font-weight: 400;
     color: var(--color-text);
     margin: 0;
+  }
+
+  .line {
+    flex: 1;
+    border-bottom: 1px solid var(--color-text);
   }
 </style>
 
@@ -31,6 +41,17 @@
           ease: "expo.inOut",
           duration: 0.4,
           x: -20,
+          opacity: 0,
+          scrollTrigger: {
+            trigger: "h2",
+            start: "top " + vhPercent(40),
+            toggleActions: "play none none reverse",
+          },
+        });
+
+        gsap.from(".line", {
+          ease: "expo.inOut",
+          duration: 0.4,
           opacity: 0,
           scrollTrigger: {
             trigger: "h2",
