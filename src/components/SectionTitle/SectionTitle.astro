@@ -1,0 +1,49 @@
+---
+
+---
+
+<astro-section-title-anim-container>
+  <h2>
+    <slot />
+  </h2>
+</astro-section-title-anim-container>
+
+<style>
+  h2 {
+    width: 100%;
+    font-size: var(--font-size-display-xl);
+    font-weight: 400;
+    color: var(--color-text);
+    margin: 0;
+  }
+</style>
+
+<script>
+  import { vhPercent } from "@scripts/utils/gsap";
+  import { gsap } from "gsap";
+
+  class SectionTitleAnimContainer extends HTMLElement {
+    constructor() {
+      super();
+
+      gsap.context(() => {
+        gsap.from("h2", {
+          ease: "expo.inOut",
+          duration: 0.4,
+          x: -20,
+          opacity: 0,
+          scrollTrigger: {
+            trigger: "h2",
+            start: "top " + vhPercent(40),
+            toggleActions: "play none none reverse",
+          },
+        });
+      }, this);
+    }
+  }
+
+  customElements.define(
+    "astro-section-title-anim-container",
+    SectionTitleAnimContainer
+  );
+</script>

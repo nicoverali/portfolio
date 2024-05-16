@@ -2,6 +2,7 @@
 import GridCol from "@components/Grid/GridCol.astro";
 import GridOffset from "@components/Grid/GridOffset.astro";
 import GridRow from "@components/Grid/GridRow.astro";
+import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
 ---
 
 <astro-about-me-anim-container>
@@ -9,7 +10,7 @@ import GridRow from "@components/Grid/GridRow.astro";
     <GridRow>
       <GridCol xs={12}>
         <div class="title">
-          <h2>About.</h2>
+          <SectionTitle>About.</SectionTitle>
         </div>
       </GridCol>
     </GridRow>
@@ -55,13 +56,6 @@ import GridRow from "@components/Grid/GridRow.astro";
     margin-bottom: var(--spacing-2xl);
   }
 
-  h2 {
-    font-size: var(--font-size-display-xl);
-    font-weight: 400;
-    color: var(--color-text);
-    margin: 0;
-  }
-
   .text {
     position: relative;
     line-height: 160%;
@@ -89,18 +83,6 @@ import GridRow from "@components/Grid/GridRow.astro";
       super();
 
       gsap.context(() => {
-        gsap.from(".title", {
-          ease: "expo.inOut",
-          duration: 0.4,
-          x: -20,
-          opacity: 0,
-          scrollTrigger: {
-            trigger: ".title",
-            start: "top " + vhPercent(40),
-            toggleActions: "play none none reverse",
-          },
-        });
-
         gsap.from(".text", {
           ease: "expo.inOut",
           duration: 0.4,
