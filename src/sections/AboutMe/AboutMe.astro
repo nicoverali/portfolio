@@ -2,20 +2,12 @@
 import GridCol from "@components/Grid/GridCol.astro";
 import GridOffset from "@components/Grid/GridOffset.astro";
 import GridRow from "@components/Grid/GridRow.astro";
-import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
 ---
 
 <astro-about-me-anim-container>
   <div class="about-me">
     <GridRow>
-      <GridCol xs={12}>
-        <div class="title">
-          <SectionTitle>About.</SectionTitle>
-        </div>
-      </GridCol>
-    </GridRow>
-    <GridRow>
-      <GridOffset xs={5} />
+      <GridOffset xs={4} />
       <GridCol xs="auto">
         <div class="text">
           <p>
@@ -37,6 +29,7 @@ import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
           </p>
         </div>
       </GridCol>
+      <GridOffset xs={1} />
     </GridRow>
   </div>
 </astro-about-me-anim-container>
@@ -83,17 +76,21 @@ import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
       super();
 
       gsap.context(() => {
-        gsap.from(".text", {
-          ease: "expo.inOut",
-          duration: 0.4,
-          x: -20,
-          opacity: 0,
-          scrollTrigger: {
-            trigger: ".title",
-            start: "top " + vhPercent(40),
-            toggleActions: "play none none reverse",
-          },
-        });
+        const paragraphs = gsap.utils.toArray<HTMLElement>(".text > *");
+
+        for (const p of paragraphs) {
+          gsap.from(p, {
+            ease: "expo.inOut",
+            duration: 0.4,
+            x: 30,
+            opacity: 0,
+            scrollTrigger: {
+              trigger: p,
+              start: "top " + vhPercent(70),
+              toggleActions: "play none none reverse",
+            },
+          });
+        }
       }, this);
     }
   }
