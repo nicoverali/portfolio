@@ -1,92 +1,84 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import LinkButton from "@components/LinkButton/LinkButton.astro";
 import TechChipGroup from "../TechChipGroup/TechChipGroup.astro";
-import GridRow from "@components/Grid/GridRow.astro";
-import GridCol from "@components/Grid/GridCol.astro";
-import ProjectImages from "../ProjectImages/ProjectImages.astro";
+import Button from "@components/Button/Button.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
-  direction?: "normal" | "reverse";
 }
 
-const { project, direction = "normal" } = Astro.props;
-
-const isReversed = direction === "reverse";
+const { project } = Astro.props;
+const { screenshots, name, short, techs } = project.data;
 ---
 
-<GridRow reverse={isReversed}>
-  <GridCol xs={isReversed ? 7 : 6}>
-    <ProjectImages project={project} />
-  </GridCol>
-  <GridCol xs="auto">
-    <div class:list={["info", { reverse: isReversed }]}>
-      <h2 class="name">{project.data.name}</h2>
-      <p class="description">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos doloremque
-        unde repellendus veniam laborum ipsa totam earum exercitationem quaerat,
-        eius excepturi. Sit magni quibusdam quos temporibus facere aliquam ipsam
-        quisquam?
-      </p>
-      <TechChipGroup names={project.data.techs} />
-      <div class="links">
-        {
-          project.data.repository && (
-            <LinkButton href={project.data.repository}>Repository</LinkButton>
-          )
-        }
-        {
-          project.data.demo && (
-            <LinkButton href={project.data.demo}>Demo</LinkButton>
-          )
-        }
-      </div>
+<div class="container">
+  <div class="images">
+    <Image src={screenshots[0]} alt={`Screenshot of ${name} app`} />
+    <div class="techs">
+      <TechChipGroup names={techs} />
     </div>
-  </GridCol>
-</GridRow>
+  </div>
+
+  <div class="bottom">
+    <div class="left">
+      <h3>{name}</h3>
+      <p>{short}</p>
+    </div>
+
+    <Button href="" outline>View Project</Button>
+  </div>
+</div>
 
 <style>
-  img {
+  .container {
     width: 100%;
-    border: 1px solid var(--color-light-border);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 4px 4px 0 var(--color-shadow);
+    padding: var(--spacing-2xl);
+    background-color: #fafafa;
+    border: 1px solid #f5f5f5;
+    border-radius: var(--radius-lg);
   }
 
-  .info {
+  .bottom {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: var(--spacing-md);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: var(--spacing-xl);
 
-    &.reverse {
-      padding-left: 0;
-      padding-right: var(--spacing-md);
-      text-align: end;
-      align-items: flex-end;
-    }
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
 
-    .name {
-      color: var(--color-text);
-      font-size: var(--font-size-h3);
-      font-weight: 600;
-      margin: 0;
-      margin-top: -4px; /* Fix small space on top of text */
-    }
+      h3 {
+        margin: 0;
+        font-size: var(--font-size-h3);
+      }
 
-    .description {
-      margin-top: var(--spacing-md);
-      margin-bottom: var(--spacing-lg);
-      line-height: 160%;
-    }
-
-    .links {
-      margin-top: var(--spacing-lg);
-
-      *:not(:last-child) {
-        margin-bottom: var(--spacing-sm);
+      h3,
+      p {
+        margin: 0;
       }
     }
+  }
+
+  .images {
+    width: 100%;
+    position: relative;
+
+    .techs {
+      position: absolute;
+      right: var(--spacing-md);
+      bottom: var(--spacing-md);
+    }
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-light-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 4px 0 var(--color-shadow);
   }
 </style>

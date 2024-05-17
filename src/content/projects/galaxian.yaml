@@ -2,7 +2,7 @@ name: Galaxian
 short: 2D Shooter minigame
 description: 2D Shooter inspired by Galaxian
 repository: https://github.com/nicoverali/galaxian
-featured: false
+featured: true
 screenshots:
   - ../../assets/images/projects/galaxian-1.png
 techs:

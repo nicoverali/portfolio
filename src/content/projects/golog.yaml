@@ -6,9 +6,9 @@ repository: https://github.com/nicoverali/golog
 demo: https://golog-nicoverali.netlify.app/
 featured: true
 screenshots:
-  - ../../assets/images/projects/golog-2.png
-  - ../../assets/images/projects/golog-3.png
   - ../../assets/images/projects/golog-6.png
+  - ../../assets/images/projects/golog-3.png
+  - ../../assets/images/projects/golog-2.png
 techs:
   - Next.js
   - StyledComponents

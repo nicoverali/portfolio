@@ -2,6 +2,8 @@
 import FeaturedProject from "./elements/FeaturedProject/FeaturedProject.astro";
 import { getCollection } from "astro:content";
 import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
+import GridRow from "@components/Grid/GridRow.astro";
+import GridCol from "@components/Grid/GridCol.astro";
 
 const allFeaturedProjects = await getCollection(
   "projects",
@@ -9,26 +11,33 @@ const allFeaturedProjects = await getCollection(
 );
 ---
 
-<astro-work-anim-container>
-  <div class="work">
-    <div class="title">
-      <SectionTitle>Work.</SectionTitle>
-    </div>
-
-    {
-      allFeaturedProjects.map((project, i) => (
-        <div class="project-container">
-          <FeaturedProject
-            project={project}
-            direction={i % 2 == 0 ? "normal" : "reverse"}
-          />
-        </div>
-      ))
-    }
-  </div>
-</astro-work-anim-container>
+<astro-work-container>
+  <GridRow>
+    <GridCol xs={1}>
+      <p class="vertical">Work.</p>
+    </GridCol>
+    <GridCol xs={10}>
+      <div class="projects">
+        <h2>Work.</h2>
+        {
+          allFeaturedProjects.map((project, i) => (
+            <div class="project-container">
+              <FeaturedProject project={project} />
+            </div>
+          ))
+        }
+      </div>
+    </GridCol>
+  </GridRow>
+</astro-work-container>
 
 <style>
+  astro-work-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
   .title {
     position: relative;
     width: 100%;
@@ -36,20 +45,78 @@ const allFeaturedProjects = await getCollection(
     padding-top: var(--spacing-5xl);
   }
 
+  h2 {
+    position: absolute;
+    text-align: center;
+    font-size: var(--font-size-display-xl);
+    font-weight: 500;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .vertical {
+    font-size: var(--font-size-h3);
+    opacity: 0.2;
+    text-align: center;
+    writing-mode: vertical-rl;
+    transform: rotate(-180deg);
+  }
+
+  .projects {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .project-container {
-    margin-bottom: var(--spacing-5xl);
+    visibility: hidden;
+    &:not(:first-of-type) {
+      position: absolute;
+      z-index: 1;
+    }
   }
 </style>
 
 <script>
+  import { vhPercent } from "@scripts/utils/gsap";
   import { gsap } from "gsap";
 
-  class WorkAnimContainer extends HTMLElement {
+  class WorkContainer extends HTMLElement {
     constructor() {
       super();
-      gsap.context(() => {}, this);
+      gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: this,
+            pin: true,
+            start: "center center",
+            end: "+=200%",
+            scrub: 1,
+          },
+        });
+
+        const projects = gsap.utils.toArray<HTMLElement>(".project-container");
+        let angle = -1;
+        projects.forEach((project, i) => {
+          angle = -angle;
+          tl.fromTo(
+            project,
+            {
+              y: () => vhPercent(100),
+            },
+            {
+              visibility: "visible",
+              y: projects.length - i * -8,
+              rotate: gsap.utils.random(1, 3, 0.5) * angle,
+            }
+          );
+        });
+      }, this);
     }
   }
 
-  customElements.define("astro-work-anim-container", WorkAnimContainer);
+  customElements.define("astro-work-container", WorkContainer);
 </script>

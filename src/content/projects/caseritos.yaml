@@ -3,8 +3,12 @@ logoIcon: projects/uns-flights-logo
 short: Homemade meals market
 description: A homemade meals market were users would have seller and buyer roles. Sellers can publish their meals, set its price, stock, description, etc. Buyers can search for published meals and make a purchase.
 repository: https://github.com/nicoverali/caseritos
-featured: false
-screenshots: []
+featured: true
+screenshots:
+  - ../../assets/images/projects/caseritos-1.png
+  - ../../assets/images/projects/caseritos-2.png
+  - ../../assets/images/projects/caseritos-3.png
+  - ../../assets/images/projects/caseritos-4.png
 techs:
   - laravel
   - react
