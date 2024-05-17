@@ -1,20 +1,29 @@
 ---
-
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
 ---
 
 <header>
-  <div class="header-logo">
-    <img src="/media/logo.svg" alt="Nicolás Vera Logo" />
-    <h1><span>Nicolás</span> <span>Vera</span></h1>
-  </div>
+  <Row align="center" grow>
+    <Column justify="start">
+      <Row align="center" spacing="sm">
+        <img src="/media/logo.svg" alt="Nicolás Vera Logo" />
+        <h1><span>Nicolás</span> <span>Vera</span></h1>
+      </Row>
+    </Column>
 
-  <nav>
-    <ul>
-      <li>About me</li>
-      <li>Projects</li>
-      <li>Contact</li>
-    </ul>
-  </nav>
+    <Column>
+      <nav>
+        <ul>
+          <Row spacing="lg" justify="end">
+            <li>About me</li>
+            <li>Projects</li>
+            <li>Contact</li>
+          </Row>
+        </ul>
+      </nav>
+    </Column>
+  </Row>
 </header>
 
 <style>
@@ -22,35 +31,18 @@
     height: var(--el-header-height);
     background-color: var(--color-background);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
-  header nav ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  header nav li {
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
     list-style-type: none;
   }
 
-  header nav li:not(:last-child) {
-    margin-right: var(--spacing-lg);
-  }
-
-  .header-logo {
-    display: flex;
-    align-items: center;
-  }
-
-  .header-logo h1 {
+  h1 {
     font-size: var(--font-size-caption);
     font-weight: 700;
-    margin-left: var(--spacing-sm);
-    color: var(--color-primary);
-
     display: flex;
     flex-direction: column;
   }

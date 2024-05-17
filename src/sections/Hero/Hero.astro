@@ -1,22 +1,20 @@
 ---
-import GridCol from "@components/Grid/GridCol.astro";
-import GridRow from "@components/Grid/GridRow.astro";
 import LinkButton from "@components/LinkButton/LinkButton.astro";
 import HeroImage from "@assets/images/hero.jpg";
 import { Image } from "astro:assets";
+import Row from "@components/Grid/Row.astro";
+import Column from "@components/Grid/Column.astro";
 ---
 
 <astro-hero-anim-container>
   <div class="hero">
-    <GridRow>
-      <GridCol xs={2}>
-        <h1>
-          <span>Analyze.</span>
-          <span>Design.</span>
-          <span>Build.</span>
-        </h1>
-      </GridCol>
-      <GridCol xs={10}>
+    <h1>
+      <span>Analyze.</span>
+      <span>Design.</span>
+      <span>Build.</span>
+    </h1>
+    <Row>
+      <Column size={10} offset={2}>
         <figure>
           <div class="img-container">
             <Image src={HeroImage} alt={"Artistic background"} />
@@ -30,8 +28,8 @@ import { Image } from "astro:assets";
             </LinkButton>
           </figcaption>
         </figure>
-      </GridCol>
-    </GridRow>
+      </Column>
+    </Row>
   </div>
 </astro-hero-anim-container>
 

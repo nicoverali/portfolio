@@ -7,25 +7,42 @@ import Skills from "@sections/Skills/Skills.astro";
 import Work from "@sections/Work/Work.astro";
 import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
+import Container from "@components/Grid/Container.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
   <div class="container">
-    <Hero />
-    <section class="my-name">
-      <MyName />
-    </section>
-    <section class="about-me">
-      <AboutMe />
-    </section>
-    <section class="skills">
-      <Skills />
-    </section>
-    <section class="work">
-      <Work />
-    </section>
-    <OtherProjects />
-    <Contact />
+    <Container>
+      <Hero />
+    </Container>
+    <div class="my-name-fluid">
+      <Container>
+        <section class="my-name">
+          <MyName />
+        </section>
+      </Container>
+    </div>
+    <div class="test">
+      <Container>
+        <section class="about-me">
+          <AboutMe />
+        </section>
+        <section class="skills">
+          <Skills />
+        </section>
+      </Container>
+    </div>
+    <Container>
+      <section class="work">
+        <Work />
+      </section>
+    </Container>
+    <Container>
+      <OtherProjects />
+    </Container>
+    <Container>
+      <Contact />
+    </Container>
   </div>
 </BaseLayout>
 
@@ -36,12 +53,17 @@ import Contact from "@sections/Contact/Contact.astro";
     /* gap: 20vh; */
   }
 
+  .my-name-fluid {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    padding-bottom: var(--spacing-2xl);
+    background-color: var(--color-background);
+  }
+
   section.my-name {
     margin-top: var(--spacing-5xl);
   }
 
   section.about-me {
-    margin-top: var(--spacing-5xl);
   }
 
   section.skills {
@@ -56,4 +78,28 @@ import Contact from "@sections/Contact/Contact.astro";
   .hero {
     margin-bottom: 80px;
   }
+
+  .test {
+    padding-top: var(--spacing-2xl);
+    background-color: #e7e5f7;
+    padding: var(--spacing-5xl) 0;
+  }
 </style>
+
+<script>
+  import { configGsap } from "@scripts/configGsap";
+  import { gsap } from "gsap";
+
+  configGsap();
+
+  gsap.to("body", {
+    backgroundColor: "#e7e5f7",
+    scrollTrigger: {
+      markers: true,
+      trigger: ".test",
+      start: "top bottom+=100",
+      end: "bottom center",
+      toggleActions: "play reverse play reverse",
+    },
+  });
+</script>

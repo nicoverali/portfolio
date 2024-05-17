@@ -1,0 +1,263 @@
+@import "./variables";
+
+.align-xs-start {
+  align-items: start;
+}
+
+.align-xs-center {
+  align-items: center;
+}
+
+.align-xs-end {
+  align-items: end;
+}
+
+.align-xs-baseline {
+  align-items: baseline;
+}
+
+.justify-xs-start {
+  justify-content: start;
+}
+
+.justify-xs-center {
+  justify-content: center;
+}
+
+.justify-xs-end {
+  justify-content: end;
+}
+
+.justify-xs-between {
+  justify-content: space-between;
+}
+
+.justify-xs-around {
+  justify-content: space-around;
+}
+
+.spacing-xs-xs {
+  gap: var(--spacing-xs);
+}
+.spacing-xs-sm {
+  gap: var(--spacing-sm);
+}
+.spacing-xs-md {
+  gap: var(--spacing-md);
+}
+.spacing-xs-lg {
+  gap: var(--spacing-lg);
+}
+.spacing-xs-xl {
+  gap: var(--spacing-xl);
+}
+.spacing-xs-2xl {
+  gap: var(--spacing-2xl);
+}
+.spacing-xs-3xl {
+  gap: var(--spacing-3xl);
+}
+.spacing-xs-4xl {
+  gap: var(--spacing-4xl);
+}
+.spacing-xs-5xl {
+  gap: var(--spacing-5xl);
+}
+
+@media only screen and (min-width: $screen-sm-min) {
+  .align-sm-start {
+    align-items: start;
+  }
+
+  .align-sm-center {
+    align-items: center;
+  }
+
+  .align-sm-end {
+    align-items: end;
+  }
+
+  .align-sm-baseline {
+    align-items: baseline;
+  }
+
+  .justify-sm-start {
+    justify-content: start;
+  }
+
+  .justify-sm-center {
+    justify-content: center;
+  }
+
+  .justify-sm-end {
+    justify-content: end;
+  }
+
+  .justify-sm-between {
+    justify-content: space-between;
+  }
+
+  .justify-sm-around {
+    justify-content: space-around;
+  }
+
+  .spacing-sm-xs {
+    gap: var(--spacing-xs);
+  }
+  .spacing-sm-sm {
+    gap: var(--spacing-sm);
+  }
+  .spacing-sm-md {
+    gap: var(--spacing-md);
+  }
+  .spacing-sm-lg {
+    gap: var(--spacing-lg);
+  }
+  .spacing-sm-xl {
+    gap: var(--spacing-xl);
+  }
+  .spacing-sm-2xl {
+    gap: var(--spacing-2xl);
+  }
+  .spacing-sm-3xl {
+    gap: var(--spacing-3xl);
+  }
+  .spacing-sm-4xl {
+    gap: var(--spacing-4xl);
+  }
+  .spacing-sm-5xl {
+    gap: var(--spacing-5xl);
+  }
+}
+
+@media only screen and (min-width: $screen-md-min) {
+  .align-md-start {
+    align-items: start;
+  }
+
+  .align-md-center {
+    align-items: center;
+  }
+
+  .align-md-end {
+    align-items: end;
+  }
+
+  .align-md-baseline {
+    align-items: baseline;
+  }
+
+  .justify-md-start {
+    justify-content: start;
+  }
+
+  .justify-md-center {
+    justify-content: center;
+  }
+
+  .justify-md-end {
+    justify-content: end;
+  }
+
+  .justify-md-between {
+    justify-content: space-between;
+  }
+
+  .justify-md-around {
+    justify-content: space-around;
+  }
+
+  .spacing-md-xs {
+    gap: var(--spacing-xs);
+  }
+  .spacing-md-sm {
+    gap: var(--spacing-sm);
+  }
+  .spacing-md-md {
+    gap: var(--spacing-md);
+  }
+  .spacing-md-lg {
+    gap: var(--spacing-lg);
+  }
+  .spacing-md-xl {
+    gap: var(--spacing-xl);
+  }
+  .spacing-md-2xl {
+    gap: var(--spacing-2xl);
+  }
+  .spacing-md-3xl {
+    gap: var(--spacing-3xl);
+  }
+  .spacing-md-4xl {
+    gap: var(--spacing-4xl);
+  }
+  .spacing-md-5xl {
+    gap: var(--spacing-5xl);
+  }
+}
+
+@media only screen and (min-width: $screen-lg-min) {
+  .align-lg-start {
+    align-items: start;
+  }
+
+  .align-lg-center {
+    align-items: center;
+  }
+
+  .align-lg-end {
+    align-items: end;
+  }
+
+  .align-lg-baseline {
+    align-items: baseline;
+  }
+
+  .justify-lg-start {
+    justify-content: start;
+  }
+
+  .justify-lg-center {
+    justify-content: center;
+  }
+
+  .justify-lg-end {
+    justify-content: end;
+  }
+
+  .justify-lg-between {
+    justify-content: space-between;
+  }
+
+  .justify-lg-around {
+    justify-content: space-around;
+  }
+
+  .spacing-lg-xs {
+    gap: var(--spacing-xs);
+  }
+  .spacing-lg-sm {
+    gap: var(--spacing-sm);
+  }
+  .spacing-lg-md {
+    gap: var(--spacing-md);
+  }
+  .spacing-lg-lg {
+    gap: var(--spacing-lg);
+  }
+  .spacing-lg-xl {
+    gap: var(--spacing-xl);
+  }
+  .spacing-lg-2xl {
+    gap: var(--spacing-2xl);
+  }
+  .spacing-lg-3xl {
+    gap: var(--spacing-3xl);
+  }
+  .spacing-lg-4xl {
+    gap: var(--spacing-4xl);
+  }
+  .spacing-lg-5xl {
+    gap: var(--spacing-5xl);
+  }
+}

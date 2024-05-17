@@ -1,54 +1,35 @@
 ---
-import GridCol from "@components/Grid/GridCol.astro";
-import GridOffset from "@components/Grid/GridOffset.astro";
-import GridRow from "@components/Grid/GridRow.astro";
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
 ---
 
-<astro-about-me-anim-container>
-  <div class="about-me">
-    <GridRow>
-      <GridOffset xs={4} />
-      <GridCol xs="auto">
-        <div class="text">
-          <p>
-            I am a <span class="highlight">Computer Science graduate</span> with
-            a passion for technology. I have developed a strong foundation in computer
-            science concepts and programming languages, which helps me quickly learn
-            new skills and technologies.
-          </p>
-          <p class="highlight">
-            — I understand the importance of user experience and always strive
-            to create intuitive and enjoyable interfaces for the people using my
-            applications.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
-            quasi veritatis corrupti dicta eaque. Saepe, sequi vel. Magni
-            voluptates quaerat sint dolore? Odio sapiente qui temporibus ab
-            quas, eos beatae?
-          </p>
-        </div>
-      </GridCol>
-      <GridOffset xs={1} />
-    </GridRow>
-  </div>
-</astro-about-me-anim-container>
+<astro-about-me>
+  <Row>
+    <Column size={7} offset={4}>
+      <div class="text">
+        <p>
+          I am a <span class="highlight">Computer Science graduate</span> with a
+          passion for technology. I have developed a strong foundation in computer
+          science concepts and programming languages, which helps me quickly learn
+          new skills and technologies.
+        </p>
+        <p class="highlight">
+          — I understand the importance of user experience and always strive to
+          create intuitive and enjoyable interfaces for the people using my
+          applications.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+          quasi veritatis corrupti dicta eaque. Saepe, sequi vel. Magni
+          voluptates quaerat sint dolore? Odio sapiente qui temporibus ab quas,
+          eos beatae?
+        </p>
+      </div>
+    </Column>
+  </Row>
+</astro-about-me>
 
 <style>
-  .about-me {
-    position: relative;
-  }
-
-  .title {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    margin-bottom: var(--spacing-2xl);
-  }
-
   .text {
     position: relative;
     line-height: 160%;
@@ -71,7 +52,7 @@ import GridRow from "@components/Grid/GridRow.astro";
   import { vhPercent } from "@scripts/utils/gsap";
   import { gsap } from "gsap";
 
-  class AboutMeAnimContainer extends HTMLElement {
+  class AboutMeContainer extends HTMLElement {
     constructor() {
       super();
 
@@ -95,5 +76,5 @@ import GridRow from "@components/Grid/GridRow.astro";
     }
   }
 
-  customElements.define("astro-about-me-anim-container", AboutMeAnimContainer);
+  customElements.define("astro-about-me", AboutMeContainer);
 </script>

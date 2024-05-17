@@ -8,6 +8,7 @@ import "@styles/global.scss";
 import "@styles/lenis.scss";
 import Header from "@components/Header/Header.astro";
 import Footer from "@components/Footer/Footer.astro";
+import Container from "@components/Grid/Container.astro";
 
 const { title } = Astro.props;
 ---
@@ -27,9 +28,13 @@ const { title } = Astro.props;
     />
   </head>
   <body>
-    <Header />
+    <Container>
+      <Header />
+    </Container>
     <slot />
-    <Footer />
+    <Container>
+      <Footer />
+    </Container>
   </body>
 </html>
 

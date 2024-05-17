@@ -1,0 +1,40 @@
+---
+import { getPropertyClasses } from "./utils";
+
+interface Props {
+  class?: string;
+  size?: ColSize | BreakpointProperty<ColSize>;
+  offset?: Offset | BreakpointProperty<Offset>;
+  justify?: Justify | BreakpointProperty<Justify>;
+  align?: Align | BreakpointProperty<Align>;
+  spacing?: Spacing;
+}
+
+const {
+  class: classProp,
+  size,
+  offset,
+  justify,
+  align,
+  spacing,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  classProp,
+  ...getPropertyClasses(size ?? "auto", "col"),
+  ...getPropertyClasses(offset, "offset"),
+  ...getPropertyClasses(align, "align"),
+  ...getPropertyClasses(justify, "justify"),
+  ...getPropertyClasses(spacing, "spacing"),
+];
+---
+
+<style>
+  @import url("./styles/common.scss");
+  @import url("./styles/columns.scss");
+</style>
+
+<div class:list={classes} {...rest}>
+  <slot />
+</div>

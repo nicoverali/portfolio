@@ -1,0 +1,19 @@
+---
+interface Props {
+  class?: string;
+  fluid?: boolean;
+}
+
+const { class: classProp, fluid, ...rest } = Astro.props;
+---
+
+<div
+  class:list={[classProp, fluid ? "container-fluid" : "container"]}
+  {...rest}
+>
+  <slot />
+</div>
+
+<style>
+  @import url("./styles/containers.scss");
+</style>

@@ -1,14 +1,12 @@
 ---
-import GridCol from "@components/Grid/GridCol.astro";
-import GridOffset from "@components/Grid/GridOffset.astro";
-import GridRow from "@components/Grid/GridRow.astro";
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
 import BadgeCertification from "@sections/Skills/elements/BadgeCertification/BadgeCertification.astro";
 ---
 
 <div class="skills-container">
-  <GridRow>
-    <GridOffset xs={3} />
-    <GridCol xs={6}>
+  <Row>
+    <Column size={6} offset={3}>
       <div class="skills">
         <p class="title">SKILLS</p>
         <p class="text">
@@ -19,11 +17,10 @@ import BadgeCertification from "@sections/Skills/elements/BadgeCertification/Bad
           <BadgeCertification>Azure Fundamentals</BadgeCertification>
         </div>
       </div>
-    </GridCol>
-  </GridRow>
-  <GridRow>
-    <GridOffset xs={3} />
-    <GridCol xs={6}>
+    </Column>
+  </Row>
+  <Row>
+    <Column size={6} offset={3}>
       <div class="skill-icons">
         <img src="/media/skills/Docker.svg" />
         <img src="/media/skills/java.svg" />
@@ -36,8 +33,8 @@ import BadgeCertification from "@sections/Skills/elements/BadgeCertification/Bad
         <img src="/media/skills/React.svg" />
         <img src="/media/skills/Typescript.svg" />
       </div>
-    </GridCol>
-  </GridRow>
+    </Column>
+  </Row>
 </div>
 
 <style>
