@@ -1,12 +1,12 @@
-$screen-xs-min: 512px;
+$screen-xs-min: 576px;
 $screen-sm-min: 768px;
-$screen-md-min: 1100px;
-$screen-lg-min: var(--page-max-width);
+$screen-md-min: 992px;
+$screen-lg-min: 1200px;
 $gutter-width: 24px;
 
-$container-sm: $screen-sm-min + $gutter-width;
-$container-md: $screen-md-min + $gutter-width;
-$container-lg: $screen-lg-min + $gutter-width;
+$container-sm: 720px;
+$container-md: 960px;
+$container-lg: 1140px;
 
 $half-gutter-width: $gutter-width * 0.5;
 $outer-margin: 2rem;

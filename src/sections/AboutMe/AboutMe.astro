@@ -5,46 +5,54 @@ import Row from "@components/Grid/Row.astro";
 
 <astro-about-me>
   <Row>
-    <Column size={7} offset={4}>
-      <div class="text">
-        <p>
-          I am a <span class="highlight">Computer Science graduate</span> with a
-          passion for technology. I have developed a strong foundation in computer
-          science concepts and programming languages, which helps me quickly learn
-          new skills and technologies.
-        </p>
-        <p class="highlight">
-          — I understand the importance of user experience and always strive to
-          create intuitive and enjoyable interfaces for the people using my
-          applications.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
-          quasi veritatis corrupti dicta eaque. Saepe, sequi vel. Magni
-          voluptates quaerat sint dolore? Odio sapiente qui temporibus ab quas,
-          eos beatae?
-        </p>
-      </div>
+    <Column size={1} justify="center">
+      <p class="vertical">About.</p>
+    </Column>
+    <Column class="text" size={7} offset={3} spacing="2xl">
+      <p>
+        I am a <span class="highlight">Computer Science graduate</span> with a passion
+        for technology. I have developed a strong foundation in computer science
+        concepts and programming languages, which helps me quickly learn new skills
+        and technologies.
+      </p>
+      <p class="highlight">
+        — I understand the importance of user experience and always strive to
+        create intuitive and enjoyable interfaces for the people using my
+        applications.
+      </p>
+      <!-- <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+        quasi veritatis corrupti dicta eaque. Saepe, sequi vel. Magni voluptates
+        quaerat sint dolore? Odio sapiente qui temporibus ab quas, eos beatae?
+      </p> -->
     </Column>
   </Row>
 </astro-about-me>
 
 <style>
   .text {
-    position: relative;
     line-height: 160%;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
     font-size: var(--font-size-h3);
 
-    /* p {
+    p {
       margin: 0;
-    } */
+    }
 
     .highlight {
+      /* font-size: var(--font-size-h3); */
       font-weight: 600;
     }
+  }
+
+  .vertical {
+    position: sticky;
+    /* top: var(--spacing-3xl); */
+    margin-top: var(--spacing-md);
+    font-size: var(--font-size-h3);
+    opacity: 1;
+    text-align: center;
+    writing-mode: vertical-rl;
+    transform: rotate(-180deg);
   }
 </style>
 

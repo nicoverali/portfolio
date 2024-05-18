@@ -4,58 +4,56 @@ import Row from "@components/Grid/Row.astro";
 import BadgeCertification from "@sections/Skills/elements/BadgeCertification/BadgeCertification.astro";
 ---
 
-<div class="skills-container">
-  <Row>
-    <Column size={6} offset={3}>
-      <div class="skills">
-        <p class="title">SKILLS</p>
-        <p class="text">
-          I feel comfortable working with both backend and frontend technologies
-        </p>
-        <div class="certifications">
-          <BadgeCertification>AWS Cloud Practitioner</BadgeCertification>
-          <BadgeCertification>Azure Fundamentals</BadgeCertification>
+<Row>
+  <Column class="card">
+    <Row justify={"center"}>
+      <Column size={8} spacing="lg" justify="center" align="center">
+        <div class="skills">
+          <p class="title">SKILLS</p>
+          <p class="text">
+            I feel comfortable working with both backend and frontend
+            technologies
+          </p>
+          <div class="certifications">
+            <BadgeCertification>AWS Cloud Practitioner</BadgeCertification>
+            <BadgeCertification>Azure Fundamentals</BadgeCertification>
+          </div>
         </div>
-      </div>
-    </Column>
-  </Row>
-  <Row>
-    <Column size={6} offset={3}>
-      <div class="skill-icons">
-        <img src="/media/skills/Docker.svg" />
-        <img src="/media/skills/java.svg" />
-        <img src="/media/skills/Javascript.svg" />
-        <img src="/media/skills/MongoDb.svg" />
-        <img src="/media/skills/nestjs.svg" />
-        <img src="/media/skills/NextJs.svg" />
-        <img src="/media/skills/NodeJs.svg" />
-        <img src="/media/skills/PostgreSQL.svg" />
-        <img src="/media/skills/React.svg" />
-        <img src="/media/skills/Typescript.svg" />
-      </div>
-    </Column>
-  </Row>
-</div>
+        <div class="skill-icons">
+          <img src="/media/skills/Docker.svg" />
+          <img src="/media/skills/java.svg" />
+          <img src="/media/skills/Javascript.svg" />
+          <img src="/media/skills/MongoDb.svg" />
+          <img src="/media/skills/nestjs.svg" />
+          <img src="/media/skills/NextJs.svg" />
+          <img src="/media/skills/NodeJs.svg" />
+          <img src="/media/skills/PostgreSQL.svg" />
+          <img src="/media/skills/React.svg" />
+          <img src="/media/skills/Typescript.svg" />
+        </div>
+      </Column>
+    </Row>
+  </Column>
+</Row>
 
 <style>
-  .skills-container {
-    width: 100%;
-    padding: var(--spacing-4xl) 0;
+  .card {
+    padding: var(--spacing-4xl);
     border-radius: var(--radius-md);
     /* background: linear-gradient(
       160deg,
       rgba(231, 231, 231, 0.9) 0%,
       rgba(250, 233, 255, 0.8) 100%
     ); */
-    background-color: rgba(224, 244, 255, 0.8);
-    /* border: 1px solid rgba(206, 234, 249, 1); */
+    background-color: var(--color-background);
+    background-image: url(media/dot.svg);
+    background-size: auto;
+    background-position: left top;
+    background-repeat: repeat;
+    border: 1px solid hsl(247, 60%, 85%);
     border-radius: var(--radius-lg);
     /* box-shadow: 0 4px 4px 0 var(--color-shadow); */
     /* color: white; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     p,
     h2,

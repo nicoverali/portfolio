@@ -11,48 +11,41 @@ import Container from "@components/Grid/Container.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <div class="container">
-    <Container>
-      <Hero />
-    </Container>
-    <div class="my-name-fluid">
+  <Container fluid noPadding class="first-section-colored">
+    <Container fluid class="first-section">
       <Container>
+        <Hero />
         <section class="my-name">
           <MyName />
         </section>
       </Container>
-    </div>
-    <div class="test">
-      <Container>
-        <section class="about-me">
-          <AboutMe />
-        </section>
-        <section class="skills">
-          <Skills />
-        </section>
-      </Container>
-    </div>
+    </Container>
+  </Container>
+
+  <div class="second-section">
     <Container>
-      <section class="work">
-        <Work />
+      <section class="about-me">
+        <AboutMe />
+      </section>
+      <section class="skills">
+        <Skills />
       </section>
     </Container>
-    <Container>
-      <OtherProjects />
-    </Container>
-    <Container>
-      <Contact />
-    </Container>
   </div>
+  <Container>
+    <section class="work">
+      <Work />
+    </section>
+  </Container>
+  <Container>
+    <OtherProjects />
+  </Container>
+  <Container>
+    <Contact />
+  </Container>
 </BaseLayout>
 
 <style>
-  .container {
-    display: flex;
-    flex-direction: column;
-    /* gap: 20vh; */
-  }
-
   .my-name-fluid {
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     padding-bottom: var(--spacing-2xl);
@@ -71,7 +64,7 @@ import Container from "@components/Grid/Container.astro";
   }
 
   section.work {
-    margin-top: var(--spacing-5xl);
+    margin-top: var(--spacing-4xl);
     margin-bottom: var(--spacing-5xl);
   }
 
@@ -79,10 +72,21 @@ import Container from "@components/Grid/Container.astro";
     margin-bottom: 80px;
   }
 
-  .test {
-    padding-top: var(--spacing-2xl);
+  .first-section-colored {
     background-color: #e7e5f7;
-    padding: var(--spacing-5xl) 0;
+
+    .first-section {
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+      background-color: var(--color-background);
+      padding-bottom: var(--spacing-4xl);
+    }
+  }
+
+  .second-section {
+    background-color: #e7e5f7;
+    padding-top: var(--spacing-4xl);
+    padding-bottom: var(--spacing-5xl);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
   }
 </style>
 
@@ -92,14 +96,28 @@ import Container from "@components/Grid/Container.astro";
 
   configGsap();
 
-  gsap.to("body", {
-    backgroundColor: "#e7e5f7",
+  const tl = gsap.timeline({
+    defaults: { ease: "none" },
     scrollTrigger: {
-      markers: true,
-      trigger: ".test",
-      start: "top bottom+=100",
+      trigger: ".first-section",
+      start: "bottom bottom",
       end: "bottom center",
-      toggleActions: "play reverse play reverse",
+      scrub: true,
     },
   });
+
+  tl.to(
+    ".first-section-colored",
+    {
+      duration: 0.15,
+      paddingLeft: 24,
+      paddingRight: 24,
+    },
+    0
+  );
+
+  // tl.to(".first-section", {
+  //   duration: 1,
+  //   y: -800,
+  // });
 </script>

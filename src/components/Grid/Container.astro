@@ -2,15 +2,13 @@
 interface Props {
   class?: string;
   fluid?: boolean;
+  noPadding?: boolean;
 }
 
-const { class: classProp, fluid, ...rest } = Astro.props;
+const { class: classProp, fluid, noPadding, ...rest } = Astro.props;
 ---
 
-<div
-  class:list={[classProp, fluid ? "container-fluid" : "container"]}
-  {...rest}
->
+<div class:list={[classProp, "container", { noPadding, fluid }]} {...rest}>
   <slot />
 </div>
 
