@@ -5,9 +5,9 @@ description: A Java/React app for flights reservation
 repository: https://github.com/nicoverali/uns-flights
 featured: true
 screenshots:
+  - ../../assets/images/projects/uns-flights-1.jpeg
   - ../../assets/images/projects/uns-flights-3.jpeg
   - ../../assets/images/projects/uns-flights-2.jpeg
-  - ../../assets/images/projects/uns-flights-1.jpeg
   
 techs:
   - MySQL
