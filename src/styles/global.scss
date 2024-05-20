@@ -1,3 +1,5 @@
+@import "@styles/screens.scss";
+
 :root {
   --page-padding-h: 64px;
   --page-max-width: 1440px;
@@ -38,6 +40,12 @@
 
   --el-header-height: 80px;
   --el-scroll-indicator-width: 48px;
+
+  @media screen and (max-width: $screen-sm-min) {
+    --font-size-display: 48px;
+    --font-size-h4: 18px;
+    --font-size-display-xl: 16px;
+  }
 }
 
 * {

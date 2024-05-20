@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Hero from "@sections/Hero/Hero.astro";
 import MyName from "@sections/MyName/MyName.astro";
 import AboutMe from "@sections/AboutMe/AboutMe.astro";
 import Skills from "@sections/Skills/Skills.astro";
@@ -8,20 +7,16 @@ import Work from "@sections/Work/Work.astro";
 import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
 import Container from "@components/Grid/Container.astro";
+import SectionContainer from "@components/SectionContainer/SectionContainer.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <Container fluid noPadding class="first-section-colored">
-    <Container fluid class="first-section">
-      <Container>
-        <Hero />
-        <section class="my-name">
-          <MyName />
-        </section>
-      </Container>
-    </Container>
-  </Container>
+  <SectionContainer background="#e7e5f7" foreground="var(--color-background)">
+    <MyName />
+  </SectionContainer>
+</BaseLayout>
 
+<!-- 
   <div class="second-section">
     <Container>
       <section class="about-me">
@@ -42,8 +37,7 @@ import Container from "@components/Grid/Container.astro";
   </Container>
   <Container>
     <Contact />
-  </Container>
-</BaseLayout>
+  </Container> -->
 
 <style>
   .my-name-fluid {
@@ -74,12 +68,12 @@ import Container from "@components/Grid/Container.astro";
 
   .first-section-colored {
     background-color: #e7e5f7;
+  }
 
-    .first-section {
-      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-      background-color: var(--color-background);
-      padding-bottom: var(--spacing-4xl);
-    }
+  .first-section {
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    background-color: var(--color-background);
+    padding-bottom: var(--spacing-4xl);
   }
 
   .second-section {
@@ -116,8 +110,8 @@ import Container from "@components/Grid/Container.astro";
     0
   );
 
-  // tl.to(".first-section", {
-  //   duration: 1,
-  //   y: -800,
-  // });
+  tl.to(".first-section", {
+    duration: 1,
+    y: -800,
+  });
 </script>

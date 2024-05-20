@@ -26,6 +26,9 @@ importers:
       astro-icon:
         specifier: ^1.1.0
         version: 1.1.0
+      flexboxgrid:
+        specifier: ^6.3.1
+        version: 6.3.1
       gsap:
         specifier: ^3.12.5
         version: 3.12.5
@@ -1023,6 +1026,9 @@ packages:
   flattie@1.1.1:
     resolution: {integrity: sha512-9UbaD6XdAL97+k/n+N7JwX46K/M6Zc6KcFYskrYL8wbBV/Uyk0CTAMY0VT+qiK5PM7AIc9aTWYtq65U7T+aCNQ==}
     engines: {node: '>=8'}
+
+  flexboxgrid@6.3.1:
+    resolution: {integrity: sha512-OS//6OHK9i3Hy5mLwD49uRYvnZ9fdfSkq7omO5uJPA2CD7JeBuDY7xleqN1h3MGJZNvKUskyNTv0ot0JKvOAsg==}
 
   fs-minipass@2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
@@ -3092,6 +3098,8 @@ snapshots:
       pkg-dir: 4.2.0
 
   flattie@1.1.1: {}
+
+  flexboxgrid@6.3.1: {}
 
   fs-minipass@2.1.0:
     dependencies:

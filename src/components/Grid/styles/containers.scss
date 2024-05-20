@@ -4,6 +4,10 @@
   margin-right: auto;
   margin-left: auto;
 
+  &:not(.fluid) {
+    max-width: $container-lg;
+  }
+
   &.fluid {
     padding-right: $outer-margin;
     padding-left: $outer-margin;
@@ -11,23 +15,5 @@
   &.noPadding {
     padding-right: 0;
     padding-left: 0;
-  }
-}
-
-@media only screen and (min-width: $screen-sm-min) {
-  .container:not(.fluid) {
-    width: $container-sm;
-  }
-}
-
-@media only screen and (min-width: $screen-md-min) {
-  .container:not(.fluid) {
-    width: $container-md;
-  }
-}
-
-@media only screen and (min-width: $screen-lg-min) {
-  .container:not(.fluid) {
-    width: $container-lg;
   }
 }

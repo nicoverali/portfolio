@@ -6,37 +6,60 @@ import { Icon } from "astro-icon/components";
 ---
 
 <astro-my-name>
+  <div class="background"></div>
   <Column spacing="2xl">
     <Column spacing="xl">
       <h1>
-        <span>Hey ! I'm Nicolás Vera</span><br />
+        <span>Hey! 👋 I'm Nicolás&nbsp;Vera</span><br />
+        <span>I'm a Software Developer&nbsp;👨‍💻</span><br />
         <span>I design and develop</span>
         <span>thoughtful solutions</span>
         <span
-          >centered on <span class="highlight">user's experience.</span>—</span
+          >centered on <span class="highlight">user's experience.</span></span
         >
       </h1>
-      <Row class="asterisk-list" spacing="md" align="center">
-        <p>Software Engineer</p>
+      <div class="asterisk-list">
+        <p class="xs-hidden">Software Engineer</p>
         <Icon is:inline={true} name="asterisk" />
         <p>Buenos Aires</p>
         <Icon is:inline={true} name="asterisk" />
         <p>Argentina</p>
-      </Row>
+      </div>
     </Column>
-    <Row class="buttons" spacing="md">
+    <Row class="buttons" spacing="md" justify="center">
       <Button href="">Download CV</Button>
       <Button href="" outline>Contact me</Button>
     </Row>
   </Column>
 </astro-my-name>
 
-<style>
+<style lang="scss">
+  @import "@styles/screens.scss";
+
+  .background {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("media/hero.jpg");
+    background-size: cover;
+    filter: blur(40px);
+    opacity: 0.1;
+  }
+
   h1 {
-    text-align: start;
+    text-align: center;
     font-size: var(--font-size-display);
+    line-height: 120%;
     font-weight: 600;
     margin: 0;
+    margin-top: var(--spacing-xl);
+
+    @media screen and (max-width: $screen-sm-min) {
+      // text-align: start;
+    }
 
     .highlight {
       color: var(--color-secondary);
@@ -44,7 +67,19 @@ import { Icon } from "astro-icon/components";
   }
 
   .asterisk-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
     font-size: var(--font-size-h4);
+    flex-wrap: wrap;
+
+    @media screen and (max-width: $screen-sm-min) {
+      > *:first-of-type {
+        display: none;
+      }
+    }
 
     p {
       margin: 0;
@@ -65,8 +100,8 @@ import { Icon } from "astro-icon/components";
     constructor() {
       super();
       gsap.context(() => {
-        this.getShowSectionAnim(75);
-        this.getTextHighlightAnim(50, 70);
+        // this.getShowSectionAnim(0);
+        this.getTextHighlightAnim(30, 70);
       }, this);
     }
 
@@ -92,7 +127,7 @@ import { Icon } from "astro-icon/components";
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "h1",
-          start: () => "top " + vhPercent(startPercent),
+          start: "top top+=160",
           end: "bottom " + vhPercent(endPercent),
           scrub: 0.5,
           invalidateOnRefresh: true,
@@ -105,7 +140,7 @@ import { Icon } from "astro-icon/components";
         const ease = i === all.length - 1 ? "power4.out" : "slow(0.3, 0, true)";
         tl.fromTo(
           span,
-          { opacity: 0.2, filter: "grayscale(1)" },
+          { opacity: 0.05, filter: "grayscale(1)" },
           { ease, duration: 1, opacity: 1, filter: "grayscale(0)" },
           ">-=0.3"
         );

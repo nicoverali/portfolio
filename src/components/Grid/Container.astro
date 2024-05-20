@@ -1,17 +1,23 @@
 ---
-interface Props {
-  class?: string;
-  fluid?: boolean;
-  noPadding?: boolean;
-}
 
-const { class: classProp, fluid, noPadding, ...rest } = Astro.props;
 ---
 
-<div class:list={[classProp, "container", { noPadding, fluid }]} {...rest}>
+<div>
   <slot />
 </div>
 
-<style>
-  @import url("./styles/containers.scss");
+<style lang="scss">
+  @import "@styles/screens.scss";
+
+  div {
+    padding: 0 var(--spacing-lg);
+
+    @media screen and (max-width: $screen-sm-min) {
+      padding: 0 var(--spacing-md);
+    }
+
+    @media screen and (min-width: 1440px) {
+      max-width: var(--page-max-width);
+    }
+  }
 </style>
