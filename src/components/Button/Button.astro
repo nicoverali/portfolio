@@ -12,10 +12,10 @@ const { href, size = "text", outline } = Astro.props;
 
 <a href={href} class:list={[{ caption: size === "caption", outline }]}>
   <slot />
-  <Icon is:inline={true} name="up-right" class="icon" />
+  <Icon name="up-right" class="icon" />
 </a>
 
-<style>
+<style lang="scss">
   a {
     padding: var(--spacing-md);
     background-color: var(--color-text);
@@ -35,18 +35,15 @@ const { href, size = "text", outline } = Astro.props;
       background-color: transparent;
       border: 1px solid var(--color-text);
 
-      svg path {
-        fill: var(--color-text);
+      svg {
+        --svg-fill: var(--color-text);
       }
     }
 
     svg {
       width: var(--font-size-text);
       height: var(--font-size-text);
-
-      path {
-        fill: var(--color-background);
-      }
+      --svg-fill: var(--color-background);
     }
 
     &.caption {
