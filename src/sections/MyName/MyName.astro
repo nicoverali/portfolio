@@ -50,6 +50,7 @@ import { Icon } from "astro-icon/components";
   }
 
   h1 {
+    will-change: opacity;
     text-align: center;
     font-size: var(--font-size-display);
     line-height: 120%;
@@ -58,7 +59,7 @@ import { Icon } from "astro-icon/components";
     margin-top: var(--spacing-xl);
 
     @media screen and (max-width: $screen-sm-min) {
-      // text-align: start;
+      text-align: start;
     }
 
     .highlight {
@@ -127,7 +128,7 @@ import { Icon } from "astro-icon/components";
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "h1",
-          start: "top top+=160",
+          start: "top top+=80",
           end: "bottom " + vhPercent(endPercent),
           scrub: 0.5,
           invalidateOnRefresh: true,
@@ -135,16 +136,48 @@ import { Icon } from "astro-icon/components";
       });
 
       const spans = gsap.utils.toArray<HTMLElement>("h1 > span");
+      const first = spans[0];
+      const last = spans[spans.length - 1];
+      const middle = spans.slice(1, -1);
 
-      spans.map((span, i, all) => {
-        const ease = i === all.length - 1 ? "power4.out" : "slow(0.3, 0, true)";
+      tl.to(first, {
+        ease: "power4.out",
+        duration: 0.3,
+        opacity: 0.05,
+        // filter: "grayscale(1)",
+      });
+
+      middle.map((span) => {
         tl.fromTo(
           span,
-          { opacity: 0.05, filter: "grayscale(1)" },
-          { ease, duration: 1, opacity: 1, filter: "grayscale(0)" },
+          {
+            opacity: 0.05,
+            // filter: "grayscale(1)",
+          },
+          {
+            ease: "slow(0.3, 0, true)",
+            duration: 1,
+            opacity: 1,
+            // filter: "grayscale(0)",
+          },
           ">-=0.3"
         );
       });
+
+      tl.fromTo(
+        last,
+        {
+          opacity: 0.05,
+          // filter: "grayscale(1)",
+        },
+        {
+          ease: "power4.out",
+          duration: 1,
+          opacity: 1,
+          // filter: "grayscale(0)",
+        },
+        ">-=0.3"
+      );
     }
   }
 

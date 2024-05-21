@@ -11,8 +11,26 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <SectionContainer background="#e7e5f7" foreground="var(--color-background)">
-    <MyName />
+  <SectionContainer
+    class="my-name"
+    background="#e7e5f7"
+    foreground="var(--color-background)"
+  >
+    <Container>
+      <MyName />
+    </Container>
+  </SectionContainer>
+  <SectionContainer
+    class="about-me"
+    background="var(--color-background)"
+    foreground="#e7e5f7"
+  >
+    <Container class="about-me-container">
+      <AboutMe />
+      <div class="skills-container">
+        <Skills />
+      </div>
+    </Container>
   </SectionContainer>
 </BaseLayout>
 
@@ -39,15 +57,13 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
     <Contact />
   </Container> -->
 
-<style>
+<style lang="scss">
+  @import "@styles/screens.scss";
+
   .my-name-fluid {
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     padding-bottom: var(--spacing-2xl);
     background-color: var(--color-background);
-  }
-
-  section.my-name {
-    margin-top: var(--spacing-5xl);
   }
 
   section.about-me {
@@ -66,21 +82,36 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
     margin-bottom: 80px;
   }
 
-  .first-section-colored {
-    background-color: #e7e5f7;
-  }
-
-  .first-section {
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    background-color: var(--color-background);
-    padding-bottom: var(--spacing-4xl);
-  }
-
-  .second-section {
-    background-color: #e7e5f7;
+  .my-name {
+    will-change: transform;
     padding-top: var(--spacing-4xl);
     padding-bottom: var(--spacing-5xl);
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+
+    @media screen and (max-width: $screen-sm-min) {
+      padding-top: var(--spacing-xl);
+      padding-bottom: var(--spacing-4xl);
+    }
+  }
+
+  .about-me {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-5xl);
+
+    .about-me-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-2xl);
+    }
+
+    .skills-container {
+      max-width: 90%;
+    }
+
+    @media screen and (max-width: $screen-sm-min) {
+      padding-top: 0;
+      padding-bottom: var(--spacing-3xl);
+    }
   }
 </style>
 
@@ -93,25 +124,23 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
   const tl = gsap.timeline({
     defaults: { ease: "none" },
     scrollTrigger: {
-      trigger: ".first-section",
-      start: "bottom bottom",
-      end: "bottom center",
-      scrub: true,
+      trigger: ".my-name",
+      start: "bottom bottom+=50",
+      end: "bottom top",
+      scrub: 1,
     },
   });
 
-  tl.to(
-    ".first-section-colored",
-    {
-      duration: 0.15,
-      paddingLeft: 24,
-      paddingRight: 24,
-    },
-    0
-  );
+  tl.to(".my-name", { duration: 0.2, scale: 0.9 }, 0);
+  tl.to(".my-name", { duration: 1, y: -300 }, 0);
 
-  tl.to(".first-section", {
-    duration: 1,
-    y: -800,
+  gsap.from(".skills-container", {
+    scale: 0.9,
+    scrollTrigger: {
+      trigger: ".skills-container",
+      start: "top bottom",
+      end: "top center",
+      scrub: true,
+    },
   });
 </script>

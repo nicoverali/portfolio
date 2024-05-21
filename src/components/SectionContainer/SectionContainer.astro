@@ -1,19 +1,20 @@
 ---
-import Container from "@components/Grid/Container.astro";
-
 interface Props {
+  class?: string;
   background: string;
   foreground: string;
 }
 
-const { background, foreground } = Astro.props;
+const { background, foreground, class: className, ...rest } = Astro.props;
 ---
 
 <div class="background" style={{ backgroundColor: background }}>
-  <div class="foreground" style={{ backgroundColor: foreground }}>
-    <Container>
-      <slot />
-    </Container>
+  <div
+    class:list={["foreground", className]}
+    style={{ backgroundColor: foreground }}
+    {...rest}
+  >
+    <slot />
   </div>
 </div>
 
@@ -25,6 +26,5 @@ const { background, foreground } = Astro.props;
 
   .foreground {
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    padding-bottom: var(--spacing-2xl);
   }
 </style>
