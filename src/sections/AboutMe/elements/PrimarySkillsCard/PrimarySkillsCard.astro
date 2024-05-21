@@ -1,0 +1,27 @@
+---
+import GridCard from "../GridCard/GridCard.astro";
+import TechBox from "../TechBox/TechBox.astro";
+---
+
+<GridCard>
+  <p slot="header">
+    My primary skills are <span>React</span>, <span>Typescript</span> and <span
+      >Java</span
+    >
+  </p>
+  <div class="skills" slot="content-fluid">
+    <TechBox name="skills/React" />
+    <TechBox name="skills/Java" />
+    <TechBox name="skills/Typescript" />
+  </div>
+</GridCard>
+
+<style lang="scss">
+  .skills {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-2xl);
+  }
+</style>

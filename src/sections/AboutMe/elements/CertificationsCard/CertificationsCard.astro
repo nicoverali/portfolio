@@ -1,0 +1,58 @@
+---
+import { Icon } from "astro-icon/components";
+import GridCard from "../GridCard/GridCard.astro";
+import SmallTechBox from "../SmallTechBox/SmallTechBox.astro";
+---
+
+<GridCard>
+  <p slot="header">Cloud certified, pursuing advanced certs.</p>
+  <div class="icons" slot="content-fluid">
+    <Icon name="cloud" />
+    <div class="tech-container">
+      <div class="aws">
+        <SmallTechBox name="skills/AWS" displayName="Cloud Practitioner" />
+      </div>
+      <div class="azure">
+        <SmallTechBox name="skills/Azure" displayName="Fundamentals" />
+      </div>
+    </div>
+  </div>
+</GridCard>
+
+<style lang="scss">
+  .icons {
+    position: relative;
+    flex: 1;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  [data-icon="cloud"] {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    bottom: 0;
+    right: 0;
+  }
+
+  .tech-container {
+    width: 100%;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    *:first-child {
+      margin-left: var(--spacing-2xl);
+    }
+
+    *:last-child {
+      margin-right: var(--spacing-2xl);
+    }
+  }
+</style>

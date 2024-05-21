@@ -27,9 +27,6 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
   >
     <Container class="about-me-container">
       <AboutMe />
-      <div class="skills-container">
-        <Skills />
-      </div>
     </Container>
   </SectionContainer>
 </BaseLayout>
@@ -133,14 +130,4 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
 
   tl.to(".my-name", { duration: 0.2, scale: 0.9 }, 0);
   tl.to(".my-name", { duration: 1, y: -300 }, 0);
-
-  gsap.from(".skills-container", {
-    scale: 0.9,
-    scrollTrigger: {
-      trigger: ".skills-container",
-      start: "top bottom",
-      end: "top center",
-      scrub: true,
-    },
-  });
 </script>

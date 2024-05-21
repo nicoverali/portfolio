@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  displayName?: string;
+}
+const { name, displayName } = Astro.props;
+---
+
+<div>
+  <Icon name={name} />
+  <p>{displayName ?? name}</p>
+</div>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background-color: #fafafa;
+    border: 1px solid #f1f1f1;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    height: 24px;
+  }
+
+  p {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-light);
+  }
+</style>

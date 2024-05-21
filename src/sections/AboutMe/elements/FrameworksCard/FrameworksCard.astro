@@ -1,0 +1,78 @@
+---
+import { Icon } from "astro-icon/components";
+import GridCard from "../GridCard/GridCard.astro";
+import TechBox from "../TechBox/TechBox.astro";
+import SmallTechBox from "../SmallTechBox/SmallTechBox.astro";
+
+const rows = [
+  {
+    NextJs: "Next.js",
+    NestJs: "Nest.js",
+    Tailwind: "Tailwind",
+    Spring: "Spring",
+  },
+  {
+    Astro: "Astro",
+    Swagger: "Swagger",
+    Github: "Github",
+    Postman: "Postman",
+    Docker: "Docker",
+  },
+  {
+    Python: "Python",
+    Go: "Go",
+    Oracle: "OracleDB",
+    MongoDb: "Mongo",
+    PostgreSQL: "PostgreSQL",
+  },
+] as const;
+
+// "NextJs", done
+//   "NestJs", done
+//   "MongoDb", doen
+//   "PostgreSQL", done
+//   "Python", doen
+//   "Go", done
+//   //   "StyledComponents",
+//   "Tailwind", deon
+//   "Astro", deon
+//   "Oracle",done
+//   "Swagger", doen
+//   "Github",
+//   "Postman",
+//   "Docker",
+//   "Spring",
+---
+
+<GridCard>
+  <p slot="header">Familiar with various tools, frameworks, and databases.</p>
+  <div class="icons" slot="content-fluid">
+    {
+      rows.map((row) => (
+        <div class="list">
+          {Object.entries(row).map(([key, display]) => (
+            <SmallTechBox name={`skills/${key}`} displayName={display} />
+          ))}
+        </div>
+      ))
+    }
+  </div>
+
+  <style>
+    .icons {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      overflow: hidden;
+      padding: var(--spacing-lg) 0;
+      /* width: 100%; */
+    }
+    .list {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      gap: var(--spacing-sm);
+    }
+  </style>
+</GridCard>

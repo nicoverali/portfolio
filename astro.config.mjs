@@ -5,5 +5,11 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [icon({ iconDir: "src/assets/icons" }), react()],
+  integrations: [
+    icon({
+      iconDir: "src/assets/icons",
+      svgoOptions: { plugins: ["prefixIds"] },
+    }),
+    react(),
+  ],
 });

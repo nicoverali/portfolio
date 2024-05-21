@@ -1,6 +1,12 @@
 ---
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
+import PrimarySkillsCard from "./elements/PrimarySkillsCard/PrimarySkillsCard.astro";
+import CertificationsCard from "./elements/CertificationsCard/CertificationsCard.astro";
+import FrameworksCard from "./elements/FrameworksCard/FrameworksCard.astro";
+import DockerCard from "./elements/DockerCard/DockerCard.astro";
+import FigmaCard from "./elements/FigmaCard/FigmaCard.astro";
+import HomeAssistantCard from "./elements/HomeAssistantCard/HomeAssistantCard.astro";
 ---
 
 <astro-about-me>
@@ -8,29 +14,55 @@ import Row from "@components/Grid/Row.astro";
     <div class="col-xs-1">
       <p class="vertical">About.</p>
     </div>
-    <div class="text col-xs col-xs-offset-1 col-sm-7 col-sm-offset-3">
+    <div class="text col-xs-offset-1 col-sm-offset-3 col-sm-7">
       <p>
-        I am a <span class="highlight">Computer Science graduate</span> with a passion
-        for technology. I have developed a strong foundation in computer science
-        concepts and programming languages, which helps me quickly learn new skills
-        and technologies.
+        I am a <span class="highlight">Computer Science graduate</span> with a deep
+        passion for technology. My solid foundation in computer science principles
+        and programming languages allows me to quickly adapt to new tools and technologies.
       </p>
       <p class="highlight">
-        — I understand the importance of user experience and always strive to
-        create intuitive and enjoyable interfaces for the people using my
-        applications.
+        — I prioritize user experience, consistently striving to design
+        intuitive and enjoyable interfaces that enhance the user journey.
       </p>
-      <!-- <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
-        quasi veritatis corrupti dicta eaque. Saepe, sequi vel. Magni voluptates
-        quaerat sint dolore? Odio sapiente qui temporibus ab quas, eos beatae?
-      </p> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-offset-1 col-xs">
+      <p class="subtitle">A few more things...</p>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="col-xs-offset-1 col-xs-4">
+        <PrimarySkillsCard />
+      </div>
+      <div class="col-xs-4">
+        <FrameworksCard />
+      </div>
+      <div class="col-xs-3">
+        <CertificationsCard />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-offset-1 col-xs-3">
+        <DockerCard />
+      </div>
+      <div class="col-xs-3">
+        <FigmaCard />
+      </div>
+      <div class="col-xs-5">
+        <HomeAssistantCard />
+      </div>
     </div>
   </div>
 </astro-about-me>
 
 <style lang="scss">
   @import "@styles/screens.scss";
+
+  astro-about-me {
+    width: 100%;
+  }
 
   .text {
     display: flex;
@@ -63,6 +95,19 @@ import Row from "@components/Grid/Row.astro";
     text-align: center;
     writing-mode: vertical-rl;
     transform: rotate(-180deg);
+  }
+
+  .subtitle {
+    margin-top: var(--spacing-5xl);
+    margin-bottom: var(--spacing-3xl);
+    font-size: var(--font-size-display);
+    font-weight: 500;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
   }
 </style>
 

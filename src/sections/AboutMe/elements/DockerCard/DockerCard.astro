@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon/components";
+import GridCard from "../GridCard/GridCard.astro";
+---
+
+<GridCard>
+  <p slot="header">I love containers for development</p>
+  <div slot="content-fluid" class="docker">
+    <Icon name="docker/whale" class="whale" />
+    <Icon name="docker/waves" class="waves" />
+    <div class="sea"></div>
+  </div>
+</GridCard>
+
+<style>
+  div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 100px;
+  }
+
+  .whale {
+    position: absolute;
+    right: 30px;
+    top: -60px;
+    width: 120px;
+    height: 120px;
+    z-index: 1;
+  }
+
+  .waves {
+    /* margin-top: 100px; */
+    z-index: 1;
+  }
+
+  .sea {
+    margin-top: -1px; /*Fixes gap between waves and sea*/
+    width: 100%;
+    flex: 1;
+    background-color: #3a4d54;
+    z-index: 1;
+  }
+</style>

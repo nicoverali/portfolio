@@ -1,0 +1,30 @@
+---
+import { Icon } from "astro-icon/components";
+import GridCard from "../GridCard/GridCard.astro";
+---
+
+<GridCard>
+  <p slot="header">I've spent a lot of time on this app</p>
+  <div slot="content-fluid">
+    <Icon is:inline={true} name="skills/Figma" />
+  </div>
+</GridCard>
+
+<style>
+  div {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  svg {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    width: 180px;
+    height: 180px;
+  }
+</style>
