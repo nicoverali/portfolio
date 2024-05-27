@@ -3,19 +3,10 @@
 :root {
   --page-padding-h: 64px;
   --page-max-width: 1440px;
-  --color-background: #ffffff;
-  --color-primary: #19aec8;
-  --color-secondary: rgb(214, 122, 177);
-  --color-primary-light: #40acbf;
-  --color-primary-lightest: #d4f2f7;
-  --color-light-border: #dddddd;
+  --color-background: #FCF8F1;
+  --color-primary: #104542;
+  --color-secondary: #F0565B;
   --color-text: #171b1c;
-  --color-text-light: #616a6b;
-  --color-text-lighter: #d7dadb;
-  --color-text-background: #f6f6f6;
-  --color-github: #181616;
-  --color-linkedin: #0076b2;
-  --color-shadow: #edf6f7;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -27,26 +18,24 @@
   --spacing-5xl: 256px;
   --font-size-caption: 12px;
   --font-size-text-small: 14px;
-  --font-size-text: 16px;
-  --font-size-h1: 48px;
-  --font-size-h3: 30px;
-  --font-size-h4: 24px;
-  --font-size-display: 96px;
-  --font-size-display-xl: 200px;
+  --font-size-text: 20px;
+  --font-size-h1: 61px;
+  --font-size-h2: 41px;
+  --font-size-h3: 31px;
+  --font-size-h4: 25px;
   --radius-sm: 4px;
   --radius-md: 10px;
   --radius-lg: 20px;
   --radius-xl: 40px;
 
   --el-header-height: 80px;
-  --el-scroll-indicator-width: 48px;
 
-  @media screen and (max-width: $screen-sm-min) {
-    --font-size-display: 48px;
-    --font-size-h3: 20px;
-    --font-size-h4: 18px;
-    --font-size-display-xl: 16px;
-  }
+  // @media screen and (max-width: $screen-sm-min) {
+  //   --font-size-display: 48px;
+  //   --font-size-h3: 20px;
+  //   --font-size-h4: 18px;
+  //   --font-size-display-xl: 16px;
+  // }
 }
 
 * {
@@ -73,6 +62,6 @@ body {
   margin: auto;
 }
 
-p {
+h1,h2,h3,h4,h5,p {
   margin: 0;
 }
