@@ -1,0 +1,27 @@
+---
+import Arrow from "@components/Arrow/Arrow.astro";
+---
+
+<div>
+  <div class="arrow-container">
+    <Arrow width={48} />
+  </div>
+</div>
+
+<style>
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    background-color: var(--color-paper-on-background);
+  }
+
+  .arrow-container {
+    transform: rotate(90deg);
+  }
+</style>
+
+<script></script>

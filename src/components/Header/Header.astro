@@ -1,28 +1,33 @@
 ---
-
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
+import Nav from "@components/Nav/Nav.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <header>
-  <div class="logo">
-    <img src="/media/logo.svg" alt="Nicolás Vera Logo" />
-    <h1><span>Nicolás</span> <span>Vera</span></h1>
-  </div>
+  <Row>
+    <Column size={1}>
+      <Icon name="logo" />
+    </Column>
+    <Column size={10} align="center">
+      <Nav />
+    </Column>
+  </Row>
 </header>
 
 <style>
   header {
+    width: 100%;
     height: var(--el-header-height);
     display: flex;
     flex-direction: row;
-    justify-content: start;
     align-items: center;
   }
 
-  .logo {
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-sm);
-    align-items: center;
+  [data-icon="logo"] {
+    width: 48px;
+    height: 48px;
   }
 
   h1 {

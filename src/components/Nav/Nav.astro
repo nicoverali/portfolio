@@ -1,0 +1,39 @@
+---
+
+---
+
+<nav>
+  <ul>
+    <li class="selected">Home</li>
+    <li>About</li>
+    <li>Work</li>
+    <li>Contact</li>
+  </ul>
+</nav>
+
+<style lang="scss">
+  nav {
+    border-radius: var(--radius-xl);
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: var(--spacing-xs);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  li {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-text-small);
+    border-radius: var(--radius-xl);
+
+    &.selected {
+      background-color: var(--color-text-on-background);
+      color: var(--color-background);
+    }
+  }
+</style>

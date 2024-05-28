@@ -8,18 +8,13 @@ import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
 import Container from "@components/Grid/Container.astro";
 import SectionContainer from "@components/SectionContainer/SectionContainer.astro";
+import Hero from "@sections/Hero/Hero.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <SectionContainer
-    class="my-name"
-    background="#e7e5f7"
-    foreground="var(--color-background)"
-  >
-    <Container>
-      <MyName />
-    </Container>
-  </SectionContainer>
+  <Container class="hero">
+    <Hero />
+  </Container>
   <SectionContainer
     class="about-me"
     background="var(--color-background)"
@@ -56,7 +51,6 @@ import SectionContainer from "@components/SectionContainer/SectionContainer.astr
 
 <style lang="scss">
   @import "@styles/screens.scss";
-
   .my-name-fluid {
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     padding-bottom: var(--spacing-2xl);

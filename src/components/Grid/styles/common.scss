@@ -36,34 +36,6 @@
   justify-content: space-around;
 }
 
-.spacing-xs-xs {
-  gap: var(--spacing-xs);
-}
-.spacing-xs-sm {
-  gap: var(--spacing-sm);
-}
-.spacing-xs-md {
-  gap: var(--spacing-md);
-}
-.spacing-xs-lg {
-  gap: var(--spacing-lg);
-}
-.spacing-xs-xl {
-  gap: var(--spacing-xl);
-}
-.spacing-xs-2xl {
-  gap: var(--spacing-2xl);
-}
-.spacing-xs-3xl {
-  gap: var(--spacing-3xl);
-}
-.spacing-xs-4xl {
-  gap: var(--spacing-4xl);
-}
-.spacing-xs-5xl {
-  gap: var(--spacing-5xl);
-}
-
 @media only screen and (min-width: $screen-sm-min) {
   .align-sm-start {
     align-items: start;
@@ -99,34 +71,6 @@
 
   .justify-sm-around {
     justify-content: space-around;
-  }
-
-  .spacing-sm-xs {
-    gap: var(--spacing-xs);
-  }
-  .spacing-sm-sm {
-    gap: var(--spacing-sm);
-  }
-  .spacing-sm-md {
-    gap: var(--spacing-md);
-  }
-  .spacing-sm-lg {
-    gap: var(--spacing-lg);
-  }
-  .spacing-sm-xl {
-    gap: var(--spacing-xl);
-  }
-  .spacing-sm-2xl {
-    gap: var(--spacing-2xl);
-  }
-  .spacing-sm-3xl {
-    gap: var(--spacing-3xl);
-  }
-  .spacing-sm-4xl {
-    gap: var(--spacing-4xl);
-  }
-  .spacing-sm-5xl {
-    gap: var(--spacing-5xl);
   }
 }
 
@@ -166,34 +110,6 @@
   .justify-md-around {
     justify-content: space-around;
   }
-
-  .spacing-md-xs {
-    gap: var(--spacing-xs);
-  }
-  .spacing-md-sm {
-    gap: var(--spacing-sm);
-  }
-  .spacing-md-md {
-    gap: var(--spacing-md);
-  }
-  .spacing-md-lg {
-    gap: var(--spacing-lg);
-  }
-  .spacing-md-xl {
-    gap: var(--spacing-xl);
-  }
-  .spacing-md-2xl {
-    gap: var(--spacing-2xl);
-  }
-  .spacing-md-3xl {
-    gap: var(--spacing-3xl);
-  }
-  .spacing-md-4xl {
-    gap: var(--spacing-4xl);
-  }
-  .spacing-md-5xl {
-    gap: var(--spacing-5xl);
-  }
 }
 
 @media only screen and (min-width: $screen-lg-min) {
@@ -231,33 +147,5 @@
 
   .justify-lg-around {
     justify-content: space-around;
-  }
-
-  .spacing-lg-xs {
-    gap: var(--spacing-xs);
-  }
-  .spacing-lg-sm {
-    gap: var(--spacing-sm);
-  }
-  .spacing-lg-md {
-    gap: var(--spacing-md);
-  }
-  .spacing-lg-lg {
-    gap: var(--spacing-lg);
-  }
-  .spacing-lg-xl {
-    gap: var(--spacing-xl);
-  }
-  .spacing-lg-2xl {
-    gap: var(--spacing-2xl);
-  }
-  .spacing-lg-3xl {
-    gap: var(--spacing-3xl);
-  }
-  .spacing-lg-4xl {
-    gap: var(--spacing-4xl);
-  }
-  .spacing-lg-5xl {
-    gap: var(--spacing-5xl);
   }
 }

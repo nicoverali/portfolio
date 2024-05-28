@@ -18,7 +18,7 @@ const { href, size = "text", outline } = Astro.props;
 <style lang="scss">
   a {
     padding: var(--spacing-md);
-    background-color: var(--color-text);
+    background-color: var(--color-text-on-background);
     color: var(--color-background);
     border-radius: var(--radius-sm);
     font-size: var(--font-size-text);
@@ -31,12 +31,12 @@ const { href, size = "text", outline } = Astro.props;
     }
 
     &.outline {
-      color: var(--color-text);
+      color: var(--color-text-on-background);
       background-color: transparent;
-      border: 1px solid var(--color-text);
+      border: 1px solid var(--color-text-on-background);
 
       svg {
-        --svg-fill: var(--color-text);
+        --svg-fill: var(--color-text-on-background);
       }
     }
 

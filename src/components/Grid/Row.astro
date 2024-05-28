@@ -28,7 +28,22 @@ const classes = [
   <slot />
 </div>
 
-<style>
-  @import url("./styles/common.scss");
-  @import url("./styles/rows.scss");
+<style lang="scss">
+  @import "./styles/common.scss";
+  @import "../../styles/variables.scss";
+
+  .row {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: - calc($col-gutter / 2);
+    margin-right: - calc($col-gutter / 2);
+
+    &.grow {
+      flex-grow: 1;
+    }
+  }
 </style>

@@ -3,10 +3,13 @@
 :root {
   --page-padding-h: 64px;
   --page-max-width: 1440px;
-  --color-background: #FCF8F1;
+  --color-background: #fcf8f1;
   --color-primary: #104542;
-  --color-secondary: #F0565B;
-  --color-text: #171b1c;
+  --color-secondary: #f0565b;
+  --color-text-on-background: #393734;
+  --color-text-on-primary: #fcf8f1;
+  --color-text-on-secondary: #fcf8f1;
+  --color-paper-on-background: #fffdfa;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -17,7 +20,7 @@
   --spacing-4xl: 128px;
   --spacing-5xl: 256px;
   --font-size-caption: 12px;
-  --font-size-text-small: 14px;
+  --font-size-text-small: 16px;
   --font-size-text: 20px;
   --font-size-h1: 61px;
   --font-size-h2: 41px;
@@ -41,7 +44,7 @@
 * {
   font-family: "Poppins", Arial;
   box-sizing: border-box;
-  color: var(--color-text);
+  color: var(--color-text-on-background);
 }
 
 figure {
@@ -62,6 +65,17 @@ body {
   margin: auto;
 }
 
-h1,h2,h3,h4,h5,p {
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
   margin: 0;
 }

@@ -1,0 +1,132 @@
+---
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
+import { Image } from "astro:assets";
+import ProfileImage from "@assets/images/profile-pic.jpeg";
+import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astro";
+---
+
+<div class="container">
+  <Row align="center">
+    <Column size={10} offset={1} align="center">
+      <div class="location">
+        <p>Buenos Aires - Argentina</p>
+        <div class="arrow"></div>
+        <p class="time">00:00 AM</p>
+      </div>
+
+      <h1>
+        Hi, I'm Nicolás <Image
+          src={ProfileImage}
+          alt={"Profile picture of Nicolás Vera"}
+        />, a Software Developer focused on delivering user-centered solutions.
+      </h1>
+
+      <h2>
+        I'm a computer science graduate with a deep passion for technology and a
+        solid foundation in computer science principles
+      </h2>
+    </Column>
+  </Row>
+  <Row grow align="center">
+    <Column align="center">
+      <ScrollDownButton />
+    </Column>
+  </Row>
+</div>
+
+<style lang="scss">
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100svh - var(--el-header-height));
+    padding-top: var(--spacing-4xl);
+  }
+
+  .location {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+
+  h1 {
+    font-size: var(--font-size-h1);
+    font-weight: 600;
+    text-align: center;
+    margin-top: var(--spacing-xl);
+
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 100%;
+      vertical-align: baseline;
+      position: relative;
+      top: 10px;
+    }
+  }
+
+  h2 {
+    margin-top: var(--spacing-2xl);
+    font-size: var(--font-size-h4);
+    text-align: center;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  .arrow {
+    position: relative;
+    background-color: var(--color-text-on-background);
+    width: 48px;
+    height: 2px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -0.5px;
+      background-color: var(--color-text-on-background);
+      height: 2px;
+      width: 12px;
+      transform-origin: center right;
+      transform: rotate(45deg);
+      border-radius: 2px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0.5px;
+      background-color: var(--color-text-on-background);
+      height: 2px;
+      width: 12px;
+      transform-origin: center right;
+      transform: rotate(-45deg);
+      border-radius: 2px;
+    }
+  }
+</style>
+
+<script>
+  function getArgentinaTime() {
+    let formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Argentina/Buenos_Aires",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+    let formattedTime = formatter.format(new Date());
+
+    return formattedTime;
+  }
+
+  const timeEl = document.getElementsByClassName("time")[0];
+
+  setInterval(() => {
+    const newTime = getArgentinaTime();
+    timeEl.textContent = timeEl.textContent?.includes(":")
+      ? newTime.replaceAll(":", " ")
+      : newTime;
+  }, 1000);
+</script>

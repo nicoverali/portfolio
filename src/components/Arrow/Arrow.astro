@@ -1,0 +1,49 @@
+---
+interface Props {
+  width?: number;
+  weight?: number;
+}
+
+const { width, weight } = Astro.props;
+---
+
+<div style={{ "--width": `${width ?? 48}px`, "--weight": `${weight ?? 2}px` }}>
+</div>
+
+<style lang="scss">
+  div {
+    --width: 48px;
+    --weight: 2px;
+
+    position: relative;
+    background-color: var(--color-text-on-background);
+    width: var(--width);
+    height: var(--weight);
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -0.5px;
+      background-color: var(--color-text-on-background);
+      height: var(--weight);
+      width: 12px;
+      transform-origin: center right;
+      transform: rotate(45deg);
+      border-radius: 2px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0.5px;
+      background-color: var(--color-text-on-background);
+      height: var(--weight);
+      width: 12px;
+      transform-origin: center right;
+      transform: rotate(-45deg);
+      border-radius: 2px;
+    }
+  }
+</style>
