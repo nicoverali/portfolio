@@ -107,10 +107,10 @@ import Hero from "@sections/Hero/Hero.astro";
 </style>
 
 <script>
-  import { configGsap } from "@scripts/configGsap";
+  import { setupGSAP } from "@scripts/gsap";
   import { gsap } from "gsap";
 
-  configGsap();
+  setupGSAP();
 
   const tl = gsap.timeline({
     defaults: { ease: "none" },

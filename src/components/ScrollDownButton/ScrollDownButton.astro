@@ -1,15 +1,18 @@
 ---
 import Arrow from "@components/Arrow/Arrow.astro";
+import Gooey from "@components/Gooey/Gooey.astro";
 ---
 
-<div>
-  <div class="arrow-container">
-    <Arrow width={48} />
+<Gooey triggerPadding={24} debugId="scroll-down-button">
+  <div class="container">
+    <div class="arrow-container">
+      <Arrow width={48} />
+    </div>
   </div>
-</div>
+</Gooey>
 
 <style>
-  div {
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,6 +20,7 @@ import Arrow from "@components/Arrow/Arrow.astro";
     height: 120px;
     border-radius: 100%;
     background-color: var(--color-paper-on-background);
+    /* background-color: red; */
   }
 
   .arrow-container {

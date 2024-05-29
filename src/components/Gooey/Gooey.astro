@@ -1,0 +1,51 @@
+---
+import {
+  GOOEY_CLASS_NAME,
+  GOOEY_ATTR_PADDING,
+  GOOEY_ATTR_DEBUG_ID,
+} from "./scripts/attributes";
+
+interface Props {
+  debugId: string;
+  triggerPadding: number;
+}
+
+const { triggerPadding, debugId } = Astro.props;
+
+const gooeyAttrs: { [k: string]: any } = {};
+gooeyAttrs[`data-${GOOEY_ATTR_PADDING}`] = triggerPadding;
+gooeyAttrs[`data-${GOOEY_ATTR_DEBUG_ID}`] = debugId;
+---
+
+<div class={GOOEY_CLASS_NAME} {...gooeyAttrs}>
+  <slot />
+</div>
+
+<style lang="scss">
+  // .gooey-container {
+  //     filter: url('data:image/svg+xml,\
+  //     <svg xmlns="http://www.w3.org/2000/svg" version="1.1">\
+  //     <defs>\
+  //       <filter id="goo">\
+  //         <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />\
+  //         <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />\
+  //         <feBlend in="SourceGraphic" in2="goo" />\
+  //       </filter>\
+  //     </defs>\
+  //   </svg>#goo');
+  //   }
+
+  .gooey-container {
+    // border: 1px solid black;
+    filter: url('data:image/svg+xml,\
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">\
+    <defs>\
+      <filter id="goo">\
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />\
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -11" result="goo" />\
+        <feBlend in="SourceGraphic" in2="goo" />\
+      </filter>\
+    </defs>\
+  </svg>#goo');
+  }
+</style>

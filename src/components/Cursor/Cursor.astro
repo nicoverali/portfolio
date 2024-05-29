@@ -1,0 +1,87 @@
+---
+
+---
+
+<div id="cursor"></div>
+
+<style>
+  div {
+    /* display: none; */
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    background-color: var(--color-secondary);
+    height: 24px;
+    width: 24px;
+    border-radius: 100%;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import VirtualCursor from "./scripts/VirtualCursor";
+  import { onScroll } from "@scripts/scroll";
+
+  class Cursor {
+    private static GOOEY_CLASSNAME = ".gooey-container";
+
+    private cursor: HTMLElement;
+
+    private cursorShowTween = gsap.from("#cursor", {
+      ease: "bounce.out",
+      scale: 0,
+      paused: true,
+    });
+
+    private cursorDownTween = gsap.to("#cursor", {
+      scale: 0.7,
+      paused: true,
+      overwrite: true,
+    });
+
+    private cursorUpTween = gsap.to("#cursor", {
+      scale: 1,
+      paused: true,
+      overwrite: true,
+    });
+
+    constructor(cursor: HTMLElement) {
+      this.cursor = cursor;
+
+      document.addEventListener("mouseup", () => {
+        this.cursorUpTween.play();
+        this.cursorUpTween.restart();
+      });
+
+      document.addEventListener("mousedown", () => {
+        this.cursorDownTween.play();
+        this.cursorDownTween.restart();
+      });
+
+      document.addEventListener(
+        "mousemove",
+        () => {
+          this.cursor.style.display = "initial";
+          this.cursorShowTween.play();
+        },
+        { once: true }
+      );
+    }
+  }
+
+  const cursorEl = document.getElementById("cursor");
+  if (cursorEl) {
+    new Cursor(cursorEl);
+    const virtualCursor = new VirtualCursor(cursorEl);
+
+    onScroll((scroll) => {
+      virtualCursor.updateScroll(scroll);
+      virtualCursor.update();
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      virtualCursor.updateActualCursor(e.x, e.y);
+      virtualCursor.update();
+    });
+  }
+</script>

@@ -10,6 +10,7 @@ import "@styles/lenis.scss";
 import Header from "@components/Header/Header.astro";
 import Footer from "@components/Footer/Footer.astro";
 import Container from "@components/Grid/Container.astro";
+import Cursor from "@components/Cursor/Cursor.astro";
 
 const { title } = Astro.props;
 ---
@@ -29,6 +30,7 @@ const { title } = Astro.props;
     />
   </head>
   <body>
+    <Cursor />
     <Container class="header">
       <Header />
     </Container>
@@ -40,6 +42,10 @@ const { title } = Astro.props;
 </html>
 
 <style>
+  :global(body) {
+    cursor: none;
+  }
+
   .header {
     position: sticky;
     top: 0;
@@ -48,9 +54,9 @@ const { title } = Astro.props;
 </style>
 
 <script>
-  import { configGsap } from "@scripts/configGsap";
-  import { configLenis } from "@scripts/configLenis";
+  import { setupGSAP } from "@scripts/gsap";
+  import { setupLenis } from "@scripts/scroll";
 
-  configGsap();
-  configLenis();
+  setupGSAP();
+  setupLenis();
 </script>
