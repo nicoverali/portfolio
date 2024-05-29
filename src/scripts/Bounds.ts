@@ -45,7 +45,7 @@ export default class Bounds {
     rectElement.style.width = `${width}px`;
     rectElement.style.height = `${height}px`;
     rectElement.style.border = `2px solid ${color}`;
-    // rectElement.style.backgroundColor = backgroundColor;
+    rectElement.style.pointerEvents = "none";
 
     if (label) {
       const labelElement = id
@@ -60,6 +60,7 @@ export default class Bounds {
       labelElement.style.color = color;
       labelElement.style.fontSize = "12px";
       labelElement.textContent = label;
+      rectElement.style.pointerEvents = "none";
       document.body.appendChild(labelElement);
     }
 

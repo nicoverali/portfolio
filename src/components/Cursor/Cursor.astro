@@ -21,10 +21,10 @@
   import { gsap } from "gsap";
   import VirtualCursor from "./scripts/VirtualCursor";
   import { onScroll } from "@scripts/scroll";
+  import { GOOEY_CLASS_NAME } from "@components/Gooey/scripts/attributes";
+  import GooeyContainer from "@components/Gooey/scripts/GooeyContainer";
 
   class Cursor {
-    private static GOOEY_CLASSNAME = ".gooey-container";
-
     private cursor: HTMLElement;
 
     private cursorShowTween = gsap.from("#cursor", {
@@ -70,18 +70,19 @@
   }
 
   const cursorEl = document.getElementById("cursor");
+  const gooeyContainers = Array.from(
+    document.getElementsByClassName(GOOEY_CLASS_NAME)
+  ).map((el) => new GooeyContainer(el as HTMLElement, { debug: true }));
   if (cursorEl) {
     new Cursor(cursorEl);
-    const virtualCursor = new VirtualCursor(cursorEl);
+    const virtualCursor = new VirtualCursor(cursorEl, gooeyContainers);
 
     onScroll((scroll) => {
       virtualCursor.updateScroll(scroll);
-      virtualCursor.update();
     });
 
     document.addEventListener("mousemove", (e) => {
-      virtualCursor.updateActualCursor(e.x, e.y);
-      virtualCursor.update();
+      virtualCursor.updateRealCursor(e.x, e.y);
     });
   }
 </script>

@@ -3,77 +3,90 @@ import Bounds from "@scripts/Bounds";
 import GooeyContainer from "@components/Gooey/scripts/GooeyContainer";
 
 export default class VirtualCursor {
-  private cursor: Element;
-  private actualCursorX: number = 0;
-  private actualCursorY: number = 0;
+  private cursor: HTMLElement;
+  private realCursorX: number = 0;
+  private realCursorY: number = 0;
   private currentScroll: Scroll = { top: 0, left: 0 };
   private gooeyContainers: Array<GooeyContainer>;
+  private currentContainer?: GooeyContainer;
 
-  constructor(cursorEl: Element, gooeyContainers?: Array<GooeyContainer>) {
+  constructor(cursorEl: HTMLElement, gooeyContainers?: Array<GooeyContainer>) {
     this.cursor = cursorEl;
     this.gooeyContainers = gooeyContainers || [];
   }
 
-  updateActualCursor(x: number, y: number) {
-    this.actualCursorX = x;
-    this.actualCursorY = y;
+  updateRealCursor(x: number, y: number) {
+    this.realCursorX = x;
+    this.realCursorY = y;
+    this.updateVirtualCursor();
   }
 
   updateScroll(scroll: Scroll) {
     this.currentScroll = scroll;
+    this.updateVirtualCursor();
   }
 
-  update() {
+  private updateVirtualCursor() {
     this.updateCursorContainer();
     this.updateCursorPosition();
   }
 
   private updateCursorContainer() {
-    const gooeyContainerEl =
-      document.querySelector<HTMLElement>(".gooey-container");
-    if (!gooeyContainerEl) return;
-
-    const gooeyContainer = new GooeyContainer(gooeyContainerEl, {
-      debug: true,
-    });
-    const gooeyBounds = gooeyContainer
-      .getTriggerBoundsInViewport()
-      .adjustByScroll(this.currentScroll);
-    const cursorBounds = this.getActualCursorBoundsInViewport().adjustByScroll(
-      this.currentScroll
-    );
-
-    cursorBounds.draw({ id: "DEBUG-cursor" });
-
-    if (gooeyBounds.intersects(cursorBounds)) {
-      if (this.cursor.parentNode !== gooeyContainerEl) {
-        gooeyContainerEl.appendChild(this.cursor);
-      }
-    } else {
-      if (this.cursor.parentNode !== document.body) {
-        document.body.appendChild(this.cursor);
-      }
+    if (this.stillIntersectsContainer()) {
+      return;
     }
+
+    const cursorBounds = this.getRealCursorBoundsInViewport();
+    for (const container of this.gooeyContainers) {
+      const gooeyBounds = container.getTriggerBoundsInViewport();
+
+      if (!gooeyBounds.intersects(cursorBounds)) continue;
+
+      container.appendChild(this.cursor);
+      this.currentContainer = container;
+      return;
+    }
+
+    this.currentContainer = undefined;
+    document.body.appendChild(this.cursor);
+  }
+
+  private stillIntersectsContainer(): boolean {
+    return (
+      this.currentContainer
+        ?.getTriggerBoundsInViewport()
+        .intersects(this.getRealCursorBoundsInViewport()) ?? false
+    );
   }
 
   private updateCursorPosition() {
-    const actualCursorBounds = this.getActualCursorBoundsInViewport();
-    const offset = this.cursor.parentElement?.getBoundingClientRect();
-    const offsetX = Math.max(offset?.left, 0);
-    const offsetY = Math.max(offset?.top, 0);
+    const realCursorBounds = this.getRealCursorBoundsInViewport();
+    const realCursorTop = realCursorBounds.getTop();
+    const realCursorLeft = realCursorBounds.getLeft();
 
-    const cursorLeft = actualCursorBounds.getLeft() - offsetX;
-    const cursorTop = actualCursorBounds.getTop() - offsetY;
-    this.cursor.style.left = cursorLeft + "px";
-    this.cursor.style.top = cursorTop + "px";
+    realCursorBounds
+      .adjustByScroll(this.currentScroll)
+      .draw({ id: "DEBUG-cursor" });
+
+    if (this.currentContainer == null) {
+      this.cursor.style.position = "fixed";
+      this.cursor.style.left = realCursorLeft + "px";
+      this.cursor.style.top = realCursorTop + "px";
+      return;
+    }
+
+    const containerBounds = this.currentContainer.getContentBoundsInViewport();
+    this.cursor.style.position = "absolute";
+    this.cursor.style.left = realCursorLeft - containerBounds.getLeft() + "px";
+    this.cursor.style.top = realCursorTop - containerBounds.getTop() + "px";
   }
 
-  private getActualCursorBoundsInViewport(): Bounds {
+  private getRealCursorBoundsInViewport(): Bounds {
     return new Bounds({
-      bottom: this.actualCursorY + this.cursor.clientHeight / 2,
-      top: this.actualCursorY - this.cursor.clientHeight / 2,
-      left: this.actualCursorX - this.cursor.clientWidth / 2,
-      right: this.actualCursorX + this.cursor.clientWidth / 2,
+      bottom: this.realCursorY + this.cursor.clientHeight / 2,
+      top: this.realCursorY - this.cursor.clientHeight / 2,
+      left: this.realCursorX - this.cursor.clientWidth / 2,
+      right: this.realCursorX + this.cursor.clientWidth / 2,
     });
   }
 }
