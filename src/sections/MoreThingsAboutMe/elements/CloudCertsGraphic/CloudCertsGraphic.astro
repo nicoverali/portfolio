@@ -1,0 +1,51 @@
+---
+import { Icon } from "astro-icon/components";
+import SmallSkillBox from "../SmallSkillBox/SmallSkillBox.astro";
+---
+
+<div class="icons">
+  <Icon name="cloud" />
+  <div class="tech-container">
+    <div class="aws">
+      <SmallSkillBox name="skills/AWS" displayName="Cloud Practitioner" />
+    </div>
+    <div class="azure">
+      <SmallSkillBox name="skills/Azure" displayName="Fundamentals" />
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .icons {
+    position: relative;
+    height: 100%;
+  }
+
+  [data-icon="cloud"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tech-container {
+    width: 100%;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    *:first-child {
+      margin-left: var(--spacing-2xl);
+    }
+
+    *:last-child {
+      margin-right: var(--spacing-2xl);
+    }
+  }
+</style>

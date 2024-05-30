@@ -30,7 +30,6 @@ const classes = [
 
 <style lang="scss">
   @import "./styles/common.scss";
-  @import "../../styles/variables.scss";
 
   .row {
     box-sizing: border-box;
@@ -39,8 +38,8 @@ const classes = [
     flex: 0 1 auto;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-left: - calc($col-gutter / 2);
-    margin-right: - calc($col-gutter / 2);
+    margin-left: calc(var(--col-gutter, 24px) / 2 * -1);
+    margin-right: calc(var(--col-gutter, 24px) / 2 * -1);
 
     &.grow {
       flex-grow: 1;

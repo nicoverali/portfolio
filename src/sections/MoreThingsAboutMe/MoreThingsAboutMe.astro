@@ -1,0 +1,67 @@
+---
+import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
+import GridCard from "./elements/GridCard/GridCard.astro";
+import MainSkillsGraphic from "./elements/MainSkillsGraphic/MainSkillsGraphic.astro";
+import AllSkillsGraphic from "./elements/AllSkillsGraphic/AllSkillsGraphic.astro";
+import CloudCertsGraphic from "./elements/CloudCertsGraphic/CloudCertsGraphic.astro";
+import DockerGraphic from "./elements/DockerGraphic/DockerGraphic.astro";
+import FigmaGraphic from "./elements/FigmaGraphic/FigmaGraphic.astro";
+import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantGraphic.astro";
+---
+
+<div>
+  <SectionTitle>A few more things about me</SectionTitle>
+
+  <div class="cards-grid">
+    <GridCard gridArea="main-sk">
+      <MainSkillsGraphic slot="content" />
+      <p slot="description">My primary skills are React, Typescript and Java</p>
+    </GridCard>
+    <GridCard gridArea="all-sk">
+      <AllSkillsGraphic slot="content" />
+      <p slot="description">
+        I've worked with various tools, frameworks and databases
+      </p>
+    </GridCard>
+    <GridCard gridArea="cloud">
+      <CloudCertsGraphic slot="content" />
+      <div slot="description">
+        <p>I'm cloud certified</p>
+        <p class="sub-description">Pursuing advanced certs</p>
+      </div>
+    </GridCard>
+    <GridCard gridArea="docker">
+      <DockerGraphic slot="content" />
+      <p slot="description">I love to use containers for development</p>
+    </GridCard>
+    <GridCard gridArea="figma">
+      <FigmaGraphic slot="content" />
+      <p slot="description">I use Figma to design my apps</p>
+    </GridCard>
+    <GridCard gridArea="ha">
+      <HomeAssistantGraphic slot="content" />
+      <p slot="description">I’ve smartify my house with Home Assistant</p>
+    </GridCard>
+  </div>
+</div>
+
+<style lang="scss">
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-row: 1fr 1fr;
+    grid-template-areas:
+      "main-sk main-sk main-sk main-sk all-sk all-sk all-sk all-sk all-sk cloud cloud cloud"
+      "docker  docker  docker  figma  figma  figma  figma  ha     ha     ha    ha    ha";
+
+    grid-column-gap: var(--col-gutter, 24px);
+    column-gap: var(--col-gutter, 24px);
+    grid-row-gap: var(--col-gutter, 24px);
+    row-gap: var(--col-gutter, 24px);
+  }
+
+  .sub-description {
+    font-size: var(--font-size-caption);
+    opacity: 0.6;
+  }
+</style>

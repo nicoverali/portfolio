@@ -1,6 +1,7 @@
 @import "@styles/screens.scss";
 
 :root {
+  --page-col-gutter: 24px;
   --page-padding-h: 64px;
   --page-max-width: 1440px;
   --color-background: #fcf8f1;
@@ -9,6 +10,7 @@
   --color-text-on-background: #393734;
   --color-text-on-primary: #fcf8f1;
   --color-text-on-secondary: #fcf8f1;
+  --color-text-on-paper: #393734;
   --color-paper-on-background: #fffdfa;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
