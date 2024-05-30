@@ -46,6 +46,7 @@ export default class Bounds {
     rectElement.style.height = `${height}px`;
     rectElement.style.border = `2px solid ${color}`;
     rectElement.style.pointerEvents = "none";
+    rectElement.style.zIndex = "99999999999";
 
     if (label) {
       const labelElement = id

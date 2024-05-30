@@ -36,6 +36,7 @@ export default class VirtualCursor {
       return;
     }
 
+    this.currentContainer?.setActive(false);
     const cursorBounds = this.getRealCursorBoundsInViewport();
     for (const container of this.gooeyContainers) {
       const gooeyBounds = container.getTriggerBoundsInViewport();
@@ -43,6 +44,7 @@ export default class VirtualCursor {
       if (!gooeyBounds.intersects(cursorBounds)) continue;
 
       container.appendChild(this.cursor);
+      container.setActive(true);
       this.currentContainer = container;
       return;
     }
@@ -63,10 +65,6 @@ export default class VirtualCursor {
     const realCursorBounds = this.getRealCursorBoundsInViewport();
     const realCursorTop = realCursorBounds.getTop();
     const realCursorLeft = realCursorBounds.getLeft();
-
-    realCursorBounds
-      .adjustByScroll(this.currentScroll)
-      .draw({ id: "DEBUG-cursor" });
 
     if (this.currentContainer == null) {
       this.cursor.style.position = "fixed";

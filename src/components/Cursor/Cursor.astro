@@ -72,7 +72,7 @@
   const cursorEl = document.getElementById("cursor");
   const gooeyContainers = Array.from(
     document.getElementsByClassName(GOOEY_CLASS_NAME)
-  ).map((el) => new GooeyContainer(el as HTMLElement, { debug: true }));
+  ).map((el) => new GooeyContainer(el as HTMLElement));
   if (cursorEl) {
     new Cursor(cursorEl);
     const virtualCursor = new VirtualCursor(cursorEl, gooeyContainers);
