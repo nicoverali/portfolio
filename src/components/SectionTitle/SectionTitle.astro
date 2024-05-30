@@ -1,70 +1,21 @@
 ---
-
+import Arrow from "@components/Arrow/Arrow.astro";
 ---
 
-<astro-section-title-anim-container>
-  <h2>
-    <slot />
-  </h2>
-  <div class="line"></div>
-</astro-section-title-anim-container>
+<h2>
+  <slot />
+  <div>
+    <Arrow width={16} angle={45} />
+  </div>
+</h2>
 
 <style>
-  astro-section-title-anim-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
   h2 {
-    font-size: var(--font-size-display-xl);
+    font-size: var(--font-size-text);
     font-weight: 400;
-    color: var(--color-text-on-background);
-    margin: 0;
   }
 
-  /* .line {
-    flex: 1;
-    border-bottom: 1px solid var(--color-text-on-background);
-  } */
+  div {
+    margin-top: var(--spacing-lg);
+  }
 </style>
-
-<script>
-  import { vhPercent } from "@scripts/utils/gsap";
-  import { gsap } from "gsap";
-
-  class SectionTitleAnimContainer extends HTMLElement {
-    constructor() {
-      super();
-
-      gsap.context(() => {
-        gsap.from("h2", {
-          ease: "expo.inOut",
-          duration: 0.4,
-          x: -20,
-          opacity: 0,
-          scrollTrigger: {
-            trigger: "h2",
-            start: "top " + vhPercent(40),
-            toggleActions: "play none none reverse",
-          },
-        });
-
-        gsap.from(".line", {
-          ease: "expo.inOut",
-          duration: 0.4,
-          opacity: 0,
-          scrollTrigger: {
-            trigger: "h2",
-            start: "top " + vhPercent(40),
-            toggleActions: "play none none reverse",
-          },
-        });
-      }, this);
-    }
-  }
-
-  customElements.define(
-    "astro-section-title-anim-container",
-    SectionTitleAnimContainer
-  );
-</script>

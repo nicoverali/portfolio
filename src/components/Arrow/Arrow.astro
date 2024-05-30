@@ -1,49 +1,59 @@
 ---
+import type { CSSProperty } from "astro/types";
+
 interface Props {
   width?: number;
   weight?: number;
+  angle?: number;
 }
 
-const { width, weight } = Astro.props;
+const { width = 48, weight = 2, angle = 0 } = Astro.props;
 ---
 
-<div style={{ "--width": `${width ?? 48}px`, "--weight": `${weight ?? 2}px` }}>
-</div>
+<div></div>
 
-<style lang="scss">
+<style
+  lang="scss"
+  define:vars={{
+    width: `${width}px`,
+    weight: `${weight}px`,
+    angle: `${angle}deg`,
+  }}
+>
   div {
     --width: 48px;
     --weight: 2px;
 
     position: relative;
-    background-color: var(--color-text-on-background);
+    background-color: currentColor;
     width: var(--width);
     height: var(--weight);
+    transform: rotate(var(--angle));
 
     &::after {
       content: "";
       position: absolute;
       right: 0;
-      bottom: -0.5px;
-      background-color: var(--color-text-on-background);
+      top: 50%;
+      background-color: currentColor;
       height: var(--weight);
       width: 12px;
       transform-origin: center right;
-      transform: rotate(45deg);
-      border-radius: 2px;
+      transform: translateY(-20%) translateX(1px) rotate(45deg);
+      border-radius: var(--weight);
     }
 
     &::before {
       content: "";
       position: absolute;
-      right: 0;
-      bottom: 0.5px;
-      background-color: var(--color-text-on-background);
+      right: 0px;
+      top: 50%;
+      background-color: currentColor;
       height: var(--weight);
       width: 12px;
       transform-origin: center right;
-      transform: rotate(-45deg);
-      border-radius: 2px;
+      transform: translateY(-80%) translateX(1px) rotate(-45deg);
+      border-radius: var(--weight);
     }
   }
 </style>

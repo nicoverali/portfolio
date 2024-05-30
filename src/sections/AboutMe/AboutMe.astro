@@ -1,60 +1,19 @@
 ---
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
-import PrimarySkillsCard from "./elements/PrimarySkillsCard/PrimarySkillsCard.astro";
-import CertificationsCard from "./elements/CertificationsCard/CertificationsCard.astro";
-import FrameworksCard from "./elements/FrameworksCard/FrameworksCard.astro";
-import DockerCard from "./elements/DockerCard/DockerCard.astro";
-import FigmaCard from "./elements/FigmaCard/FigmaCard.astro";
-import HomeAssistantCard from "./elements/HomeAssistantCard/HomeAssistantCard.astro";
+import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
+import { Content as AboutMeContent } from "@content/others/about-me.md";
 ---
 
 <astro-about-me>
-  <div class="row middle-xs">
-    <div class="col-xs-1">
-      <p class="vertical">About.</p>
-    </div>
-    <div class="text col-xs-offset-1 col-sm-offset-3 col-sm-7">
-      <p>
-        I am a <span class="highlight">Computer Science graduate</span> with a deep
-        passion for technology. My solid foundation in computer science principles
-        and programming languages allows me to quickly adapt to new tools and technologies.
-      </p>
-      <p class="highlight">
-        — I prioritize user experience, consistently striving to design
-        intuitive and enjoyable interfaces that enhance the user journey.
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-offset-1 col-xs">
-      <p class="subtitle">A few more things...</p>
-    </div>
-  </div>
-  <div class="grid">
-    <div class="row">
-      <div class="col-xs-offset-1 col-xs-4">
-        <PrimarySkillsCard />
-      </div>
-      <div class="col-xs-4">
-        <FrameworksCard />
-      </div>
-      <div class="col-xs-3">
-        <CertificationsCard />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-offset-1 col-xs-3">
-        <DockerCard />
-      </div>
-      <div class="col-xs-3">
-        <FigmaCard />
-      </div>
-      <div class="col-xs-5">
-        <HomeAssistantCard />
-      </div>
-    </div>
-  </div>
+  <Row>
+    <Column size={3}>
+      <SectionTitle> About me </SectionTitle>
+    </Column>
+    <Column size={8} class="about-me-content">
+      <AboutMeContent />
+    </Column>
+  </Row>
 </astro-about-me>
 
 <style lang="scss">
@@ -64,50 +23,22 @@ import HomeAssistantCard from "./elements/HomeAssistantCard/HomeAssistantCard.as
     width: 100%;
   }
 
-  .text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-    line-height: 160%;
-    font-size: var(--font-size-h3);
+  .about-me-content {
+    margin-top: -12px; // Visual tweak
 
-    @media screen and (max-width: $screen-sm-min) {
-      font-size: var(--font-size-h4);
+    :global(p) {
+      font-size: var(--font-size-h2);
+      font-weight: 400;
+      line-height: 150%;
+
+      &:not(:last-child) {
+        margin-bottom: var(--spacing-2xl);
+      }
+
+      &.highlight {
+        font-weight: 600;
+      }
     }
-
-    p {
-      margin: 0;
-    }
-
-    .highlight {
-      font-size: var(--font-size-h3);
-      font-weight: 600;
-    }
-  }
-
-  .vertical {
-    color: #cac6e6;
-    position: sticky;
-    /* top: var(--spacing-3xl); */
-    margin: 0;
-    font-size: var(--font-size-h3);
-    opacity: 1;
-    text-align: center;
-    writing-mode: vertical-rl;
-    transform: rotate(-180deg);
-  }
-
-  .subtitle {
-    margin-top: var(--spacing-5xl);
-    margin-bottom: var(--spacing-3xl);
-    font-size: var(--font-size-display);
-    font-weight: 500;
-  }
-
-  .grid {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
   }
 </style>
 
@@ -120,19 +51,30 @@ import HomeAssistantCard from "./elements/HomeAssistantCard/HomeAssistantCard.as
       super();
 
       gsap.context(() => {
-        const paragraphs = gsap.utils.toArray<HTMLElement>(".text > *");
-        for (const p of paragraphs) {
-          gsap.from(p, {
-            ease: "expo.inOut",
-            duration: 0.4,
-            x: 30,
-            opacity: 0,
-            scrollTrigger: {
-              trigger: p,
-              start: "top " + vhPercent(70),
-              toggleActions: "play none none reverse",
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".about-me-content",
+            scrub: true,
+            start: "top " + vhPercent(90),
+            end: "bottom " + vhPercent(50),
+          },
+        });
+
+        const splits = gsap.utils.toArray<HTMLElement>(
+          ".about-me-content .anim-split"
+        );
+        for (const split of splits) {
+          tl.fromTo(
+            split,
+            {
+              opacity: 0.4,
             },
-          });
+            {
+              ease: "expo.inOut",
+              duration: 0.4,
+              opacity: 1,
+            }
+          );
         }
       }, this);
     }

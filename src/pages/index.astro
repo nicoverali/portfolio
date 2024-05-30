@@ -7,23 +7,29 @@ import Work from "@sections/Work/Work.astro";
 import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
 import Container from "@components/Grid/Container.astro";
-import SectionContainer from "@components/SectionContainer/SectionContainer.astro";
 import Hero from "@sections/Hero/Hero.astro";
+import CardSection from "@components/CardSection/CardSection.astro";
+import Experience from "@sections/Experience/Experience.astro";
+import Button from "@components/Button/Button.astro";
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
   <Container class="hero">
     <Hero />
   </Container>
-  <SectionContainer
-    class="about-me"
-    background="var(--color-background)"
-    foreground="#e7e5f7"
-  >
+  <CardSection background="var(--color-primary)">
     <Container class="about-me-container">
       <AboutMe />
+      <Experience />
+      <Row>
+        <Column offset={3} align="start">
+          <Button href="" color="onPrimary">Download CV</Button>
+        </Column>
+      </Row>
     </Container>
-  </SectionContainer>
+  </CardSection>
 </BaseLayout>
 
 <!-- 
@@ -57,7 +63,9 @@ import Hero from "@sections/Hero/Hero.astro";
     background-color: var(--color-background);
   }
 
-  section.about-me {
+  .about-me-container {
+    padding: var(--spacing-4xl);
+    color: var(--color-text-on-primary);
   }
 
   section.skills {

@@ -1,0 +1,60 @@
+---
+import Button from "@components/Button/Button.astro";
+import Column from "@components/Grid/Column.astro";
+import Row from "@components/Grid/Row.astro";
+import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
+import { getCollection } from "astro:content";
+
+const allExperienceItems = await getCollection("experience");
+---
+
+<Row>
+  <Column size={3}><SectionTitle>Experience</SectionTitle></Column>
+  <Column class="experience-list">
+    {
+      allExperienceItems.map((experience) => (
+        <Fragment>
+          <div class="line" />
+          <p class="company">{experience.data.company}</p>
+          <p class="job-title">{experience.data.jobTitle}</p>
+          <p class="dates">
+            {experience.data.from} - {experience.data.to}
+          </p>
+        </Fragment>
+      ))
+    }
+  </Column>
+</Row>
+
+<style lang="scss">
+  .experience-list {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: auto 1fr auto;
+    grid-column-gap: var(--spacing-xl);
+    column-gap: var(--spacing-xl);
+    align-items: baseline;
+  }
+
+  .line {
+    grid-column: 1 / -1;
+    width: 100%;
+    border-bottom: 1px solid currentColor;
+    margin-bottom: var(--spacing-lg);
+
+    &:not(:first-child) {
+      margin-top: var(--spacing-2xl);
+    }
+  }
+
+  .company,
+  .dates {
+    font-size: var(--font-size-text);
+    font-weight: 400;
+  }
+
+  .job-title {
+    font-size: var(--font-size-h3);
+    font-weight: 400;
+  }
+</style>

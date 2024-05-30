@@ -2,17 +2,19 @@
 interface Props {
   href: string;
   outline?: boolean;
+  color?: "onPrimary" | "onBackground";
   size?: "text" | "caption";
 }
 
+import Arrow from "@components/Arrow/Arrow.astro";
 import { Icon } from "astro-icon/components";
 
-const { href, size = "text", outline } = Astro.props;
+const { href, size = "text", color = "onBackground", outline } = Astro.props;
 ---
 
-<a href={href} class:list={[{ caption: size === "caption", outline }]}>
+<a href={href} class:list={[color, { caption: size === "caption", outline }]}>
   <slot />
-  <Icon name="up-right" class="icon" />
+  <Arrow angle={-45} width={16} />
 </a>
 
 <style lang="scss">
@@ -25,6 +27,12 @@ const { href, size = "text", outline } = Astro.props;
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: var(--spacing-xs);
+
+    &.onPrimary {
+      background-color: var(--color-text-on-primary);
+      color: var(--color-text-on-background);
+    }
 
     &:hover {
       text-decoration: none;
@@ -34,25 +42,6 @@ const { href, size = "text", outline } = Astro.props;
       color: var(--color-text-on-background);
       background-color: transparent;
       border: 1px solid var(--color-text-on-background);
-
-      svg {
-        --svg-fill: var(--color-text-on-background);
-      }
-    }
-
-    svg {
-      width: var(--font-size-text);
-      height: var(--font-size-text);
-      --svg-fill: var(--color-background);
-    }
-
-    &.caption {
-      font-size: var(--font-size-caption);
-
-      .icon {
-        width: var(--font-size-caption);
-        height: var(--font-size-caption);
-      }
     }
   }
 </style>

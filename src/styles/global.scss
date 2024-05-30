@@ -42,8 +42,11 @@
 }
 
 * {
-  font-family: "Poppins", Arial;
   box-sizing: border-box;
+}
+
+html {
+  font-family: "Poppins", Arial;
   color: var(--color-text-on-background);
 }
 
