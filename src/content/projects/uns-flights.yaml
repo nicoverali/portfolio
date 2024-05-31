@@ -3,7 +3,7 @@ logoIcon: projects/uns-flights-logo
 short: Java/React app for flights reservation
 description: A Java/React app for flights reservation
 repository: https://github.com/nicoverali/uns-flights
-featured: true
+featuredImage: ../../assets/images/projects/unsflights-featured.png
 screenshots:
   - ../../assets/images/projects/uns-flights-1.jpeg
   - ../../assets/images/projects/uns-flights-3.jpeg

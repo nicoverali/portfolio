@@ -3,7 +3,7 @@ short: High school static-website
 description: My high school used to have an outdated website, so I took the same content but redesigned it entirely to provide a better experience to visitors.
 repository: https://github.com/nicoverali/Instituto-Centenarios
 demo: https://instituto-centenarios.com
-featured: false
+featuredImage: ../../assets/images/projects/centenarios-featured.png
 screenshots: []
 techs:
   - jekyll

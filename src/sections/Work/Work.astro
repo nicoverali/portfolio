@@ -4,126 +4,57 @@ import { getCollection } from "astro:content";
 import Row from "@components/Grid/Row.astro";
 import Column from "@components/Grid/Column.astro";
 import Button from "@components/Button/Button.astro";
+import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
 
-const allFeaturedProjects = await getCollection(
-  "projects",
-  (project) => project.data.featured
-);
+const allProjects = await getCollection("projects");
 ---
 
-<astro-work-container>
-  <Row>
-    <Column size={1} justify="center">
-      <p class="vertical">Work.</p>
-    </Column>
-    <Column class="projects" size={10}>
-      <div class="title">
-        <h2>Work.</h2>
-        <Button href="https://github.com/nicoverali">Github</Button>
-      </div>
-      {
-        allFeaturedProjects.map((project, i) => (
-          <div class:list={["project-container", { first: i === 0 }]}>
-            <FeaturedProject project={project} />
-          </div>
-        ))
-      }
-    </Column>
-  </Row>
-</astro-work-container>
+<div class="container">
+  <SectionTitle>See my work</SectionTitle>
 
-<style>
-  astro-work-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .title {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-lg);
-    text-align: center;
-    margin: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    h2 {
-      font-size: var(--font-size-display-xl);
-      font-weight: 500;
-      margin: 0;
+  <div class="projects-grid">
+    {
+      allProjects.map((project, i) => (
+        <div class:list={["project-container", { first: i === 0 }]}>
+          <FeaturedProject project={project} />
+        </div>
+      ))
     }
-  }
+  </div>
+</div>
 
-  .vertical {
-    font-size: var(--font-size-h3);
-    opacity: 0.2;
-    text-align: center;
-    writing-mode: vertical-rl;
-    transform: rotate(-180deg);
-  }
+<style lang="scss">
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: 200px 300px;
+    grid-column-gap: var(--col-gutter, 24px);
+    column-gap: var(--col-gutter, 24px);
 
-  .projects {
-    position: relative;
-  }
+    .project-container {
+      align-self: stretch;
+      padding-top: 300px;
 
-  .project-container {
-    visibility: hidden;
-    &:not(.first) {
-      position: absolute;
-      z-index: 1;
+      &:nth-child(odd) {
+        grid-column: 1 / span 6;
+        grid-row: auto / span 4;
+      }
+
+      &:nth-child(even) {
+        grid-column: 7 / -1;
+        grid-row: auto / span 4;
+      }
+
+      &:nth-child(2) {
+        grid-row: 2 / span 4;
+      }
+
+      &:first-child {
+        padding-top: 0;
+        grid-row: 1 / span 3;
+      }
     }
   }
 </style>
 
-<script>
-  import { vhPercent } from "@scripts/utils/gsap";
-  import { gsap } from "gsap";
-
-  class WorkContainer extends HTMLElement {
-    constructor() {
-      super();
-      gsap.context(() => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: this,
-            pin: true,
-            start: "center center",
-            end: "+=200%",
-            scrub: 1,
-          },
-        });
-
-        const projects = gsap.utils.toArray<HTMLElement>(".project-container");
-        let angle = -1;
-        projects.forEach((project, i) => {
-          angle = -angle;
-          tl.fromTo(
-            project,
-            {
-              y: () => vhPercent(100),
-            },
-            {
-              visibility: "visible",
-              y: projects.length - i * -8,
-            }
-          );
-
-          tl.to(
-            project,
-            {
-              duration: 0.2,
-              rotate: gsap.utils.random(1, 3, 0.5) * angle,
-            },
-            ">-=0.2"
-          );
-        });
-      }, this);
-    }
-  }
-
-  customElements.define("astro-work-container", WorkContainer);
-</script>
+<script></script>
