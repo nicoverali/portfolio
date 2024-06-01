@@ -1,0 +1,38 @@
+---
+interface Props {
+  backgroundColor: string;
+  height: string;
+  marginTop: string;
+}
+
+const { backgroundColor, height, marginTop } = Astro.props;
+---
+
+<div class="clip-container">
+  <div class="double-height-container">
+    <div class="footer-sticky-container">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style lang="scss" define:vars={{ backgroundColor, height, marginTop }}>
+  .clip-container {
+    position: relative;
+    height: calc(var(--height) + var(--marginTop));
+    clip-path: inset(0);
+
+    .double-height-container {
+      position: relative;
+      top: -100svh;
+      height: calc(100svh + var(--height) + var(--marginTop));
+    }
+
+    .footer-sticky-container {
+      position: sticky;
+      display: flex;
+      height: calc(var(--height) + var(--marginTop));
+      top: calc(100svh - var(--height) - var(--marginTop));
+    }
+  }
+</style>

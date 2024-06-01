@@ -1,18 +1,29 @@
 ---
 interface Props {
   background: string;
+  border?: "top" | "bottom" | "all";
 }
 
-const { background } = Astro.props;
+const { background, border = "all" } = Astro.props;
 ---
 
-<div class="background" style={{ backgroundColor: background }}>
+<div class={border} style={{ backgroundColor: background }}>
   <slot />
 </div>
 
-<style>
-  .background {
+<style lang="scss">
+  div {
     width: 100%;
     border-radius: var(--radius-xl);
+
+    &.top {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.bottom {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
   }
 </style>

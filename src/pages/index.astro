@@ -14,6 +14,8 @@ import Button from "@components/Button/Button.astro";
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
 import MoreThingsAboutMe from "@sections/MoreThingsAboutMe/MoreThingsAboutMe.astro";
+import Footer from "@components/Footer/Footer.astro";
+import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSection.astro";
 ---
 
 <BaseLayout title="Nicolás Vera">
@@ -35,33 +37,34 @@ import MoreThingsAboutMe from "@sections/MoreThingsAboutMe/MoreThingsAboutMe.ast
     <MoreThingsAboutMe />
     <Work />
   </Container>
-</BaseLayout>
-
-<!-- 
-  <div class="second-section">
-    <Container>
-      <section class="about-me">
-        <AboutMe />
-      </section>
-      <section class="skills">
-        <Skills />
-      </section>
+  <div class="rounded-separator"></div>
+  <StickyBottomSection backgroundColor="black" height="80svh" marginTop="80px">
+    <Container class="footer-container">
+      <Contact />
+      <Footer />
     </Container>
-  </div>
-  <Container>
-    <section class="work">
-      <Work />
-    </section>
-  </Container>
-  <Container>
-    <OtherProjects />
-  </Container>
-  <Container>
-    <Contact />
-  </Container> -->
+  </StickyBottomSection>
+</BaseLayout>
 
 <style lang="scss">
   @import "@styles/screens.scss";
+
+  .rounded-separator {
+    position: absolute;
+    height: 80px;
+    width: 100%;
+    margin-top: -1px;
+    background-color: var(--color-background);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    z-index: 1;
+  }
+
+  .footer-container {
+    padding-top: 80px;
+    background-color: black;
+    color: white;
+  }
+
   .my-name-fluid {
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     padding-bottom: var(--spacing-2xl);

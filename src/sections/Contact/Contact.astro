@@ -1,30 +1,49 @@
 ---
+import Arrow from "@components/Arrow/Arrow.astro";
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
 ---
 
-<div>
-  <Row grow>
-    <Column offset={5} justify="center" align="start">
-      <p>I'm always looking to level up my skills.</p>
-      <p>Contact me at if you believe we could grow together.</p>
+<div class="container">
+  <Row>
+    <Column>
+      <div class="header">
+        <p>Got something great in mind ?</p>
+        <p>Let's build together.</p>
+      </div>
+      <Arrow width={16} angle={45} />
+
+      <div class="email">
+        <p>nicolasalevera98@gmail.com</p>
+        <p class="sub">Click to copy</p>
+      </div>
     </Column>
   </Row>
 </div>
 
-<style>
-  div {
+<style lang="scss">
+  .container {
+    height: 80svh;
     display: flex;
-    height: 100vh;
-  }
-  p {
-    font-size: var(--font-size-h3);
-    font-weight: 400;
-    line-height: 150%;
-    margin: 0;
+    flex-direction: column;
+    justify-content: start;
   }
 
-  span {
-    color: var(--color-primary);
+  .header {
+    font-size: var(--font-size-h1);
+    font-weight: 500;
+    line-height: 150%;
+  }
+
+  .email {
+    margin-top: var(--spacing-2xl);
+    font-size: var(--font-size-text);
+    font-weight: 600;
+
+    .sub {
+      font-size: var(--font-size-caption);
+      font-weight: 400;
+      opacity: 0.6;
+    }
   }
 </style>
