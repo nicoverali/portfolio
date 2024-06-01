@@ -12,7 +12,7 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
 <div>
   <SectionTitle>A few more things about me</SectionTitle>
 
-  <div class="cards-grid">
+  <astro-cards-grid class="cards-grid">
     <GridCard gridArea="main-sk">
       <MainSkillsGraphic slot="content" />
       <p slot="description">My primary skills are React, Typescript and Java</p>
@@ -42,11 +42,12 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
       <HomeAssistantGraphic slot="content" />
       <p slot="description">I’ve smartify my house with Home Assistant</p>
     </GridCard>
-  </div>
+  </astro-cards-grid>
 </div>
 
 <style lang="scss">
   .cards-grid {
+    margin-top: var(--spacing-3xl);
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-row: 1fr 1fr;
@@ -56,8 +57,8 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
 
     grid-column-gap: var(--col-gutter, 24px);
     column-gap: var(--col-gutter, 24px);
-    grid-row-gap: var(--col-gutter, 24px);
-    row-gap: var(--col-gutter, 24px);
+    grid-row-gap: var(--spacing-2xl);
+    row-gap: var(--spacing-xl);
   }
 
   .sub-description {
@@ -65,3 +66,37 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
     opacity: 0.6;
   }
 </style>
+
+<script>
+  import { vhPercent } from "@scripts/utils/gsap";
+  import { gsap } from "gsap";
+
+  class CardsGridContainer extends HTMLElement {
+    constructor() {
+      super();
+
+      gsap.context(
+        () => {
+          const cards = gsap.utils.toArray<HTMLElement>(".cards-grid > *");
+          cards.forEach((card) => {
+            gsap.from(card, {
+              scale: 0.85,
+              y: 10,
+              opacity: 0.8,
+              scrollTrigger: {
+                trigger: card,
+                start: "top " + vhPercent(95),
+                end: "bottom " + vhPercent(75),
+                scrub: true,
+              },
+            });
+          });
+        },
+
+        this
+      );
+    }
+  }
+
+  customElements.define("astro-cards-grid", CardsGridContainer);
+</script>

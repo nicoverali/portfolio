@@ -33,8 +33,10 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
       </Row>
     </Container>
   </CardSection>
-  <Container>
+  <Container class="more-things-container">
     <MoreThingsAboutMe />
+  </Container>
+  <Container class="work-container">
     <Work />
   </Container>
   <div class="rounded-separator"></div>
@@ -75,6 +77,18 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
     padding-top: var(--spacing-4xl);
     padding-bottom: var(--spacing-4xl);
     color: var(--color-text-on-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3xl);
+  }
+
+  .more-things-container {
+    margin-top: var(--spacing-4xl);
+  }
+
+  .work-container {
+    margin-top: var(--spacing-5xl);
   }
 
   section.skills {

@@ -12,7 +12,7 @@ const allProjects = await getCollection("projects");
 <div class="container">
   <SectionTitle>See my work</SectionTitle>
 
-  <div class="projects-grid">
+  <astro-projects-grid class="projects-grid">
     {
       allProjects.map((project, i) => (
         <div class:list={["project-container", { first: i === 0 }]}>
@@ -20,11 +20,12 @@ const allProjects = await getCollection("projects");
         </div>
       ))
     }
-  </div>
+  </astro-projects-grid>
 </div>
 
 <style lang="scss">
   .projects-grid {
+    margin-top: var(--spacing-3xl);
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-auto-rows: 200px 300px;
@@ -57,4 +58,33 @@ const allProjects = await getCollection("projects");
   }
 </style>
 
-<script></script>
+<script>
+  import { vhPercent } from "@scripts/utils/gsap";
+  import { gsap } from "gsap";
+
+  class ProjectsGridContainer extends HTMLElement {
+    constructor() {
+      super();
+
+      gsap.context(() => {
+        const projects = gsap.utils.toArray<HTMLElement>(".project-container");
+
+        for (const project of projects) {
+          gsap.from(project, {
+            scale: 0.9,
+            opacity: 0.8,
+            y: 250,
+            scrollTrigger: {
+              trigger: project,
+              start: "top " + vhPercent(95),
+              end: "top " + vhPercent(20),
+              scrub: 1,
+            },
+          });
+        }
+      }, this);
+    }
+  }
+
+  customElements.define("astro-projects-grid", ProjectsGridContainer);
+</script>
