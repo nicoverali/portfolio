@@ -20,6 +20,7 @@ const { backgroundColor, height, marginTop } = Astro.props;
   .clip-container {
     position: relative;
     height: calc(var(--height) + var(--marginTop));
+    background-color: var(--backgroundColor);
     clip-path: inset(0);
 
     .double-height-container {
