@@ -2,25 +2,543 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<div>
-  <Icon name="skills/Figma" />
+<div class="container">
+  <astro-figma class="editable-container">
+    <Icon name="skills/Figma" class="figma-icon" />
+    <div class="resize-handle topleft" data-resize-dir="topleft"></div>
+    <div class="resize-handle topright" data-resize-dir="topright"></div>
+    <div class="resize-handle bottomleft" data-resize-dir="bottomleft"></div>
+    <div class="resize-handle bottomright" data-resize-dir="bottomright"></div>
+    <div class="size-tooltip">
+      <span class="w">256</span>
+      <span class="x">x</span>
+      <span class="h">128</span>
+    </div>
+  </astro-figma>
+
+  <style lang="scss">
+    .container {
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+
+    [data-icon="skills/Figma"] {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .editable-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 0.5px solid transparent;
+      width: 60%;
+
+      &.dynamic {
+        transform: none;
+      }
+
+      &:hover,
+      &.edit-mode {
+        box-shadow: inset 0 0 0 1px var(--el-figma-editable-color);
+        border: 0.5px solid var(--el-figma-editable-color);
+      }
+
+      &.edit-mode {
+        .size-tooltip {
+          display: flex;
+        }
+        .resize-handle {
+          display: initial;
+        }
+      }
+
+      &.flipped-w {
+        svg {
+          transform: scaleX(-1);
+        }
+      }
+
+      &.flipped-h {
+        svg {
+          transform: scaleY(-1);
+        }
+      }
+
+      &.flipped-w.flipped-h {
+        svg {
+          transform: scale(-1, -1);
+        }
+      }
+
+      $handle-size: 8px;
+
+      .size-tooltip {
+        display: none;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: var(--spacing-xs);
+
+        position: absolute;
+        bottom: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--el-figma-editable-color);
+        border-radius: 2px;
+        padding: 2px 4px;
+        color: white;
+        font-family: Trebuchet MS;
+        letter-spacing: 0.2px;
+        font-size: var(--font-size-caption);
+
+        .x {
+          font-size: 8px;
+          font-weight: 600;
+          position: relative;
+        }
+      }
+
+      .resize-handle {
+        display: none;
+        position: absolute;
+        width: $handle-size;
+        height: $handle-size;
+        background-color: white;
+        border: 1.5px solid var(--el-figma-editable-color);
+
+        &.topleft {
+          top: calc($handle-size / 2 * -1);
+          left: calc($handle-size / 2 * -1);
+        }
+
+        &.topright {
+          top: calc($handle-size / 2 * -1);
+          right: calc($handle-size / 2 * -1);
+        }
+
+        &.bottomleft {
+          bottom: calc($handle-size / 2 * -1);
+          left: calc($handle-size / 2 * -1);
+        }
+
+        &.bottomright {
+          bottom: calc($handle-size / 2 * -1);
+          right: calc($handle-size / 2 * -1);
+        }
+      }
+    }
+  </style>
+
+  <script>
+    interface KeyboardState {
+      shiftKey: boolean;
+    }
+
+    interface ElementState {
+      mouseX: number;
+      mouseY: number;
+      height: number;
+      width: number;
+      top: number;
+      left: number;
+      flippedX: boolean;
+      flippedY: boolean;
+      shiftKey: boolean;
+    }
+
+    interface NewState {
+      height: number;
+      width: number;
+      top: number;
+      left: number;
+    }
+
+    class FigmaInteractiveElement extends HTMLElement {
+      private static MIN_SIZE = 20;
+
+      private parent: HTMLElement;
+      private widthEl?: HTMLElement | null;
+      private heightEl?: HTMLElement | null;
+      private resizeHandlers?: NodeListOf<HTMLElement>;
+      private activeResizeHandler?: HTMLElement;
+
+      private originalState!: ElementState;
+      private keyboardState!: KeyboardState;
+
+      constructor() {
+        super();
+        this.parent = this.parentElement as HTMLElement;
+        this.setupStyle();
+        this.setupElements();
+        this.setupEventListeners();
+        this.saveOriginalState();
+      }
+
+      private setupStyle() {
+        const centeredLeft = this.parent.clientWidth / 2 - this.clientWidth / 2;
+        const centeredTop =
+          this.parent.clientHeight / 2 - this.clientHeight / 2;
+
+        this.classList.add("dynamic");
+        this.style.left = this.getLeftPercent(centeredLeft);
+        this.style.top = this.getTopPercent(centeredTop);
+      }
+
+      private setupElements() {
+        this.widthEl = this.querySelector(".w");
+        this.heightEl = this.querySelector(".h");
+        this.resizeHandlers = this.querySelectorAll(".resize-handle");
+        this.updateSize();
+      }
+
+      private setupEventListeners() {
+        document.addEventListener("mousedown", this);
+        window.addEventListener("resize", () => this.updateSize());
+
+        this.resizeHandlers?.forEach((handler) => {
+          handler.addEventListener(
+            "mousedown",
+            () => (this.activeResizeHandler = handler)
+          );
+        });
+      }
+
+      handleEvent(e: Event) {
+        switch (e.type) {
+          case "keydown":
+          case "keyup":
+            return this.handleKeyboardChange(e as KeyboardEvent);
+          case "mousedown":
+            return this.handleMouseDown(e as MouseEvent);
+          case "mousemove":
+            return this.handleMouseMove(e as MouseEvent);
+          case "mouseup":
+            return this.handleMouseUp(e as MouseEvent);
+        }
+      }
+
+      private handleKeyboardChange(e: KeyboardEvent) {
+        this.saveKeyboardState(e);
+      }
+
+      private handleMouseDown(e: MouseEvent) {
+        const isOnThis = this.isOnThis(e);
+        this.setEditionMode(isOnThis);
+        if (isOnThis) {
+          this.saveKeyboardState(e);
+          this.saveOriginalState(e);
+          document.body.style.userSelect = "none";
+          document.addEventListener("mousemove", this);
+          document.addEventListener("mouseup", this);
+          document.addEventListener("keydown", this);
+          document.addEventListener("keyup", this);
+        }
+      }
+
+      private handleMouseMove(e: MouseEvent) {
+        if (this.activeResizeHandler != null) {
+          this.resize(e);
+        } else {
+          this.drag(e);
+        }
+      }
+
+      private handleMouseUp(e: MouseEvent) {
+        this.activeResizeHandler = undefined;
+        document.body.style.userSelect = "initial";
+        document.removeEventListener("mousemove", this);
+        document.removeEventListener("mouseup", this);
+        document.removeEventListener("keydown", this);
+        document.removeEventListener("keyup", this);
+      }
+
+      private updateSize() {
+        this.widthEl?.replaceChildren(String(this.clientWidth));
+        this.heightEl?.replaceChildren(String(this.clientHeight));
+      }
+
+      private setEditionMode(active: boolean) {
+        this.classList.toggle("edit-mode", active);
+      }
+
+      private drag(e: MouseEvent) {
+        const deltaX = e.x - this.originalState.mouseX;
+        const deltaY = e.y - this.originalState.mouseY;
+
+        const newLeft = this.limitLeftToParent(
+          this.originalState.left + deltaX
+        );
+        const newTop = this.limitTopToParent(this.originalState.top + deltaY);
+        this.style.left = this.getLeftPercent(newLeft);
+        this.style.top = this.getTopPercent(newTop);
+      }
+
+      private resize(e: MouseEvent) {
+        if (this.activeResizeHandler == null) return;
+
+        const deltaX = e.x - this.originalState.mouseX;
+        const deltaY = e.y - this.originalState.mouseY;
+
+        switch (this.activeResizeHandler.dataset.resizeDir) {
+          case "topright":
+            this.applyTransformation(this.resizeTopRight(deltaX, deltaY));
+            break;
+          case "topleft":
+            this.applyTransformation(this.resizeTopLeft(deltaX, deltaY));
+            break;
+          case "bottomleft":
+            this.applyTransformation(this.resizeBottomLeft(deltaX, deltaY));
+            break;
+          case "bottomright":
+            this.applyTransformation(this.resizeBottomRight(deltaX, deltaY));
+            break;
+        }
+
+        this.updateSize();
+      }
+
+      private resizeTopRight(deltaX: number, deltaY: number): NewState {
+        const newWidth = this.originalState.width + deltaX;
+        const newHeight = this.originalState.height - deltaY;
+
+        const maxBottom = this.originalState.top + this.originalState.height;
+
+        const newTop = Math.min(this.originalState.top + deltaY, maxBottom);
+        const newLeft = Math.min(
+          this.originalState.left,
+          this.originalState.left + newWidth
+        );
+
+        return {
+          width: newWidth,
+          height: newHeight,
+          top: newTop,
+          left: newLeft,
+        };
+
+        if (newTop >= 0 && newHeight) {
+          this.style.top = `${newTop}px`;
+          this.style.height = `${Math.abs(newHeight)}px`;
+        }
+        if (newWidth + this.offsetLeft < this.parent.clientWidth) {
+          this.style.width = `${newWidth}px`;
+        }
+      }
+
+      private resizeTopLeft(deltaX: number, deltaY: number): NewState {
+        const maxBottom = this.originalState.top + this.originalState.height;
+        const maxLeft = this.originalState.left + this.originalState.width;
+
+        const newWidth = this.originalState.width - deltaX;
+        const newHeight = this.originalState.height - deltaY;
+        const newTop = Math.min(this.originalState.top + deltaY, maxBottom);
+        const newLeft = Math.min(this.originalState.left + deltaX, maxLeft);
+        const newRight = newLeft + Math.abs(newWidth);
+        const newBottom = newTop + Math.abs(newHeight);
+
+        // console.table({
+        //   deltaX,
+        //   deltaY,
+        //   newWidth,
+        //   newHeight,
+        //   newTop,
+        //   newLeft,
+        //   newRight,
+        //   newBottom,
+        // });
+
+        return {
+          height: newHeight,
+          width: newWidth,
+          left: newLeft,
+          top: newTop,
+        };
+
+        if (newTop >= 0 && newBottom <= this.parent.clientHeight) {
+          this.style.top = `${newTop}px`;
+          this.style.height = `${Math.abs(newHeight)}px`;
+        }
+        if (newLeft >= 0 && newRight <= this.parent.clientWidth) {
+          this.style.left = `${newLeft}px`;
+          this.style.width = `${Math.abs(newWidth)}px`;
+        }
+        this.classList.toggle(
+          "flipped-w",
+          this.originalState.flippedX ? newWidth >= 0 : newWidth < 0
+        );
+        this.classList.toggle(
+          "flipped-h",
+          this.originalState.flippedY ? newHeight >= 0 : newHeight < 0
+        );
+      }
+
+      private resizeBottomLeft(deltaX: number, deltaY: number): NewState {
+        const maxLeft = this.originalState.left + this.originalState.width;
+
+        const newWidth = this.originalState.width - deltaX;
+        const newHeight = this.originalState.height + deltaY;
+        const newLeft = Math.min(this.originalState.left + deltaX, maxLeft);
+        const newTop = Math.min(
+          this.originalState.top,
+          this.originalState.top + newHeight
+        );
+        const newBottom = this.originalState.top + newHeight;
+
+        return {
+          width: newWidth,
+          height: newHeight,
+          left: newLeft,
+          top: newTop,
+        };
+
+        if (
+          newBottom <= this.parent.clientHeight &&
+          newHeight >= FigmaInteractiveElement.MIN_SIZE
+        ) {
+          this.style.height = `${newHeight}px`;
+        }
+        if (newLeft >= 0 && newWidth >= FigmaInteractiveElement.MIN_SIZE) {
+          this.style.left = `${newLeft}px`;
+          this.style.width = `${newWidth}px`;
+        }
+      }
+
+      private resizeBottomRight(deltaX: number, deltaY: number): NewState {
+        const newWidth = this.originalState.width + deltaX;
+        const newHeight = this.originalState.height + deltaY;
+
+        const newLeft = Math.min(
+          this.originalState.left,
+          this.originalState.left + newWidth
+        );
+        const newTop = Math.min(
+          this.originalState.top,
+          this.originalState.top + newHeight
+        );
+
+        return {
+          width: newWidth,
+          height: newHeight,
+          left: newLeft,
+          top: newTop,
+        };
+      }
+
+      private applyTransformation(newState: NewState) {
+        const deltaWidth = Math.abs(newState.width) - this.originalState.width;
+        const deltaHeight =
+          Math.abs(newState.height) - this.originalState.height;
+
+        const maxDeltaSize = Math.max(deltaWidth, deltaHeight);
+        const aspectRatio =
+          this.originalState.width / this.originalState.height;
+
+        const newWidth =
+          this.isResizeEvenly() && maxDeltaSize === deltaHeight
+            ? this.originalState.width +
+              deltaHeight * aspectRatio * Math.sign(newState.width)
+            : newState.width;
+
+        const newHeight =
+          this.isResizeEvenly() && maxDeltaSize === deltaWidth
+            ? this.originalState.height +
+              (deltaWidth / aspectRatio) * Math.sign(newState.height)
+            : newState.height;
+
+        console.table({ newStateWidth: newState.width, newWidth });
+
+        const newTop =
+          this.originalState.top !== newState.top
+            ? newState.top - (newHeight - newState.height)
+            : newState.top;
+
+        const newLeft =
+          this.originalState.left !== newState.left
+            ? this.originalState.left - newWidth
+            : newState.left;
+
+        // console.table({ newWidth, newHeight, newTop, newLeft });
+
+        const newRight = newState.left + Math.abs(newState.width);
+        const newBottom = newState.top + Math.abs(newState.height);
+
+        if (newState.top >= 0 && newBottom <= this.parent.clientHeight) {
+          this.style.top = `${newTop}px`;
+          this.style.height = `${Math.abs(newHeight)}px`;
+        }
+        if (newState.left >= 0 && newRight <= this.parent.clientWidth) {
+          this.style.left = `${newLeft}px`;
+          this.style.width = `${Math.abs(newWidth)}px`;
+        }
+        this.classList.toggle(
+          "flipped-w",
+          this.originalState.flippedX ? newState.width >= 0 : newState.width < 0
+        );
+        this.classList.toggle(
+          "flipped-h",
+          this.originalState.flippedY
+            ? newState.height >= 0
+            : newState.height < 0
+        );
+      }
+
+      private limitLeftToParent(left: number) {
+        const maxLeft = this.parent.clientWidth - this.clientWidth;
+        return Math.min(Math.max(left, 0), maxLeft);
+      }
+
+      private limitTopToParent(top: number) {
+        const maxTop = this.parent.clientHeight - this.clientHeight;
+        return Math.min(Math.max(top, 0), maxTop);
+      }
+
+      private getLeftPercent(left: number): string {
+        return `${(left / this.parent.clientWidth) * 100}%`;
+      }
+
+      private getTopPercent(top: number): string {
+        return `${(top / this.parent.clientHeight) * 100}%`;
+      }
+
+      private isResizeEvenly(): boolean {
+        return this.keyboardState.shiftKey;
+      }
+
+      private isOnThis(e: Event): boolean {
+        return this.contains(e.target as Node);
+      }
+
+      private isEditModeActive(): boolean {
+        return this.classList.contains("edit-mode");
+      }
+
+      private saveKeyboardState(e: MouseEvent | KeyboardEvent) {
+        this.keyboardState = {
+          shiftKey: e.shiftKey,
+        };
+      }
+
+      /// Change this to getCurrentState. Then manually store original state when needed. USe this to update shiftkey and altkey and store it on updated state. Then use updated state to do things like showing distance lines or
+      // rezising evenly
+      private saveOriginalState(e?: MouseEvent) {
+        this.originalState = {
+          mouseX: e?.x ?? 0,
+          mouseY: e?.y ?? 0,
+          height: this.clientHeight,
+          width: this.clientWidth,
+          left: this.offsetLeft,
+          top: this.offsetTop,
+          flippedX: this.classList.contains("flipped-w"),
+          flippedY: this.classList.contains("flipped-h"),
+          shiftKey: e?.shiftKey ?? false,
+        };
+      }
+    }
+
+    customElements.define("astro-figma", FigmaInteractiveElement);
+  </script>
 </div>
-
-<style>
-  div {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  svg {
-    position: absolute;
-    bottom: -24px;
-    right: -24px;
-    width: 180px;
-    height: 180px;
-  }
-</style>
