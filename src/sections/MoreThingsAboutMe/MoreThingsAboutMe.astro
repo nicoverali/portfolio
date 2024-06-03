@@ -15,13 +15,19 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
   <astro-cards-grid class="cards-grid">
     <GridCard gridArea="main-sk">
       <MainSkillsGraphic slot="content" />
-      <p slot="description">My primary skills are React, Typescript and Java</p>
+      <div slot="description">
+        <p>React, Typescript and Java</p>
+        <p class="sub-description">These are my primary skills</p>
+      </div>
     </GridCard>
     <GridCard gridArea="all-sk">
       <AllSkillsGraphic slot="content" />
-      <p slot="description">
-        I've worked with various tools, frameworks and databases
-      </p>
+      <div slot="description">
+        <p>Other skills</p>
+        <p class="sub-description">
+          I've worked with various tools, frameworks and databases
+        </p>
+      </div>
     </GridCard>
     <GridCard gridArea="cloud">
       <CloudCertsGraphic slot="content" />
@@ -32,15 +38,30 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
     </GridCard>
     <GridCard gridArea="docker">
       <DockerGraphic slot="content" />
-      <p slot="description">I love to use containers for development</p>
+      <div slot="description">
+        <p>I love containers</p>
+        <p class="sub-description">
+          It's just too easy to spin up an entire development environment
+        </p>
+      </div>
     </GridCard>
     <GridCard gridArea="figma">
       <FigmaGraphic slot="content" />
-      <p slot="description">I use Figma to design my apps</p>
+      <div slot="description">
+        <p>I design with Figma</p>
+        <p class="sub-description">
+          I'm a developer with an eye for design<br />s
+        </p>
+      </div>
     </GridCard>
     <GridCard gridArea="ha">
       <HomeAssistantGraphic slot="content" />
-      <p slot="description">I’ve smartify my house with Home Assistant</p>
+      <div slot="description">
+        <p>I'm interested in the future of IoT</p>
+        <p class="sub-description">
+          I've smartify my house with Home Assistant<br />s
+        </p>
+      </div>
     </GridCard>
   </astro-cards-grid>
 </div>
@@ -53,7 +74,7 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
     grid-template-row: 1fr 1fr;
     grid-template-areas:
       "main-sk main-sk main-sk main-sk all-sk all-sk all-sk all-sk all-sk cloud cloud cloud"
-      "docker  docker  docker  figma  figma  figma   ha  ha     ha     ha    ha    ha";
+      " figma  figma  figma   ha  ha     ha     ha    ha    ha docker  docker  docker ";
 
     grid-column-gap: var(--col-gutter, 24px);
     column-gap: var(--col-gutter, 24px);
