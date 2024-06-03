@@ -1,20 +1,44 @@
 ---
 import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  state?: string;
+  icon?:
+    | "bulb"
+    | "lock"
+    | "ceiling-bulb"
+    | "tv"
+    | "speaker"
+    | "videocam"
+    | "scene";
+  color?: "off" | "yellow" | "blue";
+  opacity?: number;
+}
+
+const {
+  name,
+  state,
+  icon = "bulb",
+  color = "yellow",
+  opacity = 0.4,
+} = Astro.props;
 ---
 
 <div class="input-container">
-  <div class="icon-container">
-    <Icon name="bulb" />
+  <div class:list={["icon-container", color]}>
+    <Icon is:inline={true} name={`ha/${icon}`} />
   </div>
 
   <div class="text-container">
-    <p>Portfolio</p>
-    <p>100%</p>
+    <p>{name}</p>
+    {state && <p>{state}</p>}
   </div>
 </div>
 
-<style>
+<style lang="scss" define:vars={{ opacity }}>
   .input-container {
+    opacity: var(--opacity);
     width: 40%;
     display: flex;
     flex-direction: row;
@@ -29,10 +53,24 @@ import { Icon } from "astro-icon/components";
 
   .icon-container {
     padding: var(--spacing-sm);
-    background-color: antiquewhite;
     border-radius: var(--radius-md);
     height: 40px;
     width: 40px;
+
+    &.yellow {
+      background-color: #ffeecd;
+      color: #ffbe3e;
+    }
+
+    &.blue {
+      background-color: #dae5ef;
+      color: #a3c6f1;
+    }
+
+    &.off {
+      background-color: #e6e6e6;
+      color: #9f9f9f;
+    }
   }
 
   .icon-container svg {
@@ -46,6 +84,7 @@ import { Icon } from "astro-icon/components";
     flex-direction: column;
     gap: var(--spacing-xs);
     font-size: var(--font-size-caption);
+    text-wrap: nowrap;
   }
 
   .text-container p:last-child {
