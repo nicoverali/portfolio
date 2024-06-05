@@ -84,5 +84,8 @@
     document.addEventListener("mousemove", (e) => {
       virtualCursor.updateRealCursor(e.x, e.y);
     });
+    document.addEventListener("pointermove", (e) => {
+      virtualCursor.updateRealCursor(e.x, e.y);
+    });
   }
 </script>
