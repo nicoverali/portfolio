@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
+  class?: string;
   name: string;
   state?: string;
   icon?:
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const {
+  class: className,
   name,
   state,
   icon = "bulb",
@@ -25,7 +27,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="input-container">
+<div class:list={["input-container", className]}>
   <div class:list={["icon-container", color]}>
     <Icon is:inline={true} name={`ha/${icon}`} />
   </div>
@@ -47,8 +49,9 @@ const {
     padding: var(--spacing-sm);
     padding-right: var(--spacing-xl);
     border-radius: var(--radius-md);
-    background-color: #fafafa;
-    border: 1px solid #f1f1f1;
+    background-color: var(--color-paper-on-paper);
+    border: 1px solid var(--color-paper-border-on-paper);
+    user-select: none;
   }
 
   .icon-container {

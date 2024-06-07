@@ -19,15 +19,16 @@ const { name, displayName } = Astro.props;
     flex-direction: row;
     align-items: center;
     gap: var(--spacing-xs);
-    background-color: #fafafa;
-    border: 1px solid #f1f1f1;
+    background-color: var(--color-paper-on-paper);
+    border: 1px solid var(--color-paper-border-on-paper);
     padding: var(--spacing-md);
     border-radius: var(--radius-md);
     height: 24px;
+    user-select: none;
   }
 
   p {
     font-size: var(--font-size-caption);
-    color: var(--color-text-on-background-light);
+    color: var(--color-text-on-paper);
   }
 </style>

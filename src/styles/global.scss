@@ -12,6 +12,8 @@
   --color-text-on-secondary: #fcf8f1;
   --color-text-on-paper: #393734;
   --color-paper-on-background: #fffdfa;
+  --color-paper-on-paper: #fafafa;
+  --color-paper-border-on-paper: #f1f1f1;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -35,6 +37,19 @@
 
   --el-header-height: 80px;
   --el-figma-editable-color: #4597f7;
+
+  &.dark {
+    --color-background: #1b1b1a;
+    --color-primary: #082120;
+    --color-secondary: #960d12;
+    --color-text-on-background: #fffcf8;
+    --color-text-on-primary: #fcf8f1;
+    --color-text-on-secondary: #fcf8f1;
+    --color-text-on-paper: #fffcf8;
+    --color-paper-on-background: #393938;
+    --color-paper-on-paper: #666665;
+    --color-paper-border-on-paper: #7d7d7d;
+  }
 
   // @media screen and (max-width: $screen-sm-min) {
   //   --font-size-display: 48px;
