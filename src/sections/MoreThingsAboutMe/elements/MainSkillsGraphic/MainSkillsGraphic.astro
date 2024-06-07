@@ -141,15 +141,23 @@ import { Icon } from "astro-icon/components";
   import CircleRotationAnimation from "./scripts/CircleRotationAnimation";
 
   class MainSkillsContainer extends HTMLElement {
+    private draggableElement: HTMLElement | null;
+    private circles: Array<HTMLElement>;
+
     constructor() {
       super();
+      this.draggableElement = this.querySelector<HTMLElement>(".draggable");
+      this.circles = Array.from(this.querySelectorAll<HTMLElement>(".circle"));
+      this.setupAnimations();
+    }
 
-      const draggable = this.querySelector<HTMLElement>(".draggable");
-      const circlesEl = Array.from(
-        this.querySelectorAll<HTMLElement>(".circle")
-      );
+    private setupAnimations() {
+      if (!this.draggableElement) {
+        console.warn("Missing draggable element in MainSkillsContainer");
+        return;
+      }
 
-      const circlesAnim = circlesEl.map(
+      const circlesAnim = this.circles.map(
         (circle) =>
           new CircleRotationAnimation(circle, {
             maxRotation: 360,
@@ -159,9 +167,7 @@ import { Icon } from "astro-icon/components";
       );
 
       pushCirclesOnMouseEnter(this, circlesAnim);
-      if (draggable) {
-        rotateCirclesBasedOnDraggable(draggable, circlesAnim);
-      }
+      rotateCirclesBasedOnDraggable(this.draggableElement, circlesAnim);
     }
   }
 

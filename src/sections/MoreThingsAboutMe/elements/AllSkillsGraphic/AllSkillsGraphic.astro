@@ -25,17 +25,18 @@ const rows = [
 ] as const;
 ---
 
-<div class="icons">
+<astro-all-skills class="icons">
   {
     rows.map((row) => (
       <div class="list">
         {Object.entries(row).map(([key, display]) => (
           <SmallSkillBox name={`skills/${key}`} displayName={display} />
         ))}
+        <div class="drag-proxy" />
       </div>
     ))
   }
-</div>
+</astro-all-skills>
 
 <style lang="scss">
   .icons {
@@ -53,6 +54,7 @@ const rows = [
       position: absolute;
       width: 100%;
       height: 100%;
+      pointer-events: none;
       box-shadow:
         inset -24px 0 48px 16px var(--color-paper-on-background),
         inset 24px 0 48px 16px var(--color-paper-on-background);
@@ -64,4 +66,46 @@ const rows = [
     flex-direction: row;
     gap: var(--spacing-sm);
   }
+
+  .drag-proxy {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
 </style>
+
+<script>
+  import InfiniteListAnimation from "./scripts/InfiniteListAnimation";
+  import moveListWithDraggable from "./scripts/moveListWithDraggable";
+
+  class AstroAllSkills extends HTMLElement {
+    private lists: Array<HTMLElement>;
+
+    constructor() {
+      super();
+      this.lists = Array.from(this.querySelectorAll<HTMLElement>(".list"));
+      this.setupAnimations();
+    }
+
+    private setupAnimations() {
+      for (const list of this.lists) {
+        const skills = Array.from(list.children).filter(
+          (c) => !c.classList.contains("drag-proxy")
+        );
+        const animation = new InfiniteListAnimation(list, skills, {
+          elementsMargin: 8,
+        });
+
+        animation.play();
+
+        const draggable = list.querySelector<HTMLElement>(".drag-proxy");
+        if (draggable) {
+          moveListWithDraggable(animation, draggable);
+        }
+      }
+    }
+  }
+
+  customElements.define("astro-all-skills", AstroAllSkills);
+</script>
