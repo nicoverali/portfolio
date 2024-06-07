@@ -39,10 +39,9 @@ export default class InfiniteListAnimation {
   }
 
   move(deltaX: number) {
-    this.getMoveTween().play();
     this.tweenTarget = deltaX;
-    this.baseTween.timeScale(5);
     this.baseTween.vars.ease = "power1.out";
+    this.baseTween.timeScale(10);
     this.baseTween.repeat(0);
     this.baseTween.invalidate();
     this.baseTween.restart();
@@ -50,18 +49,12 @@ export default class InfiniteListAnimation {
 
   release() {
     const releaseVelocity = this.tweenTarget;
-    console.log("releaseVelocity: " + releaseVelocity);
     this.tweenTarget =
       this.getTotalWidth() * (Math.sign(this.tweenTarget) || 1);
     this.baseTween.vars.ease = "none";
     this.baseTween.repeat(-1);
     this.baseTween.invalidate();
     this.baseTween.restart();
-
-    // if (this.baseTween.timeScale() == 0) {
-    //   this.getFreezedToIdleTween().play();
-    //   return;
-    // }
 
     this.getReleaseVelocityToIdleTween(releaseVelocity).play();
   }
@@ -104,10 +97,7 @@ export default class InfiniteListAnimation {
 
   private getBaseTween(): gsap.core.Tween {
     return gsap.to(this.items, {
-      x: () => {
-        console.log("Calculated x: " + this.tweenTarget);
-        return `+=${this.tweenTarget}`;
-      },
+      x: () => `+=${this.tweenTarget}`,
       ease: "none",
       duration: this.options.idleDuration,
       repeat: -1,
@@ -115,16 +105,6 @@ export default class InfiniteListAnimation {
       modifiers: {
         x: (x, item) => this.wrapXOnBounds(parseFloat(x), item) + "px",
       },
-    });
-  }
-
-  private getMoveTween(): gsap.core.Tween {
-    return gsap.to(this.baseTween, {
-      timeScale: 10,
-      duration: 0.5,
-      overwrite: true,
-      ease: "power3.in",
-      paused: true,
     });
   }
 
@@ -142,16 +122,6 @@ export default class InfiniteListAnimation {
         overwrite: true,
         ease: "power4.out",
         paused: true,
-        onUpdate: () => {
-          console.log(
-            "Releasing, timeScale: " +
-              this.baseTween.timeScale() +
-              ", duration: " +
-              this.baseTween.duration() +
-              ", x: " +
-              JSON.stringify(this.baseTween.vars)
-          );
-        },
       }
     );
   }
@@ -161,19 +131,6 @@ export default class InfiniteListAnimation {
       timeScale: 0,
       ease: "power3.out",
       duration: 2,
-      overwrite: true,
-      paused: true,
-    });
-  }
-
-  private getFreezedToIdleTween(): gsap.core.Tween {
-    this.tweenTarget =
-      this.getTotalWidth() * (Math.sign(this.tweenTarget) || 1);
-    this.baseTween.vars.ease = "none";
-    return gsap.to(this.baseTween, {
-      timeScale: 1,
-      duration: 1,
-      ease: "power2.in",
       overwrite: true,
       paused: true,
     });

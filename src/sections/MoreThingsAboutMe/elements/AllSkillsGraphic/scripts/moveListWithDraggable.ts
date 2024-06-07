@@ -6,6 +6,7 @@ const moveListWithDraggable = (
   list: InfiniteListAnimation,
   draggable: HTMLElement
 ) => {
+  const clampDelta = gsap.utils.clamp(-5000, 5000);
   let previousDrag = 0;
   Draggable.create(draggable, {
     type: "x",
@@ -22,7 +23,10 @@ const moveListWithDraggable = (
       const currentDrag = parseFloat(
         gsap.getProperty(draggable, "x").toString()
       );
-      list.move((currentDrag - previousDrag) * 50);
+
+      const delta = (currentDrag - previousDrag) * 50;
+
+      list.move(clampDelta(delta));
       previousDrag = currentDrag;
     },
     onDragEnd: () => {
