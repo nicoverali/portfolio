@@ -2,6 +2,8 @@ import type { Scroll } from "@scripts/scroll";
 import Bounds from "@scripts/Bounds";
 import GooeyContainer from "@components/Gooey/scripts/GooeyContainer";
 
+export const BUTTON_CURSOR_CLASS = "button-cursor";
+
 export default class VirtualCursor {
   private cursor: HTMLElement;
   private realCursorX: number = 0;
@@ -13,6 +15,12 @@ export default class VirtualCursor {
   constructor(cursorEl: HTMLElement, gooeyContainers?: Array<GooeyContainer>) {
     this.cursor = cursorEl;
     this.gooeyContainers = gooeyContainers || [];
+  }
+
+  updateClassesBasedOnTargets() {
+    window.addEventListener("mouseover", (e) => {
+      console.log(e.target);
+    });
   }
 
   updateRealCursor(x: number, y: number) {

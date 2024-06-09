@@ -2,18 +2,19 @@ name: Caseritos
 short: Homemade meals market
 description: A homemade meals market were users would have seller and buyer roles. Sellers can publish their meals, set its price, stock, description, etc. Buyers can search for published meals and make a purchase.
 repository: https://github.com/nicoverali/caseritos
-featuredImage: ../../assets/images/projects/caseritos-featured.png
+featuredColor: "#C5BCB3"
+featuredImage: ../../assets/images/projects/caseritos-featured.jpg
 screenshots:
   - ../../assets/images/projects/caseritos-1.png
   - ../../assets/images/projects/caseritos-2.png
   - ../../assets/images/projects/caseritos-3.png
   - ../../assets/images/projects/caseritos-4.png
 techs:
-  - laravel
-  - react
-  - nextjs
-  - typescript
-  - scss
-  - express
-  - storybook
-  - pwa
+  - Laravel
+  - React
+  - Next.js
+  - Typescript
+  - SCSS
+  - Express
+  - Storybook
+  - PWA

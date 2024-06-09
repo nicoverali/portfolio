@@ -4,6 +4,7 @@ interface Props {
   size?: "text" | "caption";
 }
 
+import Arrow from "@components/Arrow/Arrow.astro";
 import { Icon } from "astro-icon/components";
 
 const { href, size = "text" } = Astro.props;
@@ -11,28 +12,24 @@ const { href, size = "text" } = Astro.props;
 
 <a href={href} class:list={[{ caption: size === "caption" }]}>
   <slot />
-  <Icon name="up-right" class="icon" is:inline={true} />
+  <Arrow width={14} angle={-45} />
 </a>
 
 <style>
   a {
     font-size: var(--font-size-text);
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap 100ms ease;
 
-    .icon {
-      width: var(--font-size-text);
-      height: var(--font-size-text);
+    &:hover {
+      gap: var(--spacing-sm);
     }
 
     &.caption {
       font-size: var(--font-size-caption);
-
-      .icon {
-        width: var(--font-size-caption);
-        height: var(--font-size-caption);
-      }
     }
   }
 </style>
