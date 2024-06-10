@@ -1,49 +1,75 @@
 ---
 import Arrow from "@components/Arrow/Arrow.astro";
+import Button from "@components/Button/Button.astro";
+import Footer from "@components/Footer/Footer.astro";
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
+import LinkButton from "@components/LinkButton/LinkButton.astro";
 ---
 
 <div class="container">
   <Row>
-    <Column>
+    <Column offset={3}>
       <div class="header">
         <p>Got something great in mind ?</p>
         <p>Let's build together.</p>
       </div>
-      <Arrow width={16} angle={45} />
+      <!-- <Arrow width={16} angle={45} weight={3} /> -->
 
       <div class="email">
-        <p>nicolasalevera98@gmail.com</p>
+        <Button>nicolasalevera98@gmail.com</Button>
+        <!-- <p>nicolasalevera98@gmail.com</p> -->
         <p class="sub">Click to copy</p>
       </div>
+
+      <div class="links">
+        <LinkButton>CV</LinkButton>
+        <LinkButton>Github</LinkButton>
+        <LinkButton>LinkedIn</LinkButton>
+      </div>
+
+      <Footer />
     </Column>
   </Row>
 </div>
 
 <style lang="scss">
   .container {
-    height: 80svh;
+    height: 100svh;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
   }
 
   .header {
     font-size: var(--font-size-h1);
     font-weight: 500;
     line-height: 150%;
+
+    p {
+      text-wrap: balanced;
+      text-wrap: pretty;
+    }
   }
 
   .email {
-    margin-top: var(--spacing-2xl);
+    margin-top: var(--spacing-lg);
     font-size: var(--font-size-text);
     font-weight: 600;
 
     .sub {
+      margin-top: var(--spacing-md);
       font-size: var(--font-size-caption);
       font-weight: 400;
       opacity: 0.6;
     }
+  }
+
+  .links {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-lg);
   }
 </style>

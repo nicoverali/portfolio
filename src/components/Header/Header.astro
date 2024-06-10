@@ -1,22 +1,39 @@
 ---
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
+import LinkButton from "@components/LinkButton/LinkButton.astro";
 import Nav from "@components/Nav/Nav.astro";
 import { Icon } from "astro-icon/components";
 ---
 
 <header>
-  <Row>
-    <Column size={1}>
-      <!-- <Icon name="logo" /> -->
+  <Row justify="between" align="center">
+    <Column size={1} class="logo">
+      <Icon name="logo" />
+      <div>
+        <p>Nicolás</p>
+        <p>Vera</p>
+      </div>
     </Column>
-    <Column size={10} align="center">
-      <Nav />
+    <Column align="end">
+      <nav>
+        <ul>
+          <li>
+            <LinkButton>About</LinkButton>
+          </li>
+          <li>
+            <LinkButton>Work</LinkButton>
+          </li>
+          <li>
+            <LinkButton>Contact</LinkButton>
+          </li>
+        </ul>
+      </nav>
     </Column>
   </Row>
 </header>
 
-<style>
+<style lang="scss">
   header {
     width: 100%;
     height: var(--el-header-height);
@@ -25,9 +42,27 @@ import { Icon } from "astro-icon/components";
     align-items: center;
   }
 
-  [data-icon="logo"] {
-    width: 48px;
-    height: 48px;
+  .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    [data-icon="logo"] {
+      width: 48px;
+      height: 48px;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+
+      p {
+        font-size: var(--font-size-caption);
+        font-weight: 600;
+      }
+    }
   }
 
   h1 {
@@ -35,5 +70,12 @@ import { Icon } from "astro-icon/components";
     font-weight: 700;
     display: flex;
     flex-direction: column;
+    text-wrap: pretty;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-4xl);
   }
 </style>

@@ -4,6 +4,7 @@
   --page-col-gutter: 24px;
   --page-padding-h: 64px;
   --page-max-width: 1440px;
+  --page-wide-max-width: 1800px;
   --color-background: #fcf8f1;
   --color-primary: #104542;
   --color-secondary: #f0565b;
@@ -35,7 +36,7 @@
   --radius-lg: 20px;
   --radius-xl: 40px;
 
-  --el-header-height: 0px;
+  --el-header-height: 80px;
   --el-figma-editable-color: #4597f7;
 
   &.dark {

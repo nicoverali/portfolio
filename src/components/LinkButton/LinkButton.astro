@@ -12,10 +12,12 @@ const { href, size = "text" } = Astro.props;
 
 <a href={href} class:list={[{ caption: size === "caption" }]}>
   <slot />
-  <Arrow width={14} angle={-45} />
+  <div class="arrow-container">
+    <Arrow width={14} angle={-45} />
+  </div>
 </a>
 
-<style>
+<style lang="scss">
   a {
     font-size: var(--font-size-text);
     display: inline-flex;
@@ -24,12 +26,26 @@ const { href, size = "text" } = Astro.props;
     gap: var(--spacing-xs);
     transition: gap 100ms ease;
 
-    &:hover {
-      gap: var(--spacing-sm);
-    }
+    // &:hover {
+    //   gap: var(--spacing-sm);
+    // }
 
     &.caption {
       font-size: var(--font-size-caption);
+    }
+
+    .arrow-container {
+      opacity: 0;
+      position: relative;
+      right: 16px;
+      transition: all 200ms ease;
+    }
+
+    &:hover {
+      .arrow-container {
+        opacity: 1;
+        right: 0;
+      }
     }
   }
 </style>

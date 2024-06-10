@@ -19,7 +19,7 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <Container class="hero">
+  <Container wide class="hero">
     <Hero />
   </Container>
   <CardSection background="var(--color-primary)">
@@ -36,16 +36,19 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
   <Container class="more-things-container">
     <MoreThingsAboutMe />
   </Container>
-  <div class="work-container">
+  <Container wide class="work-container">
     <Work />
-  </div>
-  <div class="rounded-separator"></div>
-  <StickyBottomSection backgroundColor="black" height="80svh" marginTop="80px">
-    <Container class="footer-container">
-      <Contact />
-      <Footer />
-    </Container>
-  </StickyBottomSection>
+  </Container>
+  <!-- <div class="rounded-separator"></div> -->
+  <!-- <StickyBottomSection
+    backgroundColor="#baa67f"
+    height="80svh"
+    marginTop="80px"
+  > -->
+  <Container wide class="footer-container">
+    <Contact />
+  </Container>
+  <!-- </StickyBottomSection> -->
 </BaseLayout>
 
 <style lang="scss">
@@ -62,9 +65,14 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
   }
 
   .footer-container {
-    padding-top: 80px;
-    background-color: black;
-    color: white;
+    // margin-top: var(--spacing-4xl);
+    // padding-top: var(--spacing-4xl);
+    // height: 80vh;
+    // background-color: #baa67f;
+    // color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .my-name-fluid {
@@ -89,9 +97,6 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
 
   .work-container {
     margin-top: var(--spacing-5xl);
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1440px;
   }
 
   section.skills {
@@ -134,6 +139,14 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
       padding-bottom: var(--spacing-3xl);
     }
   }
+
+  // #noise {
+  //   position: fixed;
+  //   left: 0;
+  //   top: 0;
+  //   z-index: 999999999;
+  //   opacity: 0.04;
+  // }
 </style>
 
 <script>
@@ -154,4 +167,89 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
 
   tl.to(".my-name", { duration: 0.2, scale: 0.9 }, 0);
   tl.to(".my-name", { duration: 1, y: -300 }, 0);
+
+  const noise = () => {
+    let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D;
+
+    let wWidth: number, wHeight: number;
+
+    let noiseData = [];
+    let frame = 0;
+
+    let loopTimeout;
+
+    const createNoise = () => {
+      const idata = ctx.createImageData(wWidth, wHeight);
+      const buffer32 = new Uint32Array(idata.data.buffer);
+      const len = buffer32.length;
+
+      for (let i = 0; i < len; i++) {
+        if (Math.random() < 0.5) {
+          buffer32[i] = 0xff000000;
+        }
+      }
+
+      noiseData.push(idata);
+    };
+
+    const paintNoise = () => {
+      if (frame === 9) {
+        frame = 0;
+      } else {
+        frame++;
+      }
+
+      ctx.putImageData(noiseData[frame], 0, 0);
+    };
+
+    const loop = () => {
+      paintNoise(frame);
+
+      loopTimeout = window.setTimeout(() => {
+        window.requestAnimationFrame(loop);
+      }, 1000 / 25);
+    };
+
+    // Setup
+    const setup = () => {
+      wWidth = window.innerWidth;
+      wHeight = window.innerHeight;
+
+      canvas.width = wWidth;
+      canvas.height = wHeight;
+
+      for (let i = 0; i < 10; i++) {
+        createNoise();
+      }
+
+      loop();
+    };
+
+    // Reset
+    let resizeThrottle;
+    const reset = () => {
+      window.addEventListener(
+        "resize",
+        () => {
+          window.clearTimeout(resizeThrottle);
+
+          resizeThrottle = window.setTimeout(() => {
+            window.clearTimeout(loopTimeout);
+            setup();
+          }, 200);
+        },
+        false
+      );
+    };
+
+    // Init
+    const init = (() => {
+      canvas = document.querySelector<HTMLCanvasElement>(".noise");
+      ctx = canvas?.getContext("2d");
+
+      setup();
+    })();
+  };
+
+  noise();
 </script>

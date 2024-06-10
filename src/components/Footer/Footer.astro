@@ -1,10 +1,16 @@
 ---
+import LinkButton from "@components/LinkButton/LinkButton.astro";
+
 const year = new Date().getFullYear();
 ---
 
 <footer>
-  <p>© {year} Nicolás Vera</p>
-  <div>image</div>
+  <p>© {year} Nicolás Vera. All rights reserved</p>
+  <!-- <div>
+    <LinkButton>CV</LinkButton>
+    <LinkButton>Github</LinkButton>
+    <LinkButton>LinkedIn</LinkButton>
+  </div> -->
 </footer>
 
 <style>
@@ -12,10 +18,18 @@ const year = new Date().getFullYear();
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg) 0;
   }
 
   p,
   div {
     font-size: var(--font-size-caption);
+  }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-lg);
   }
 </style>

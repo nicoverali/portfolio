@@ -2,7 +2,7 @@
 interface Props {
   href: string;
   outline?: boolean;
-  color?: "onPrimary" | "onBackground";
+  color?: "onPrimary" | "onBackground" | "secondary";
   size?: "text" | "caption";
 }
 
@@ -24,7 +24,7 @@ const { href, size = "text", color = "onBackground", outline } = Astro.props;
     color: var(--color-background);
     border-radius: var(--radius-sm);
     font-size: var(--font-size-text);
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     gap: var(--spacing-xs);
@@ -32,6 +32,11 @@ const { href, size = "text", color = "onBackground", outline } = Astro.props;
     &.onPrimary {
       background-color: var(--color-text-on-primary);
       color: var(--color-text-on-background);
+    }
+
+    &.secondary {
+      background-color: var(--color-secondary);
+      color: var(--color-text-on-secondary);
     }
 
     &:hover {

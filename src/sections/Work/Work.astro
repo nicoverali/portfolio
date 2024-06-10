@@ -16,7 +16,7 @@ const isEven = (n: number) => n % 2 === 0;
 
   <astro-projects-grid class="projects-grid">
     <Row class="project-row">
-      <Column size={12}>
+      <Column size={6}>
         {
           allProjects.splice(0, allProjects.length / 2).map((project, i) => (
             <div class:list={["project-container", { first: i === 0 }]}>
@@ -25,9 +25,9 @@ const isEven = (n: number) => n % 2 === 0;
           ))
         }
       </Column>
-      <Column size={12}>
+      <Column size={6}>
         {
-          allProjects.splice(allProjects.length / 2).map((project, i) => (
+          allProjects.splice(allProjects.length / 2 - 1).map((project, i) => (
             <div class:list={["project-container", { first: i === 0 }]}>
               <FeaturedProject project={project} />
             </div>
@@ -41,6 +41,16 @@ const isEven = (n: number) => n % 2 === 0;
 <style lang="scss">
   .projects-grid {
     display: block;
+    margin-top: var(--spacing-3xl);
+  }
+
+  .project-row {
+    > *:last-child {
+      margin-top: var(--spacing-3xl);
+    }
+  }
+
+  .project-container:not(:first-child) {
     margin-top: var(--spacing-3xl);
   }
 </style>

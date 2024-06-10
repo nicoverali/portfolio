@@ -7,8 +7,16 @@ import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astr
 ---
 
 <div class="container">
+  <!-- <Row align="end" grow>
+    <Column offset={6} align="end">
+      <h2>
+        I'm a computer science graduate with a deep passion for technology and a
+        solid foundation in computer science principles
+      </h2>
+    </Column>
+  </Row> -->
   <Row align="center">
-    <Column size={10} offset={1} align="center">
+    <Column size={10} align="start">
       <div class="location">
         <p>Buenos Aires - Argentina</p>
         <div class="arrow"></div>
@@ -22,26 +30,28 @@ import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astr
         />, a Software Developer focused on delivering user-centered solutions.
       </h1>
 
-      <h2>
+      <!-- <h2>
         I'm a computer science graduate with a deep passion for technology and a
         solid foundation in computer science principles
-      </h2>
+      </h2> -->
     </Column>
-  </Row>
-  <Row grow align="center">
-    <Column align="center">
+    <Column align="end" justify="center">
       <ScrollDownButton />
     </Column>
   </Row>
+  <!-- <Row grow align="end">
+    <Column align="center" class="scroll-down-container">
+    </Column>
+  </Row> -->
 </div>
 
 <style lang="scss">
   .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: end;
     height: calc(100svh - var(--el-header-height));
-    padding-top: var(--spacing-4xl);
+    padding-bottom: var(--spacing-3xl);
   }
 
   .location {
@@ -54,7 +64,8 @@ import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astr
   h1 {
     font-size: var(--font-size-h1);
     font-weight: 600;
-    text-align: center;
+    text-align: start;
+    text-wrap: pretty;
     margin-top: var(--spacing-xl);
 
     img {
@@ -68,9 +79,9 @@ import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astr
   }
 
   h2 {
-    margin-top: var(--spacing-2xl);
+    // margin-top: var(--spacing-2xl);
     font-size: var(--font-size-h4);
-    text-align: center;
+    text-align: end;
     font-weight: 400;
     text-wrap: balance;
   }
@@ -106,6 +117,10 @@ import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astr
       transform: rotate(-45deg);
       border-radius: 2px;
     }
+  }
+
+  .scroll-down-container {
+    padding-bottom: var(--spacing-2xl);
   }
 </style>
 
