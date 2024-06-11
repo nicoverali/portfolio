@@ -82,7 +82,11 @@ const { nav } = Astro.props;
     background-color: var(--el-mobile-nav-background);
     color: var(--el-mobile-nav-color);
     z-index: 1;
-    clip-path: inset(0% -100% 0% 100%);
+    display: none;
+
+    &.show {
+      display: block;
+    }
 
     ul {
       display: flex;
@@ -138,10 +142,18 @@ const { nav } = Astro.props;
 
       gsap.context(() => {
         const tl = gsap.timeline({ paused: true });
-        tl.to(this, {
-          duration: 0.5,
-          clipPath: "inset(0% 0% 0% 0%)",
-        });
+        tl.fromTo(
+          this,
+          {
+            display: "none",
+            clipPath: "inset(0% -100% 0% 100%)",
+          },
+          {
+            duration: 0.5,
+            display: "block",
+            clipPath: "inset(0% 0% 0% 0%)",
+          }
+        );
         tl.fromTo(
           "li",
           {
