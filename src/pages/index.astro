@@ -1,10 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import MyName from "@sections/MyName/MyName.astro";
 import AboutMe from "@sections/AboutMe/AboutMe.astro";
-import Skills from "@sections/Skills/Skills.astro";
 import Work from "@sections/Work/Work.astro";
-import OtherProjects from "@sections/OtherProjects/OtherProjects.astro";
 import Contact from "@sections/Contact/Contact.astro";
 import Container from "@components/Grid/Container.astro";
 import Hero from "@sections/Hero/Hero.astro";
@@ -14,12 +11,29 @@ import Button from "@components/Button/Button.astro";
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
 import MoreThingsAboutMe from "@sections/MoreThingsAboutMe/MoreThingsAboutMe.astro";
-import Footer from "@components/Footer/Footer.astro";
-import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSection.astro";
+import Header from "@components/Header/Header.astro";
+
+const nav = [
+  {
+    name: "About",
+    target: ".about-me-container",
+  },
+  {
+    name: "Work",
+    target: ".work-container",
+  },
+  {
+    name: "Contact",
+    target: ".footer-container",
+  },
+];
 ---
 
 <BaseLayout title="Nicolás Vera">
-  <Container wide class="hero">
+  <Container>
+    <Header nav={nav} />
+  </Container>
+  <Container>
     <Hero />
   </Container>
   <CardSection background="var(--color-primary)">
@@ -36,49 +50,21 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
   <Container class="more-things-container">
     <MoreThingsAboutMe />
   </Container>
-  <Container wide class="work-container">
+  <Container class="work-container">
     <Work />
   </Container>
-  <!-- <div class="rounded-separator"></div> -->
-  <!-- <StickyBottomSection
-    backgroundColor="#baa67f"
-    height="80svh"
-    marginTop="80px"
-  > -->
-  <Container wide class="footer-container">
+  <Container class="footer-container">
     <Contact />
   </Container>
-  <!-- </StickyBottomSection> -->
 </BaseLayout>
 
 <style lang="scss">
   @import "@styles/screens.scss";
 
-  .rounded-separator {
-    position: absolute;
-    height: 80px;
-    width: 100%;
-    margin-top: -1px;
-    background-color: var(--color-background);
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    z-index: 1;
-  }
-
   .footer-container {
-    // margin-top: var(--spacing-4xl);
-    // padding-top: var(--spacing-4xl);
-    // height: 80vh;
-    // background-color: #baa67f;
-    // color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
-
-  .my-name-fluid {
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    padding-bottom: var(--spacing-2xl);
-    background-color: var(--color-background);
   }
 
   .about-me-container {
@@ -93,30 +79,6 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
 
   .more-things-container {
     margin-top: var(--spacing-4xl);
-  }
-
-  .work-container {
-    margin-top: var(--spacing-5xl);
-  }
-
-  section.skills {
-    margin-top: var(--spacing-5xl);
-  }
-
-  section.work {
-    margin-top: var(--spacing-4xl);
-    margin-bottom: var(--spacing-5xl);
-  }
-
-  .my-name {
-    will-change: transform;
-    padding-top: var(--spacing-4xl);
-    padding-bottom: var(--spacing-5xl);
-
-    @media screen and (max-width: $screen-sm-min) {
-      padding-top: var(--spacing-xl);
-      padding-bottom: var(--spacing-4xl);
-    }
   }
 
   .about-me {
@@ -139,117 +101,4 @@ import StickyBottomSection from "@components/StickyBottomSection/StickyBottomSec
       padding-bottom: var(--spacing-3xl);
     }
   }
-
-  // #noise {
-  //   position: fixed;
-  //   left: 0;
-  //   top: 0;
-  //   z-index: 999999999;
-  //   opacity: 0.04;
-  // }
 </style>
-
-<script>
-  import { setupGSAP } from "@scripts/gsap";
-  import { gsap } from "gsap";
-
-  setupGSAP();
-
-  const tl = gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      trigger: ".my-name",
-      start: "bottom bottom+=50",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  tl.to(".my-name", { duration: 0.2, scale: 0.9 }, 0);
-  tl.to(".my-name", { duration: 1, y: -300 }, 0);
-
-  const noise = () => {
-    let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D;
-
-    let wWidth: number, wHeight: number;
-
-    let noiseData = [];
-    let frame = 0;
-
-    let loopTimeout;
-
-    const createNoise = () => {
-      const idata = ctx.createImageData(wWidth, wHeight);
-      const buffer32 = new Uint32Array(idata.data.buffer);
-      const len = buffer32.length;
-
-      for (let i = 0; i < len; i++) {
-        if (Math.random() < 0.5) {
-          buffer32[i] = 0xff000000;
-        }
-      }
-
-      noiseData.push(idata);
-    };
-
-    const paintNoise = () => {
-      if (frame === 9) {
-        frame = 0;
-      } else {
-        frame++;
-      }
-
-      ctx.putImageData(noiseData[frame], 0, 0);
-    };
-
-    const loop = () => {
-      paintNoise(frame);
-
-      loopTimeout = window.setTimeout(() => {
-        window.requestAnimationFrame(loop);
-      }, 1000 / 25);
-    };
-
-    // Setup
-    const setup = () => {
-      wWidth = window.innerWidth;
-      wHeight = window.innerHeight;
-
-      canvas.width = wWidth;
-      canvas.height = wHeight;
-
-      for (let i = 0; i < 10; i++) {
-        createNoise();
-      }
-
-      loop();
-    };
-
-    // Reset
-    let resizeThrottle;
-    const reset = () => {
-      window.addEventListener(
-        "resize",
-        () => {
-          window.clearTimeout(resizeThrottle);
-
-          resizeThrottle = window.setTimeout(() => {
-            window.clearTimeout(loopTimeout);
-            setup();
-          }, 200);
-        },
-        false
-      );
-    };
-
-    // Init
-    const init = (() => {
-      canvas = document.querySelector<HTMLCanvasElement>(".noise");
-      ctx = canvas?.getContext("2d");
-
-      setup();
-    })();
-  };
-
-  noise();
-</script>

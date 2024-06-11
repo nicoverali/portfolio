@@ -38,6 +38,17 @@ export const getCurrentScroll = (): Scroll => {
   };
 };
 
+export const scrollTo = (target: number | string | HTMLElement) => {
+  lenis.scrollTo(target);
+};
+
+export const toggleScroll = (active?: boolean) => {
+  if (active != null) {
+    return active ? lenis.start() : lenis.stop();
+  }
+  lenis.isStopped ? lenis.start() : lenis.stop();
+};
+
 export const onScroll = (callback: (scroll: Scroll) => void) => {
   if (lenis) {
     lenis.on("scroll", () => callback(getCurrentScroll()));

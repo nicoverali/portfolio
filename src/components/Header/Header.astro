@@ -1,14 +1,20 @@
 ---
 import Column from "@components/Grid/Column.astro";
 import Row from "@components/Grid/Row.astro";
-import LinkButton from "@components/LinkButton/LinkButton.astro";
+import type { NavItem } from "@components/Nav/Nav.astro";
 import Nav from "@components/Nav/Nav.astro";
 import { Icon } from "astro-icon/components";
+
+interface Props {
+  nav?: NavItem[];
+}
+
+const { nav } = Astro.props;
 ---
 
 <header>
   <Row justify="between" align="center">
-    <Column size={1} class="logo">
+    <Column size={2} class="logo">
       <Icon name="logo" />
       <div>
         <p>Nicolás</p>
@@ -16,19 +22,7 @@ import { Icon } from "astro-icon/components";
       </div>
     </Column>
     <Column align="end">
-      <nav>
-        <ul>
-          <li>
-            <LinkButton>About</LinkButton>
-          </li>
-          <li>
-            <LinkButton>Work</LinkButton>
-          </li>
-          <li>
-            <LinkButton>Contact</LinkButton>
-          </li>
-        </ul>
-      </nav>
+      <Nav nav={nav} />
     </Column>
   </Row>
 </header>
@@ -40,12 +34,19 @@ import { Icon } from "astro-icon/components";
     display: flex;
     flex-direction: row;
     align-items: center;
+    transition: color 0.5s ease;
+
+    &.open {
+      color: var(--color-text-on-primary);
+    }
   }
 
   .logo {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
+    z-index: 2;
     gap: var(--spacing-sm);
 
     [data-icon="logo"] {
@@ -72,10 +73,14 @@ import { Icon } from "astro-icon/components";
     flex-direction: column;
     text-wrap: pretty;
   }
-
-  nav ul {
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-4xl);
-  }
 </style>
+
+<script>
+  import { isMobileNavOpen } from "@scripts/stores";
+
+  isMobileNavOpen.subscribe((isMobileNavOpen) => {
+    document
+      .querySelectorAll("header")
+      .forEach((header) => header.classList.toggle("open", isMobileNavOpen));
+  });
+</script>

@@ -3,8 +3,7 @@
 :root {
   --page-col-gutter: 24px;
   --page-padding-h: 64px;
-  --page-max-width: 1440px;
-  --page-wide-max-width: 1800px;
+  --page-max-width: 1660px;
   --color-background: #fcf8f1;
   --color-primary: #104542;
   --color-secondary: #f0565b;
@@ -36,7 +35,7 @@
   --radius-lg: 20px;
   --radius-xl: 40px;
 
-  --el-header-height: 80px;
+  --el-header-height: 96px;
   --el-figma-editable-color: #4597f7;
 
   &.dark {
@@ -91,6 +90,15 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+button {
+  background-color: inherit;
+  border: none;
+
+  &:hover {
+    outline: none;
+  }
 }
 
 h1,

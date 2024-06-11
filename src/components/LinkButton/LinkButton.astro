@@ -1,37 +1,52 @@
 ---
 interface Props {
-  href: string;
-  size?: "text" | "caption";
+  href?: string;
+  id?: string;
+  size?: "text" | "caption" | "h2";
+  [key: `data-${string}`]: string;
 }
 
 import Arrow from "@components/Arrow/Arrow.astro";
-import { Icon } from "astro-icon/components";
 
-const { href, size = "text" } = Astro.props;
+const { href, id, size = "text", ...rest } = Astro.props;
+const Button = href == null ? "button" : "a";
+
+const arrowSize = {
+  caption: 14,
+  text: 14,
+  h2: 20,
+};
+const arrowWeight = {
+  caption: 2,
+  text: 2,
+  h2: 3,
+};
 ---
 
-<a href={href} class:list={[{ caption: size === "caption" }]}>
+<Button href={href} id={id} class:list={[size]} {...rest}>
   <slot />
   <div class="arrow-container">
-    <Arrow width={14} angle={-45} />
+    <Arrow width={arrowSize[size]} weight={arrowWeight[size]} angle={-45} />
   </div>
-</a>
+</Button>
 
 <style lang="scss">
-  a {
+  a,
+  button {
+    cursor: pointer;
     font-size: var(--font-size-text);
     display: inline-flex;
     flex-direction: row;
     align-items: center;
     gap: var(--spacing-xs);
     transition: gap 100ms ease;
-
-    // &:hover {
-    //   gap: var(--spacing-sm);
-    // }
-
+    color: currentColor;
     &.caption {
       font-size: var(--font-size-caption);
+    }
+
+    &.h2 {
+      font-size: var(--font-size-h2);
     }
 
     .arrow-container {
@@ -42,6 +57,8 @@ const { href, size = "text" } = Astro.props;
     }
 
     &:hover {
+      text-decoration: underline;
+
       .arrow-container {
         opacity: 1;
         right: 0;

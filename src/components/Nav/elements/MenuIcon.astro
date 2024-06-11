@@ -1,0 +1,43 @@
+---
+
+---
+
+<svg class="nav-menu-icon" viewBox="0 0 100 100">
+  <rect class="line top" width="75" height="8.3" x="12.5" y="25"></rect>
+  <rect class="line middle" width="75" height="8.3" x="12.5" y="45.8"></rect>
+  <rect class="line bottom" width="75" height="8.3" x="12.5" y="66.6"></rect>
+</svg>
+
+<style>
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+
+  svg .line {
+    fill: currentColor;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { isMobileNavOpen } from "@scripts/stores";
+
+  gsap.context(() => {
+    const tl = gsap.timeline({
+      defaults: { transformOrigin: "center" },
+      paused: true,
+    });
+    tl.to("rect.top", { y: 20.9 });
+    tl.to("rect.bottom", { y: -20.9 }, "<");
+
+    tl.set("rect.middle", { opacity: 0 });
+
+    tl.to("rect.top", { rotate: 45 });
+    tl.to("rect.bottom", { rotate: -45 }, "<");
+
+    isMobileNavOpen.subscribe((isMobileNavOpen) =>
+      isMobileNavOpen ? tl.play() : tl.reverse()
+    );
+  }, ".nav-menu-icon");
+</script>

@@ -1,13 +1,12 @@
 ---
 interface Props {
   class?: string;
-  wide?: boolean;
 }
 
-const { class: className, wide, ...rest } = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<div class:list={[className, { wide }]} {...rest}>
+<div class:list={[className]} {...rest}>
   <slot />
 </div>
 
@@ -23,12 +22,6 @@ const { class: className, wide, ...rest } = Astro.props;
       padding: 0 var(--spacing-md);
     }
 
-    @media screen and (min-width: 1440px) {
-      max-width: var(--page-wide-max-width);
-    }
-  }
-
-  div.wide {
     @media screen and (min-width: 1440px) {
       max-width: var(--page-wide-max-width);
     }
