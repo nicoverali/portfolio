@@ -1,8 +1,10 @@
 ---
+export type ButtonColor = "onPrimary" | "onBackground" | "secondary";
+
 interface Props {
   href: string;
   outline?: boolean;
-  color?: "onPrimary" | "onBackground" | "secondary";
+  color?: ButtonColor;
   size?: "text" | "caption";
 }
 
