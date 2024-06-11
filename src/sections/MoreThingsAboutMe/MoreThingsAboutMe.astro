@@ -65,11 +65,12 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
 </div>
 
 <style lang="scss">
+  @import "../../styles/screens.scss";
+
   .cards-grid {
     margin-top: var(--spacing-3xl);
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-row: 1fr 1fr;
     grid-template-areas:
       "main-sk main-sk main-sk main-sk all-sk all-sk all-sk all-sk all-sk cloud cloud cloud"
       " figma  figma  figma   ha  ha     ha     ha    ha    ha docker  docker  docker ";
@@ -78,6 +79,26 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
     column-gap: var(--col-gutter, 24px);
     grid-row-gap: var(--spacing-2xl);
     row-gap: var(--spacing-xl);
+
+    @media screen and (max-width: $screen-lg-min) {
+      grid-template-areas:
+        "main-sk main-sk main-sk main-sk main-sk all-sk all-sk all-sk all-sk all-sk all-sk all-sk"
+        "figma figma figma figma figma figma figma cloud cloud cloud cloud cloud"
+        " ha  ha  ha   ha  ha     ha     ha    ha    docker docker  docker  docker ";
+    }
+
+    @media screen and (max-width: $screen-md-min) {
+      grid-template-areas:
+        "main-sk main-sk main-sk main-sk main-sk main-sk cloud cloud cloud cloud cloud cloud"
+        "all-sk all-sk all-sk all-sk all-sk all-sk all-sk all-sk all-sk all-sk all-sk all-sk"
+        "figma figma figma figma figma figma docker docker docker docker docker docker"
+        "ha ha ha ha ha ha ha ha ha ha ha ha";
+    }
+
+    @media screen and (max-width: $screen-sm-min) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "main-sk" "all-sk" "cloud" "figma" "ha" "docker";
+    }
   }
 
   .sub-description {

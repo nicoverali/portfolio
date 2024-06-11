@@ -6,7 +6,7 @@ interface Props {
 const { gridArea } = Astro.props;
 ---
 
-<div class="card" style={{ gridArea }}>
+<div class="card">
   <div class="content">
     <slot name="content" />
   </div>
@@ -15,7 +15,9 @@ const { gridArea } = Astro.props;
   </div>
 </div>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ gridArea }}>
+  @import "../../../../styles/screens.scss";
+
   .card {
     background-color: var(--color-paper-on-background);
     height: 400px;
@@ -26,6 +28,8 @@ const { gridArea } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+
+    grid-area: var(--gridArea);
 
     .content {
       flex: 1;
