@@ -3,14 +3,15 @@ import type { CSSProperty } from "astro/types";
 
 interface Props {
   width?: number;
+  animateTo?: number;
   weight?: number;
   angle?: number;
 }
 
-const { width = 48, weight = 2, angle = 0 } = Astro.props;
+const { width = 48, animateTo, weight = 2, angle = 0 } = Astro.props;
 ---
 
-<div></div>
+<astro-arrow data-anim-to={animateTo}></astro-arrow>
 
 <style
   lang="scss"
@@ -20,10 +21,11 @@ const { width = 48, weight = 2, angle = 0 } = Astro.props;
     angle: `${angle}deg`,
   }}
 >
-  div {
+  astro-arrow {
     --width: 48px;
     --weight: 2px;
 
+    display: block;
     position: relative;
     background-color: currentColor;
     width: var(--width);
@@ -57,3 +59,31 @@ const { width = 48, weight = 2, angle = 0 } = Astro.props;
     }
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+
+  class Arrow extends HTMLElement {
+    constructor() {
+      super();
+
+      const animTo = this.dataset.animTo;
+
+      if (animTo != null && !isNaN(parseInt(animTo))) {
+        this.playAnimation(parseInt(animTo));
+      }
+    }
+
+    playAnimation(to: number) {
+      gsap.to(this, {
+        width: to,
+        duration: 1,
+        yoyo: true,
+        yoyoEase: true,
+        repeat: -1,
+      });
+    }
+  }
+
+  customElements.define("astro-arrow", Arrow);
+</script>

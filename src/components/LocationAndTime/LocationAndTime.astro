@@ -1,0 +1,85 @@
+---
+
+---
+
+<div class="location">
+  <p>Buenos Aires - Argentina</p>
+  <div class="nowrap">
+    <div class="arrow"></div>
+    <p class="time">00:00 AM</p>
+  </div>
+</div>
+
+<style lang="scss">
+  .location {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+
+  .nowrap {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+
+  .arrow {
+    position: relative;
+    background-color: var(--color-text-on-background);
+    width: 48px;
+    height: 2px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -0.5px;
+      background-color: var(--color-text-on-background);
+      height: 2px;
+      width: 12px;
+      transform-origin: center right;
+      transform: rotate(45deg);
+      border-radius: 2px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0.5px;
+      background-color: var(--color-text-on-background);
+      height: 2px;
+      width: 12px;
+      transform-origin: center right;
+      transform: rotate(-45deg);
+      border-radius: 2px;
+    }
+  }
+</style>
+
+<script>
+  function getArgentinaTime() {
+    let formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Argentina/Buenos_Aires",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+    let formattedTime = formatter.format(new Date());
+
+    return formattedTime;
+  }
+
+  const timeEl = document.getElementsByClassName("time")[0];
+  timeEl.textContent = getArgentinaTime();
+
+  setInterval(() => {
+    const newTime = getArgentinaTime();
+    timeEl.textContent = timeEl.textContent?.includes(":")
+      ? newTime.replaceAll(":", " ")
+      : newTime;
+  }, 1000);
+</script>

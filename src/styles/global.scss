@@ -7,6 +7,7 @@
   --color-background: #fcf8f1;
   --color-primary: #104542;
   --color-secondary: #f0565b;
+  --color-topbar: red;
   --color-text-on-background: #393734;
   --color-text-on-primary: #fcf8f1;
   --color-text-on-secondary: #fcf8f1;
@@ -35,6 +36,8 @@
   --radius-lg: 20px;
   --radius-xl: 40px;
 
+  --el-mobile-nav-background: var(--color-primary);
+  --el-mobile-nav-color: var(--color-text-on-primary);
   --el-header-height: 96px;
   --el-figma-editable-color: #4597f7;
 
@@ -51,12 +54,21 @@
     --color-paper-border-on-paper: #7d7d7d;
   }
 
-  // @media screen and (max-width: $screen-sm-min) {
-  //   --font-size-display: 48px;
-  //   --font-size-h3: 20px;
-  //   --font-size-h4: 18px;
-  //   --font-size-display-xl: 16px;
-  // }
+  @media screen and (max-width: $screen-md-min) {
+    --font-size-h1: 48px;
+    --font-size-h3: 20px;
+    --font-size-h4: 18px;
+    --font-size-display-xl: 16px;
+  }
+
+  @media screen and (max-width: $screen-sm-min) {
+    --font-size-h1: 36px;
+    --font-size-h3: 20px;
+    --font-size-h4: 18px;
+    --font-size-text: 16px;
+    --font-size-text-small: 14px;
+    --font-size-display-xl: 16px;
+  }
 }
 
 * {
@@ -86,7 +98,8 @@ body {
   margin: auto;
 }
 
-ul {
+ul,
+li {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -95,6 +108,9 @@ ul {
 button {
   background-color: inherit;
   border: none;
+  padding: 0;
+  margin: 0;
+  color: currentColor;
 
   &:hover {
     outline: none;

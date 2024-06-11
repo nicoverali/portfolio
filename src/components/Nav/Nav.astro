@@ -60,17 +60,27 @@ const { nav } = Astro.props;
     }
   }
 
+  .mobile-menu-toggle {
+    position: relative;
+    display: none;
+    width: 48px;
+    height: 48px;
+    z-index: 2;
+
+    @media screen and (max-width: $screen-md-min) {
+      display: block;
+    }
+  }
+
   astro-mobile-menu {
-    display: flex;
-    justify-content: start;
-    align-items: center;
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-primary);
-    color: var(--color-text-on-primary);
+    padding-top: calc(var(--el-header-height) + var(--spacing-2xl));
+    background-color: var(--el-mobile-nav-background);
+    color: var(--el-mobile-nav-color);
     z-index: 1;
     clip-path: inset(0% -100% 0% 100%);
 
@@ -81,18 +91,6 @@ const { nav } = Astro.props;
       font-size: var(--font-size-h2);
       font-weight: 500;
       color: var(--color-text-on-primary);
-    }
-  }
-
-  .mobile-menu-toggle {
-    position: relative;
-    display: none;
-    width: 48px;
-    height: 48px;
-    z-index: 2;
-
-    @media screen and (max-width: $screen-md-min) {
-      display: block;
     }
   }
 </style>

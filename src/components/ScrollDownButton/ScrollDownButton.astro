@@ -1,14 +1,18 @@
 ---
 import Arrow from "@components/Arrow/Arrow.astro";
+
+interface Props {
+  target: number | string;
+}
+
+const { target } = Astro.props;
 ---
 
-<div class="container">
-  <div class="arrow-container">
-    <Arrow width={48} />
-  </div>
-</div>
+<button class="scroll-down-button container" data-scroll-to={target}>
+  <Arrow width={48} angle={90} animateTo={42} />
+</button>
 
-<style>
+<style lang="scss">
   .container {
     display: flex;
     justify-content: center;
@@ -17,12 +21,33 @@ import Arrow from "@components/Arrow/Arrow.astro";
     height: 120px;
     border-radius: 100%;
     background-color: var(--color-paper-on-background);
-    /* background-color: red; */
-  }
+    cursor: pointer;
+    transition:
+      color 200ms ease,
+      background-color 200ms ease;
 
-  .arrow-container {
-    transform: rotate(90deg);
+    &:hover {
+      background-color: var(--color-secondary);
+      color: var(--color-text-on-secondary);
+    }
   }
 </style>
 
-<script></script>
+<script>
+  import { scrollTo } from "@scripts/scroll";
+
+  const buttons = document.querySelectorAll<HTMLElement>(".scroll-down-button");
+
+  for (const button of buttons) {
+    const target = button.dataset.scrollTo;
+    if (!target) continue;
+
+    button.addEventListener("click", () => {
+      if (!isNaN(parseInt(target))) {
+        scrollTo(parseInt(target));
+      } else {
+        scrollTo(target);
+      }
+    });
+  }
+</script>

@@ -1,72 +1,83 @@
 ---
-import Column from "@components/Grid/Column.astro";
-import Row from "@components/Grid/Row.astro";
 import { Image } from "astro:assets";
 import ProfileImage from "@assets/images/profile-pic.jpeg";
+import ProfileDarkImage from "@assets/images/profile-pic-dark.jpeg";
 import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astro";
+import LocationAndTime from "@components/LocationAndTime/LocationAndTime.astro";
+
+interface Props {
+  scrollDownTarget: number | string;
+}
+
+const { scrollDownTarget } = Astro.props;
 ---
 
 <div class="container">
-  <!-- <Row align="end" grow>
-    <Column offset={6} align="end">
-      <h2>
-        I'm a computer science graduate with a deep passion for technology and a
-        solid foundation in computer science principles
-      </h2>
-    </Column>
-  </Row> -->
-  <Row align="center">
-    <Column size={10} align="start">
-      <div class="location">
-        <p>Buenos Aires - Argentina</p>
-        <div class="arrow"></div>
-        <p class="time">00:00 AM</p>
-      </div>
-
-      <h1>
-        Hi, I'm Nicolás <Image
+  <div class="top">
+    <LocationAndTime />
+  </div>
+  <div class="bottom">
+    <h1>
+      Hi, I'm Nicolás <span
+        ><Image
+          class="light"
           src={ProfileImage}
           alt={"Profile picture of Nicolás Vera"}
-        />, a Software Developer focused on delivering user-centered solutions.
-      </h1>
-
-      <!-- <h2>
-        I'm a computer science graduate with a deep passion for technology and a
-        solid foundation in computer science principles
-      </h2> -->
-    </Column>
-    <Column align="end" justify="center">
-      <ScrollDownButton />
-    </Column>
-  </Row>
-  <!-- <Row grow align="end">
-    <Column align="center" class="scroll-down-container">
-    </Column>
-  </Row> -->
+        /><Image
+          class="dark"
+          src={ProfileDarkImage}
+          alt={"Profile picture of Nicolás Vera at night"}
+        />,</span
+      > a Software Developer focused on delivering user-centered solutions.
+    </h1>
+    <div class="scroll-down-container">
+      <ScrollDownButton target={scrollDownTarget} />
+    </div>
+  </div>
 </div>
 
 <style lang="scss">
+  @import "../../styles/screens.scss";
+
   .container {
     display: flex;
     flex-direction: column;
     justify-content: end;
     height: calc(100svh - var(--el-header-height));
     padding-bottom: var(--spacing-3xl);
+
+    @media screen and (max-width: $screen-lg-min) {
+      padding-bottom: var(--spacing-2xl);
+    }
+
+    @media screen and (max-width: $screen-sm-min) {
+      padding-bottom: var(--spacing-xl);
+    }
   }
 
-  .location {
+  .bottom {
+    margin-top: var(--spacing-xl);
     display: flex;
     flex-direction: row;
-    gap: var(--spacing-md);
     align-items: center;
+    gap: var(--spacing-xl);
+    justify-content: space-between;
+
+    @media screen and (max-width: $screen-md-min) {
+      margin-top: var(--spacing-md);
+      flex-direction: column;
+      gap: var(--spacing-xl);
+    }
   }
 
   h1 {
     font-size: var(--font-size-h1);
     font-weight: 600;
-    text-align: start;
-    text-wrap: pretty;
-    margin-top: var(--spacing-xl);
+    -webkit-text-wrap: balance;
+
+    span {
+      white-space: nowrap;
+    }
 
     img {
       width: 64px;
@@ -75,74 +86,46 @@ import ScrollDownButton from "@components/ScrollDownButton/ScrollDownButton.astr
       vertical-align: baseline;
       position: relative;
       top: 10px;
-    }
-  }
 
-  h2 {
-    // margin-top: var(--spacing-2xl);
-    font-size: var(--font-size-h4);
-    text-align: end;
-    font-weight: 400;
-    text-wrap: balance;
-  }
-
-  .arrow {
-    position: relative;
-    background-color: var(--color-text-on-background);
-    width: 48px;
-    height: 2px;
-
-    &::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: -0.5px;
-      background-color: var(--color-text-on-background);
-      height: 2px;
-      width: 12px;
-      transform-origin: center right;
-      transform: rotate(45deg);
-      border-radius: 2px;
+      @media screen and (max-width: $screen-sm-min) {
+        width: 48px;
+        height: 48px;
+        top: 8px;
+      }
     }
 
-    &::before {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: 0.5px;
-      background-color: var(--color-text-on-background);
-      height: 2px;
-      width: 12px;
-      transform-origin: center right;
-      transform: rotate(-45deg);
-      border-radius: 2px;
+    img.light {
+      display: initial;
+    }
+    img.dark {
+      display: none;
+    }
+
+    &.dark {
+      img.light {
+        display: none;
+      }
+      img.dark {
+        display: initial;
+      }
     }
   }
 
   .scroll-down-container {
-    padding-bottom: var(--spacing-2xl);
+    @media screen and (max-width: $screen-md-min) {
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 </style>
 
 <script>
-  function getArgentinaTime() {
-    let formatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/Argentina/Buenos_Aires",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-    let formattedTime = formatter.format(new Date());
+  import { isDarkMode } from "@scripts/stores";
 
-    return formattedTime;
-  }
+  const h1 = document.querySelectorAll<HTMLElement>("h1");
 
-  const timeEl = document.getElementsByClassName("time")[0];
-
-  setInterval(() => {
-    const newTime = getArgentinaTime();
-    timeEl.textContent = timeEl.textContent?.includes(":")
-      ? newTime.replaceAll(":", " ")
-      : newTime;
-  }, 1000);
+  isDarkMode.subscribe((isDarkMode) => {
+    h1.forEach((el) => el.classList.toggle("dark", isDarkMode));
+  });
 </script>

@@ -28,6 +28,7 @@ const { title } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+    <meta name="theme-color" content="" />
   </head>
   <body>
     <slot />
@@ -39,7 +40,24 @@ const { title } = Astro.props;
 <script>
   import { setupGSAP } from "@scripts/gsap";
   import { setupLenis } from "@scripts/scroll";
+  import { isMobileNavOpen, isDarkMode } from "@scripts/stores";
 
   setupGSAP();
   setupLenis();
+
+  const root = document.documentElement;
+  const metaTag = document.querySelector("meta[name='theme-color']");
+
+  isMobileNavOpen.subscribe(updateThemeColor);
+  isDarkMode.subscribe(updateThemeColor);
+
+  function updateThemeColor() {
+    const style = getComputedStyle(root);
+    const backgroundColor = style.getPropertyValue("--color-background");
+    const mobileNavColor = style.getPropertyValue("--el-mobile-nav-background");
+    metaTag?.setAttribute(
+      "content",
+      isMobileNavOpen.get() ? mobileNavColor : backgroundColor
+    );
+  }
 </script>

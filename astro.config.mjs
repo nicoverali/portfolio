@@ -6,6 +6,9 @@ import remarkAnimSplit from "./src/scripts/remark-anim-split-plugin";
 
 // https://astro.build/config
 export default defineConfig({
+  devToolbar: {
+    enabled: false,
+  },
   markdown: {
     remarkPlugins: [remarkAnimSplit],
   },

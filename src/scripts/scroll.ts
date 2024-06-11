@@ -39,7 +39,7 @@ export const getCurrentScroll = (): Scroll => {
 };
 
 export const scrollTo = (target: number | string | HTMLElement) => {
-  lenis.scrollTo(target);
+  lenis.scrollTo(target, { duration: 1.5 });
 };
 
 export const toggleScroll = (active?: boolean) => {
