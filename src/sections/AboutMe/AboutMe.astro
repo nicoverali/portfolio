@@ -7,10 +7,10 @@ import { Content as AboutMeContent } from "@content/others/about-me.md";
 
 <astro-about-me>
   <Row>
-    <Column size={3}>
+    <Column size={{ xs: 12, md: 3 }}>
       <SectionTitle> About me </SectionTitle>
     </Column>
-    <Column size={8} class="about-me-content">
+    <Column size={{ xs: 12, md: 9, lg: 8 }} class="about-me-content">
       <AboutMeContent />
     </Column>
   </Row>
@@ -20,6 +20,7 @@ import { Content as AboutMeContent } from "@content/others/about-me.md";
   @import "@styles/screens.scss";
 
   astro-about-me {
+    display: block;
     width: 100%;
   }
 
@@ -30,6 +31,8 @@ import { Content as AboutMeContent } from "@content/others/about-me.md";
       font-size: var(--font-size-h2);
       font-weight: 400;
       line-height: 150%;
+      -webkit-text-wrap: balance;
+      text-wrap: pretty;
 
       &:not(:last-child) {
         margin-bottom: var(--spacing-2xl);
@@ -38,6 +41,10 @@ import { Content as AboutMeContent } from "@content/others/about-me.md";
       &.highlight {
         font-weight: 600;
       }
+    }
+
+    @media screen and (max-width: $screen-md-min) {
+      margin-top: var(--spacing-xl);
     }
   }
 </style>

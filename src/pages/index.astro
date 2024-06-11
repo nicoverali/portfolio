@@ -41,7 +41,10 @@ const nav = [
       <AboutMe />
       <Experience />
       <Row>
-        <Column offset={3} align="start">
+        <Column
+          offset={{ xs: 12, md: 3 }}
+          align={{ md: "start", xs: "center" }}
+        >
           <Button href="" color="onPrimary">Download CV</Button>
         </Column>
       </Row>
@@ -73,7 +76,6 @@ const nav = [
     color: var(--color-text-on-primary);
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--spacing-3xl);
   }
 
