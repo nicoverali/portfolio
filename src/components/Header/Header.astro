@@ -1,6 +1,4 @@
 ---
-import Column from "@components/Grid/Column.astro";
-import Row from "@components/Grid/Row.astro";
 import type { NavItem } from "@components/Nav/Nav.astro";
 import Nav from "@components/Nav/Nav.astro";
 import { Icon } from "astro-icon/components";
@@ -13,18 +11,14 @@ const { nav } = Astro.props;
 ---
 
 <header>
-  <Row justify="between" align="center">
-    <Column size={2} class="logo">
-      <Icon name="logo" />
-      <div>
-        <p>Nicolás</p>
-        <p>Vera</p>
-      </div>
-    </Column>
-    <Column align="end">
-      <Nav nav={nav} />
-    </Column>
-  </Row>
+  <div class="logo">
+    <Icon name="logo" />
+    <div>
+      <p>Nicolás</p>
+      <p>Vera</p>
+    </div>
+  </div>
+  <Nav nav={nav} />
 </header>
 
 <style lang="scss">
@@ -34,6 +28,7 @@ const { nav } = Astro.props;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     transition: color 0.5s ease;
 
     &.open {
