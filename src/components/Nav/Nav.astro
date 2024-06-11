@@ -126,6 +126,18 @@ const { nav } = Astro.props;
         ".mobile-menu-toggle"
       );
 
+      this.querySelectorAll("li").forEach((item) => {
+        item.addEventListener("click", () => isMobileNavOpen.set(false));
+      });
+
+      window.addEventListener("resize", () =>
+        isMobileNavOpen.set(window.innerWidth <= 1024 && isMobileNavOpen.get())
+      );
+
+      toggleButton?.addEventListener("click", () =>
+        isMobileNavOpen.set(!isMobileNavOpen.get())
+      );
+
       gsap.context(() => {
         const tl = gsap.timeline({ paused: true });
         tl.to(this, {
@@ -147,21 +159,8 @@ const { nav } = Astro.props;
           ">-=0.4"
         );
 
-        window.addEventListener("resize", () => {
-          if (window.innerWidth > 1024) {
-            isMobileNavOpen.set(false);
-            tl.reverse();
-          }
-        });
-
-        toggleButton?.addEventListener("click", () => {
-          if (!isMobileNavOpen.get()) {
-            isMobileNavOpen.set(true);
-            tl.play();
-          } else {
-            isMobileNavOpen.set(false);
-            tl.reverse();
-          }
+        isMobileNavOpen.subscribe((isMobileNavOpen) => {
+          isMobileNavOpen ? tl.play() : tl.reverse();
         });
       }, this);
     }
