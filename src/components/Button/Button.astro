@@ -9,18 +9,22 @@ interface Props {
 }
 
 import Arrow from "@components/Arrow/Arrow.astro";
-import { Icon } from "astro-icon/components";
 
 const { href, size = "text", color = "onBackground", outline } = Astro.props;
+const ButtonElement = href ? "a" : "button";
 ---
 
-<a href={href} class:list={[color, { caption: size === "caption", outline }]}>
+<ButtonElement
+  href={href}
+  class:list={[color, { caption: size === "caption", outline }]}
+>
   <slot />
   <Arrow angle={-45} width={16} />
-</a>
+</ButtonElement>
 
 <style lang="scss">
-  a {
+  a,
+  button {
     padding: var(--spacing-md);
     background-color: var(--color-text-on-background);
     color: var(--color-background);
@@ -30,10 +34,14 @@ const { href, size = "text", color = "onBackground", outline } = Astro.props;
     flex-direction: row;
     align-items: center;
     gap: var(--spacing-xs);
+    cursor: pointer;
+    transition:
+      color 200ms ease,
+      background-color 200ms ease;
 
     &.onPrimary {
       background-color: var(--color-text-on-primary);
-      color: var(--color-text-on-background);
+      color: var(--color-primary);
     }
 
     &.secondary {
@@ -42,6 +50,12 @@ const { href, size = "text", color = "onBackground", outline } = Astro.props;
     }
 
     &:hover {
+      text-decoration: underline;
+      background-color: var(--color-secondary);
+      color: var(--color-text-on-secondary);
+    }
+
+    &:active {
       text-decoration: none;
     }
 
