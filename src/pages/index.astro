@@ -7,9 +7,6 @@ import Container from "@components/Grid/Container.astro";
 import Hero from "@sections/Hero/Hero.astro";
 import CardSection from "@components/CardSection/CardSection.astro";
 import Experience from "@sections/Experience/Experience.astro";
-import Button from "@components/Button/Button.astro";
-import Column from "@components/Grid/Column.astro";
-import Row from "@components/Grid/Row.astro";
 import MoreThingsAboutMe from "@sections/MoreThingsAboutMe/MoreThingsAboutMe.astro";
 import Header from "@components/Header/Header.astro";
 
@@ -75,24 +72,7 @@ const nav = [
     margin-top: var(--spacing-4xl);
   }
 
-  .about-me {
-    padding-top: var(--spacing-lg);
-    padding-bottom: var(--spacing-5xl);
-
-    .about-me-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--spacing-2xl);
-    }
-
-    .skills-container {
-      max-width: 90%;
-    }
-
-    @media screen and (max-width: $screen-sm-min) {
-      padding-top: 0;
-      padding-bottom: var(--spacing-3xl);
-    }
+  .work-container {
+    margin-top: var(--spacing-4xl);
   }
 </style>

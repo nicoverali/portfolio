@@ -1,5 +1,4 @@
 ---
-import Arrow from "@components/Arrow/Arrow.astro";
 import Button from "@components/Button/Button.astro";
 import Footer from "@components/Footer/Footer.astro";
 import Column from "@components/Grid/Column.astro";
@@ -9,16 +8,14 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 
 <div class="container">
   <Row>
-    <Column offset={3}>
+    <Column offset={{ md: 3 }}>
       <div class="header">
         <p>Got something great in mind ?</p>
         <p>Let's build together.</p>
       </div>
-      <!-- <Arrow width={16} angle={45} weight={3} /> -->
 
       <div class="email">
         <Button>nicolasalevera98@gmail.com</Button>
-        <!-- <p>nicolasalevera98@gmail.com</p> -->
         <p class="sub">Click to copy</p>
       </div>
 
