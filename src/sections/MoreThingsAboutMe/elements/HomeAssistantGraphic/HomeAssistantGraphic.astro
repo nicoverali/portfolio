@@ -10,11 +10,13 @@ import HomeButtonBox from "../HomeButtonBox/HomeButtonBox.astro";
     <HomeButtonBox name="Stairs" state="100%" />
   </div>
   <div class="list">
+    <HomeButtonBox name="Ambient Light" icon="bulb" state="50%" color="off" />
     <HomeButtonBox name="Kitchen TV" icon="tv" state="Off" color="off" />
     <HomeButtonBox
       class="light theme-switcher"
       name="Portfolio"
       state="Light"
+      clickable
       opacity={1}
     />
     <HomeButtonBox
@@ -22,6 +24,7 @@ import HomeButtonBox from "../HomeButtonBox/HomeButtonBox.astro";
       name="Portfolio"
       color="off"
       state="Dark"
+      clickable
       opacity={1}
     />
     <HomeButtonBox
@@ -30,6 +33,7 @@ import HomeButtonBox from "../HomeButtonBox/HomeButtonBox.astro";
       state="Off"
       color="off"
     />
+    <HomeButtonBox name="Kitchen TV" icon="speaker" state="Off" color="off" />
   </div>
   <div class="list">
     <HomeButtonBox name="Farolito" state="Off" color="off" />

@@ -14,6 +14,7 @@ interface Props {
     | "videocam"
     | "scene";
   color?: "off" | "yellow" | "blue";
+  clickable?: boolean;
   opacity?: number;
 }
 
@@ -23,11 +24,15 @@ const {
   state,
   icon = "bulb",
   color = "yellow",
+  clickable = false,
   opacity = 0.4,
 } = Astro.props;
 ---
 
-<div class:list={["input-container", className]}>
+<button
+  class:list={["input-container", className, { clickable }]}
+  disabled={!clickable}
+>
   <div class:list={["icon-container", color]}>
     <Icon is:inline={true} name={`ha/${icon}`} />
   </div>
@@ -36,7 +41,7 @@ const {
     <p>{name}</p>
     {state && <p>{state}</p>}
   </div>
-</div>
+</button>
 
 <style lang="scss" define:vars={{ opacity }}>
   .input-container {
@@ -52,6 +57,14 @@ const {
     background-color: var(--color-paper-on-paper);
     border: 1px solid var(--color-paper-border-on-paper);
     user-select: none;
+
+    &.clickable {
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: var(--color-paper-on-paper-hover);
+    }
   }
 
   .icon-container {
@@ -85,6 +98,7 @@ const {
   .text-container {
     display: flex;
     flex-direction: column;
+    align-items: start;
     gap: var(--spacing-xs);
     font-size: var(--font-size-caption);
     text-wrap: nowrap;
