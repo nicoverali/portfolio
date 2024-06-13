@@ -6,7 +6,7 @@ import Row from "@components/Grid/Row.astro";
 import LinkButton from "@components/LinkButton/LinkButton.astro";
 ---
 
-<div class="container">
+<astro-contact class="container">
   <Row>
     <Column offset={{ md: 3 }}>
       <div class="header">
@@ -15,7 +15,11 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
       </div>
 
       <div class="email">
-        <Button>nicolasalevera98@gmail.com</Button>
+        <Button
+          ><span class="text">nicolasalevera98@gmail.com</span><span
+            class="hidden">Copied!</span
+          ></Button
+        >
         <p class="sub">Click to copy</p>
       </div>
 
@@ -28,7 +32,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
       <Footer />
     </Column>
   </Row>
-</div>
+</astro-contact>
 
 <style lang="scss">
   .container {
@@ -50,9 +54,16 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
   }
 
   .email {
+    cursor: pointer;
     margin-top: var(--spacing-lg);
     font-size: var(--font-size-text);
     font-weight: 600;
+
+    .hidden {
+      position: absolute;
+      top: 100%;
+      text-decoration: none;
+    }
 
     .sub {
       margin-top: var(--spacing-md);
@@ -70,3 +81,73 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
     gap: var(--spacing-lg);
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+
+  class Contact extends HTMLElement {
+    constructor() {
+      super();
+      this.setupAnimations();
+    }
+
+    private setupAnimations() {
+      const emailButton = this.querySelector(".email");
+      const email = emailButton?.querySelector(".text");
+      const hiddenText = emailButton?.querySelector(".hidden");
+
+      if (!email || !hiddenText) return;
+
+      const animation = this.getShowHiddenTextAnimation(email, hiddenText);
+
+      emailButton?.addEventListener("click", () => {
+        navigator.clipboard.writeText(email.innerHTML);
+        animation.restart();
+      });
+    }
+
+    private getShowHiddenTextAnimation(
+      email: Element,
+      hiddenText: Element
+    ): gsap.core.Timeline {
+      const tl = gsap.timeline({ paused: true });
+
+      tl.to(email, {
+        duration: 0.2,
+        yPercent: -200,
+      });
+
+      tl.to(
+        hiddenText,
+        {
+          duration: 0.2,
+          ease: "back.out(1)",
+          top: "50%",
+          yPercent: -50,
+        },
+        "<"
+      );
+
+      tl.to(hiddenText, {
+        delay: 1.5,
+        duration: 0.2,
+        top: 0,
+        yPercent: -200,
+      });
+
+      tl.set(email, { yPercent: 100 });
+      tl.to(email, {
+        ease: "back.out(1)",
+        duration: 0.2,
+        yPercent: 0,
+      });
+      tl.set(hiddenText, {
+        clearProps: "all",
+      });
+
+      return tl;
+    }
+  }
+
+  customElements.define("astro-contact", Contact);
+</script>
