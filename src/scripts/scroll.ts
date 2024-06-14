@@ -2,7 +2,10 @@ import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+type ScrollTarget = number | string | HTMLElement;
+
 let lenis: Lenis;
+let scrollToTarget: ScrollTarget | null;
 
 export interface Scroll {
   top: number;
@@ -38,15 +41,27 @@ export const getCurrentScroll = (): Scroll => {
   };
 };
 
-export const scrollTo = (target: number | string | HTMLElement) => {
+export const scrollTo = (target: ScrollTarget) => {
+  if (lenis.isStopped) {
+    scrollToTarget = target;
+    return;
+  }
   lenis.scrollTo(target, { duration: 1.5 });
 };
 
 export const toggleScroll = (active?: boolean) => {
-  if (active != null) {
-    return active ? lenis.start() : lenis.stop();
+  const shouldStart = active ?? lenis.isStopped;
+
+  if (!shouldStart) {
+    lenis.stop();
+    return;
   }
-  lenis.isStopped ? lenis.start() : lenis.stop();
+
+  lenis.start();
+  if (scrollToTarget) {
+    lenis.scrollTo(scrollToTarget, { duration: 1.5 });
+    scrollToTarget = null;
+  }
 };
 
 export const onScroll = (callback: (scroll: Scroll) => void) => {

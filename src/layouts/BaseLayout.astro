@@ -39,7 +39,7 @@ const { title } = Astro.props;
 
 <script>
   import { setupGSAP } from "@scripts/gsap";
-  import { setupLenis } from "@scripts/scroll";
+  import { setupLenis, toggleScroll } from "@scripts/scroll";
   import { isMobileNavOpen, isDarkMode } from "@scripts/stores";
 
   setupGSAP();
@@ -49,6 +49,9 @@ const { title } = Astro.props;
   const metaTag = document.querySelector("meta[name='theme-color']");
 
   isMobileNavOpen.subscribe(updateThemeColor);
+  isMobileNavOpen.subscribe((isMobileNavOpen) =>
+    toggleScroll(!isMobileNavOpen)
+  );
   isDarkMode.subscribe(updateThemeColor);
 
   function updateThemeColor() {
