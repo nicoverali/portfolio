@@ -3,10 +3,11 @@ short: High school static-website
 description: My high school used to have an outdated website, so I took the same content but redesigned it entirely to provide a better experience to visitors.
 repository: https://github.com/nicoverali/Instituto-Centenarios
 demo: https://instituto-centenarios.com
-featuredColor: "#BA4138"
-featuredImage: ../../assets/images/projects/centenarios-featured.jpg
-screenshots: 
-  - ../../assets/images/projects/centenarios-1.jpeg
+featured:
+  image: ../../assets/images/projects/centenarios-featured.jpeg
+  color: "#BA4138"
+  colorDark: "#BA4138"
+screenshots: []
 techs:
   - Jekyll
   - Bootstrap

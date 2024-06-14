@@ -1,140 +1,60 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import LinkButton from "@components/LinkButton/LinkButton.astro";
-import ButtonCursor from "@components/Cursor/ButtonCursor.astro";
-import Arrow from "@components/Arrow/Arrow.astro";
+import BrowserMockup from "./BrowserMockup.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
-const {
-  featuredImage,
-  featuredColor,
-  screenshots,
-  name,
-  short,
-  repository,
-  demo,
-  techs,
-} = project.data;
+const { featured, name, short, techs } = project.data;
 ---
 
 <astro-featured-project class="container">
   <div class="image-container">
-    <div class="image-browser">
-      <div class="toolbar">
-        <div class="left-buttons">
-          <div class="button red"></div>
-          <div class="button yellow"></div>
-          <div class="button green"></div>
-
-          <div class="arrows">
-            <Arrow width={0} angle={-180} />
-            <Arrow width={0} />
-          </div>
-        </div>
-        <div class="address-bar">
-          {name}
-        </div>
-      </div>
-      <Image src={screenshots[0]} alt={`Screenshot of ${name} app`} />
-    </div>
+    {
+      featured.hasMockup ? (
+        <Image src={featured.image} alt={`Screenshot of ${name} app`} />
+      ) : (
+        <BrowserMockup>
+          <Image src={featured.image} alt={`Screenshot of ${name} app`} />
+        </BrowserMockup>
+      )
+    }
   </div>
 
   <div class="bottom">
     <h3>{short}</h3>
     <p class="techs">{techs.join(", ")}</p>
-    <!-- <div class="links">
-      {demo && <LinkButton href={demo}>Visit page</LinkButton>}
-    </div> -->
   </div>
 </astro-featured-project>
 
-<style lang="scss" define:vars={{ featuredColor }}>
+<style
+  lang="scss"
+  define:vars={{
+    color: featured.color,
+    colorDark: featured.colorDark ?? featured.color,
+  }}
+>
   .container {
     position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin-bottom: var(--spacing-2xl);
   }
 
   .image-container {
     position: relative;
     overflow: hidden;
     width: 100%;
-    // height: 500px;
     display: flex;
     border-radius: var(--radius-md);
-    background-color: var(--featuredColor, #f1f1f1);
+    background-color: var(--color, #f1f1f1);
     padding: var(--spacing-3xl) var(--spacing-2xl);
 
-    .image-browser {
-      transform: rotate3d(20deg, 0, 15deg) skew(20);
-      border-radius: 6px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      box-shadow:
-        0 8px 16px 0 rgba(0, 0, 0, 0.1),
-        0 2px 6px 0 rgba(0, 0, 0, 0.1);
-
-      .toolbar {
-        display: grid;
-        padding: 6px 8px;
-        background-color: white;
-        grid-template-columns: 1fr 1.5fr 1fr;
-        align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-
-        .left-buttons {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 3px;
-          justify-content: start;
-
-          .button {
-            height: 5px;
-            width: 5px;
-            border-radius: 100%;
-
-            &.red {
-              background-color: #e36961;
-            }
-
-            &.yellow {
-              background-color: #f3b35d;
-            }
-
-            &.green {
-              background-color: #61be61;
-            }
-          }
-
-          .arrows {
-            display: flex;
-            gap: 48px;
-            color: #787878;
-            transform: scale(0.4);
-          }
-        }
-
-        .address-bar {
-          width: 100%;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 3px;
-          padding: 1px;
-          text-align: center;
-          font-size: 6px;
-          font-family: sans-serif;
-          font-weight: 400;
-        }
-      }
+    &:hover {
+      background-color: var(--colorDark, #f1f1f1);
     }
 
     img {

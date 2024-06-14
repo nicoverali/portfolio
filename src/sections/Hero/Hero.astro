@@ -87,6 +87,10 @@ const { scrollDownTarget } = Astro.props;
       position: relative;
       top: 10px;
 
+      @media screen and (max-width: $screen-md-min) {
+        top: 12px;
+      }
+
       @media screen and (max-width: $screen-sm-min) {
         width: 48px;
         height: 48px;

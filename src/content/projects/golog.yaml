@@ -3,10 +3,12 @@ short: Classic Go board-game with Next.js
 description: Classic Go board-game with Next.js
 repository: https://github.com/nicoverali/golog
 demo: https://golog-nicoverali.netlify.app/
-featuredColor: "#BFA06B"
-featuredImage: ../../assets/images/projects/golog-featured.jpg
+featured:
+  image: ../../assets/images/projects/golog-featured.png
+  color: "#BFA06B"
+  colorDark: "#BFA06B"
+  hasMockup: false
 screenshots:
-  - ../../assets/images/projects/golog-6.png
   - ../../assets/images/projects/golog-3.png
   - ../../assets/images/projects/golog-2.png
 techs:
