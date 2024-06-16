@@ -16,6 +16,10 @@ import SmallSkillBox from "../SmallSkillBox/SmallSkillBox.astro";
 </astro-cloud>
 
 <style lang="scss">
+  astro-cloud {
+    cursor: pointer;
+  }
+
   .icons {
     display: block;
     position: relative;
@@ -55,47 +59,57 @@ import SmallSkillBox from "../SmallSkillBox/SmallSkillBox.astro";
   import { gsap } from "gsap";
 
   class AstroCloud extends HTMLElement {
+    private timeline!: gsap.core.Timeline;
+
     constructor() {
       super();
 
       gsap.context(() => {
-        const tl = gsap.timeline({
-          defaults: { yoyoEase: true },
-          paused: true,
-          yoyo: true,
-        });
-        const initialGap = parseFloat(
-          gsap.getProperty(".tech-container", "gap").toString()
-        );
-        tl.to(".tech-container", {
-          gap: 0,
-          ease: "power2.out",
-        });
-        tl.to(".aws, .azure", {
-          duration: 0.6,
-          ease: "power4.inOut",
-          marginLeft: (_, target: HTMLElement) => {
-            return parseFloat(
-              gsap.getProperty(target, "marginRight").toString()
-            );
-          },
-          marginRight: (_, target: HTMLElement) => {
-            return parseFloat(
-              gsap.getProperty(target, "marginLeft").toString()
-            );
-          },
-        });
-        tl.to(".tech-container", {
-          gap: initialGap,
-          ease: "power2.in",
-        });
-
-        this.addEventListener("mouseenter", () => {
-          if (tl.isActive()) return;
-          tl.resume();
-          tl.reversed(!tl.reversed());
-        });
+        this.timeline = this.getCloudAnimation();
+        this.setupEventListeners();
       }, this);
+    }
+
+    private getCloudAnimation() {
+      const tl = gsap.timeline({
+        defaults: { yoyoEase: true },
+        paused: true,
+        yoyo: true,
+      });
+      const initialGap = parseFloat(
+        gsap.getProperty(".tech-container", "gap").toString()
+      );
+      tl.to(".tech-container", {
+        gap: 0,
+        ease: "power2.out",
+      });
+      tl.to(".aws, .azure", {
+        duration: 0.6,
+        ease: "power4.inOut",
+        marginLeft: (_, target: HTMLElement) => {
+          return parseFloat(gsap.getProperty(target, "marginRight").toString());
+        },
+        marginRight: (_, target: HTMLElement) => {
+          return parseFloat(gsap.getProperty(target, "marginLeft").toString());
+        },
+      });
+      tl.to(".tech-container", {
+        gap: initialGap,
+        ease: "power2.in",
+      });
+
+      return tl;
+    }
+
+    private setupEventListeners() {
+      const playTimeline = () => {
+        if (this.timeline.isActive()) return;
+        this.timeline.resume();
+        this.timeline.reversed(!this.timeline.reversed());
+      };
+
+      this.addEventListener("click", playTimeline);
+      this.addEventListener("mouseenter", playTimeline);
     }
   }
 
