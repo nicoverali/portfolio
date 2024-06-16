@@ -201,8 +201,6 @@ import { Icon } from "astro-icon/components";
 
     class FigmaInteractiveElement extends HTMLElement {
       private parent: HTMLElement;
-      private widthEl?: HTMLElement | null;
-      private heightEl?: HTMLElement | null;
 
       private tooltips!: {
         width: HTMLElement;
@@ -309,8 +307,8 @@ import { Icon } from "astro-icon/components";
       }
 
       private updateSize() {
-        this.widthEl?.replaceChildren(String(this.clientWidth));
-        this.heightEl?.replaceChildren(String(this.clientHeight));
+        this.tooltips.width?.replaceChildren(String(this.clientWidth));
+        this.tooltips.height?.replaceChildren(String(this.clientHeight));
       }
 
       private updateMeasureTooltip() {
