@@ -14,6 +14,10 @@ import { Icon } from "astro-icon/components";
       <span class="x">x</span>
       <span class="h">128</span>
     </div>
+    <div class="measure-tooltip top"><span>0</span></div>
+    <div class="measure-tooltip bottom"><span>0</span></div>
+    <div class="measure-tooltip left"><span>0</span></div>
+    <div class="measure-tooltip right"><span>0</span></div>
   </astro-figma>
 
   <style lang="scss">
@@ -21,9 +25,19 @@ import { Icon } from "astro-icon/components";
       height: 100%;
       width: 100%;
       position: relative;
+
+      &.measure {
+        box-shadow: inset 0 0 0 1px var(--el-figma-measure-color);
+
+        .measure-tooltip {
+          display: block;
+        }
+      }
     }
 
     [data-icon="skills/Figma"] {
+      position: relative;
+      z-index: -1;
       display: block;
       width: 100%;
       height: 100%;
@@ -35,7 +49,7 @@ import { Icon } from "astro-icon/components";
       top: 50%;
       transform: translate(-50%, -50%);
       border: 0.5px solid transparent;
-      width: 60%;
+      width: 50%;
 
       &.dynamic {
         transform: none;
@@ -102,6 +116,37 @@ import { Icon } from "astro-icon/components";
         }
       }
 
+      .measure-tooltip {
+        display: none;
+        position: absolute;
+        &.left,
+        &.right {
+          top: 50%;
+          transform: translateY(-50%);
+          border-bottom: 1px solid var(--el-figma-measure-color);
+        }
+        &.top,
+        &.bottom {
+          left: 50%;
+          transform: translateX(-50%);
+          border-right: 1px solid var(--el-figma-measure-color);
+        }
+
+        span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: var(--el-figma-measure-color);
+          border-radius: 2px;
+          color: white;
+          padding: 2px 4px;
+          font-family: Trebuchet MS;
+          letter-spacing: 0.2px;
+          font-size: var(--font-size-caption);
+        }
+      }
+
       .resize-handle {
         display: none;
         position: absolute;
@@ -134,48 +179,30 @@ import { Icon } from "astro-icon/components";
   </style>
 
   <script>
-    interface KeyboardState {
-      shiftKey: boolean;
-    }
-
-    interface ElementState {
-      mouseX: number;
-      mouseY: number;
-      height: number;
-      width: number;
-      top: number;
-      left: number;
-      flippedX: boolean;
-      flippedY: boolean;
-      shiftKey: boolean;
-    }
-
-    interface NewState {
-      height: number;
-      width: number;
-      top: number;
-      left: number;
-    }
+    import ResizableElement from "./scripts/ResizableElement";
+    import DraggableElement from "./scripts/DraggableElement";
+    import measureToParent from "./scripts/measureToParent";
 
     class FigmaInteractiveElement extends HTMLElement {
-      private static MIN_SIZE = 20;
-
       private parent: HTMLElement;
       private widthEl?: HTMLElement | null;
       private heightEl?: HTMLElement | null;
-      private resizeHandlers?: NodeListOf<HTMLElement>;
-      private activeResizeHandler?: HTMLElement;
 
-      private originalState!: ElementState;
-      private keyboardState!: KeyboardState;
+      private tooltips!: {
+        width: HTMLElement;
+        height: HTMLElement;
+        measureTop: HTMLElement;
+        measureBottom: HTMLElement;
+        measureLeft: HTMLElement;
+        measureRight: HTMLElement;
+      };
 
       constructor() {
         super();
         this.parent = this.parentElement as HTMLElement;
         this.setupStyle();
-        this.setupElements();
+        this.setupTooltips();
         this.setupEventListeners();
-        this.saveOriginalState();
       }
 
       private setupStyle() {
@@ -188,72 +215,81 @@ import { Icon } from "astro-icon/components";
         this.style.top = this.getTopPercent(centeredTop);
       }
 
-      private setupElements() {
-        this.widthEl = this.querySelector(".w");
-        this.heightEl = this.querySelector(".h");
-        this.resizeHandlers = this.querySelectorAll(".resize-handle");
+      private setupTooltips() {
+        const width = this.querySelector(".w") as HTMLElement;
+        if (!width) throw new Error("Missing width tooltip");
+        const height = this.querySelector(".h") as HTMLElement;
+        if (!height) throw new Error("Missing height tooltip");
+        const measureTop = this.querySelector(
+          ".measure-tooltip.top"
+        ) as HTMLElement;
+        if (!measureTop) throw new Error("Missing top measure tooltip");
+        const measureLeft = this.querySelector(
+          ".measure-tooltip.left"
+        ) as HTMLElement;
+        if (!measureLeft) throw new Error("Missing left measure tooltip");
+        const measureRight = this.querySelector(
+          ".measure-tooltip.right"
+        ) as HTMLElement;
+        if (!measureRight) throw new Error("Missing right measure tooltip");
+        const measureBottom = this.querySelector(
+          ".measure-tooltip.bottom"
+        ) as HTMLElement;
+        if (!measureBottom) throw new Error("Missing bottom measure tooltip");
+
+        this.tooltips = {
+          width,
+          height,
+          measureTop,
+          measureLeft,
+          measureRight,
+          measureBottom,
+        };
+
         this.updateSize();
+        this.updateMeasureTooltip();
       }
 
       private setupEventListeners() {
-        document.addEventListener("mousedown", this);
-        window.addEventListener("resize", () => this.updateSize());
-
-        this.resizeHandlers?.forEach((handler) => {
-          handler.addEventListener(
-            "mousedown",
-            () => (this.activeResizeHandler = handler)
-          );
+        document.addEventListener("keydown", (e: KeyboardEvent) =>
+          this.parent.classList.toggle("measure", e.altKey)
+        );
+        document.addEventListener("keyup", (e: KeyboardEvent) => {
+          this.parent.classList.toggle("measure", e.altKey);
         });
+        window.addEventListener("resize", () => {
+          this.updateSize();
+          this.updateMeasureTooltip();
+        });
+        document.addEventListener("mousedown", (e) =>
+          this.setEditionMode(this.isOnThis(e))
+        );
+
+        const resizable = new ResizableElement({
+          bounds: this.parent,
+          element: this,
+          handlers: Array.from(this.querySelectorAll(".resize-handle")),
+        });
+
+        const draggable = new DraggableElement(this, this.parent);
+
+        resizable.onResizeStart(this.disableUserSelection);
+        resizable.onResize(() => {
+          this.updateSize();
+          this.updateMeasureTooltip();
+        });
+        resizable.onResizeEnd(this.enableUserSelection);
+        draggable.onDragStart(this.disableUserSelection);
+        draggable.onDrag(() => this.updateMeasureTooltip());
+        draggable.onDragEnd(this.enableUserSelection);
       }
 
-      handleEvent(e: Event) {
-        switch (e.type) {
-          case "keydown":
-          case "keyup":
-            return this.handleKeyboardChange(e as KeyboardEvent);
-          case "mousedown":
-            return this.handleMouseDown(e as MouseEvent);
-          case "mousemove":
-            return this.handleMouseMove(e as MouseEvent);
-          case "mouseup":
-            return this.handleMouseUp(e as MouseEvent);
-        }
+      private disableUserSelection() {
+        document.body.style.userSelect = "none";
       }
 
-      private handleKeyboardChange(e: KeyboardEvent) {
-        this.saveKeyboardState(e);
-      }
-
-      private handleMouseDown(e: MouseEvent) {
-        const isOnThis = this.isOnThis(e);
-        this.setEditionMode(isOnThis);
-        if (isOnThis) {
-          this.saveKeyboardState(e);
-          this.saveOriginalState(e);
-          document.body.style.userSelect = "none";
-          document.addEventListener("mousemove", this);
-          document.addEventListener("mouseup", this);
-          document.addEventListener("keydown", this);
-          document.addEventListener("keyup", this);
-        }
-      }
-
-      private handleMouseMove(e: MouseEvent) {
-        if (this.activeResizeHandler != null) {
-          this.resize(e);
-        } else {
-          this.drag(e);
-        }
-      }
-
-      private handleMouseUp(e: MouseEvent) {
-        this.activeResizeHandler = undefined;
+      private enableUserSelection() {
         document.body.style.userSelect = "initial";
-        document.removeEventListener("mousemove", this);
-        document.removeEventListener("mouseup", this);
-        document.removeEventListener("keydown", this);
-        document.removeEventListener("keyup", this);
       }
 
       private updateSize() {
@@ -261,239 +297,40 @@ import { Icon } from "astro-icon/components";
         this.heightEl?.replaceChildren(String(this.clientHeight));
       }
 
+      private updateMeasureTooltip() {
+        const measures = measureToParent(this);
+
+        const top = this.tooltips.measureTop;
+        top.style.top = -measures.top + "px";
+        top.style.height = measures.top + "px";
+        this.setMeasureTooltipContent(top, measures.top);
+
+        const left = this.tooltips.measureLeft;
+        left.style.left = -measures.left + "px";
+        left.style.width = measures.left + "px";
+        this.setMeasureTooltipContent(left, measures.left);
+
+        const right = this.tooltips.measureRight;
+        right.style.right = -measures.right + "px";
+        right.style.width = measures.right + "px";
+        this.setMeasureTooltipContent(right, measures.right);
+
+        const bottom = this.tooltips.measureBottom;
+        bottom.style.bottom = -measures.bottom + "px";
+        bottom.style.height = measures.bottom + "px";
+        this.setMeasureTooltipContent(bottom, measures.bottom);
+      }
+
+      private setMeasureTooltipContent(
+        element: HTMLElement,
+        content: string | number
+      ) {
+        if (!element.firstElementChild) return;
+        element.firstElementChild.textContent = content + "";
+      }
+
       private setEditionMode(active: boolean) {
         this.classList.toggle("edit-mode", active);
-      }
-
-      private drag(e: MouseEvent) {
-        const deltaX = e.x - this.originalState.mouseX;
-        const deltaY = e.y - this.originalState.mouseY;
-
-        const newLeft = this.limitLeftToParent(
-          this.originalState.left + deltaX
-        );
-        const newTop = this.limitTopToParent(this.originalState.top + deltaY);
-        this.style.left = this.getLeftPercent(newLeft);
-        this.style.top = this.getTopPercent(newTop);
-      }
-
-      private resize(e: MouseEvent) {
-        if (this.activeResizeHandler == null) return;
-
-        const deltaX = e.x - this.originalState.mouseX;
-        const deltaY = e.y - this.originalState.mouseY;
-
-        switch (this.activeResizeHandler.dataset.resizeDir) {
-          case "topright":
-            this.applyTransformation(this.resizeTopRight(deltaX, deltaY));
-            break;
-          case "topleft":
-            this.applyTransformation(this.resizeTopLeft(deltaX, deltaY));
-            break;
-          case "bottomleft":
-            this.applyTransformation(this.resizeBottomLeft(deltaX, deltaY));
-            break;
-          case "bottomright":
-            this.applyTransformation(this.resizeBottomRight(deltaX, deltaY));
-            break;
-        }
-
-        this.updateSize();
-      }
-
-      private resizeTopRight(deltaX: number, deltaY: number): NewState {
-        const newWidth = this.originalState.width + deltaX;
-        const newHeight = this.originalState.height - deltaY;
-
-        const maxBottom = this.originalState.top + this.originalState.height;
-
-        const newTop = Math.min(this.originalState.top + deltaY, maxBottom);
-        const newLeft = Math.min(
-          this.originalState.left,
-          this.originalState.left + newWidth
-        );
-
-        return {
-          width: newWidth,
-          height: newHeight,
-          top: newTop,
-          left: newLeft,
-        };
-
-        if (newTop >= 0 && newHeight) {
-          this.style.top = `${newTop}px`;
-          this.style.height = `${Math.abs(newHeight)}px`;
-        }
-        if (newWidth + this.offsetLeft < this.parent.clientWidth) {
-          this.style.width = `${newWidth}px`;
-        }
-      }
-
-      private resizeTopLeft(deltaX: number, deltaY: number): NewState {
-        const maxBottom = this.originalState.top + this.originalState.height;
-        const maxLeft = this.originalState.left + this.originalState.width;
-
-        const newWidth = this.originalState.width - deltaX;
-        const newHeight = this.originalState.height - deltaY;
-        const newTop = Math.min(this.originalState.top + deltaY, maxBottom);
-        const newLeft = Math.min(this.originalState.left + deltaX, maxLeft);
-        const newRight = newLeft + Math.abs(newWidth);
-        const newBottom = newTop + Math.abs(newHeight);
-
-        // console.table({
-        //   deltaX,
-        //   deltaY,
-        //   newWidth,
-        //   newHeight,
-        //   newTop,
-        //   newLeft,
-        //   newRight,
-        //   newBottom,
-        // });
-
-        return {
-          height: newHeight,
-          width: newWidth,
-          left: newLeft,
-          top: newTop,
-        };
-
-        if (newTop >= 0 && newBottom <= this.parent.clientHeight) {
-          this.style.top = `${newTop}px`;
-          this.style.height = `${Math.abs(newHeight)}px`;
-        }
-        if (newLeft >= 0 && newRight <= this.parent.clientWidth) {
-          this.style.left = `${newLeft}px`;
-          this.style.width = `${Math.abs(newWidth)}px`;
-        }
-        this.classList.toggle(
-          "flipped-w",
-          this.originalState.flippedX ? newWidth >= 0 : newWidth < 0
-        );
-        this.classList.toggle(
-          "flipped-h",
-          this.originalState.flippedY ? newHeight >= 0 : newHeight < 0
-        );
-      }
-
-      private resizeBottomLeft(deltaX: number, deltaY: number): NewState {
-        const maxLeft = this.originalState.left + this.originalState.width;
-
-        const newWidth = this.originalState.width - deltaX;
-        const newHeight = this.originalState.height + deltaY;
-        const newLeft = Math.min(this.originalState.left + deltaX, maxLeft);
-        const newTop = Math.min(
-          this.originalState.top,
-          this.originalState.top + newHeight
-        );
-        const newBottom = this.originalState.top + newHeight;
-
-        return {
-          width: newWidth,
-          height: newHeight,
-          left: newLeft,
-          top: newTop,
-        };
-
-        if (
-          newBottom <= this.parent.clientHeight &&
-          newHeight >= FigmaInteractiveElement.MIN_SIZE
-        ) {
-          this.style.height = `${newHeight}px`;
-        }
-        if (newLeft >= 0 && newWidth >= FigmaInteractiveElement.MIN_SIZE) {
-          this.style.left = `${newLeft}px`;
-          this.style.width = `${newWidth}px`;
-        }
-      }
-
-      private resizeBottomRight(deltaX: number, deltaY: number): NewState {
-        const newWidth = this.originalState.width + deltaX;
-        const newHeight = this.originalState.height + deltaY;
-
-        const newLeft = Math.min(
-          this.originalState.left,
-          this.originalState.left + newWidth
-        );
-        const newTop = Math.min(
-          this.originalState.top,
-          this.originalState.top + newHeight
-        );
-
-        return {
-          width: newWidth,
-          height: newHeight,
-          left: newLeft,
-          top: newTop,
-        };
-      }
-
-      private applyTransformation(newState: NewState) {
-        const deltaWidth = Math.abs(newState.width) - this.originalState.width;
-        const deltaHeight =
-          Math.abs(newState.height) - this.originalState.height;
-
-        const maxDeltaSize = Math.max(deltaWidth, deltaHeight);
-        const aspectRatio =
-          this.originalState.width / this.originalState.height;
-
-        const newWidth =
-          this.isResizeEvenly() && maxDeltaSize === deltaHeight
-            ? this.originalState.width +
-              deltaHeight * aspectRatio * Math.sign(newState.width)
-            : newState.width;
-
-        const newHeight =
-          this.isResizeEvenly() && maxDeltaSize === deltaWidth
-            ? this.originalState.height +
-              (deltaWidth / aspectRatio) * Math.sign(newState.height)
-            : newState.height;
-
-        console.table({ newStateWidth: newState.width, newWidth });
-
-        const newTop =
-          this.originalState.top !== newState.top
-            ? newState.top - (newHeight - newState.height)
-            : newState.top;
-
-        const newLeft =
-          this.originalState.left !== newState.left
-            ? this.originalState.left - newWidth
-            : newState.left;
-
-        // console.table({ newWidth, newHeight, newTop, newLeft });
-
-        const newRight = newState.left + Math.abs(newState.width);
-        const newBottom = newState.top + Math.abs(newState.height);
-
-        if (newState.top >= 0 && newBottom <= this.parent.clientHeight) {
-          this.style.top = `${newTop}px`;
-          this.style.height = `${Math.abs(newHeight)}px`;
-        }
-        if (newState.left >= 0 && newRight <= this.parent.clientWidth) {
-          this.style.left = `${newLeft}px`;
-          this.style.width = `${Math.abs(newWidth)}px`;
-        }
-        this.classList.toggle(
-          "flipped-w",
-          this.originalState.flippedX ? newState.width >= 0 : newState.width < 0
-        );
-        this.classList.toggle(
-          "flipped-h",
-          this.originalState.flippedY
-            ? newState.height >= 0
-            : newState.height < 0
-        );
-      }
-
-      private limitLeftToParent(left: number) {
-        const maxLeft = this.parent.clientWidth - this.clientWidth;
-        return Math.min(Math.max(left, 0), maxLeft);
-      }
-
-      private limitTopToParent(top: number) {
-        const maxTop = this.parent.clientHeight - this.clientHeight;
-        return Math.min(Math.max(top, 0), maxTop);
       }
 
       private getLeftPercent(left: number): string {
@@ -503,39 +340,8 @@ import { Icon } from "astro-icon/components";
       private getTopPercent(top: number): string {
         return `${(top / this.parent.clientHeight) * 100}%`;
       }
-
-      private isResizeEvenly(): boolean {
-        return this.keyboardState.shiftKey;
-      }
-
       private isOnThis(e: Event): boolean {
         return this.contains(e.target as Node);
-      }
-
-      private isEditModeActive(): boolean {
-        return this.classList.contains("edit-mode");
-      }
-
-      private saveKeyboardState(e: MouseEvent | KeyboardEvent) {
-        this.keyboardState = {
-          shiftKey: e.shiftKey,
-        };
-      }
-
-      /// Change this to getCurrentState. Then manually store original state when needed. USe this to update shiftkey and altkey and store it on updated state. Then use updated state to do things like showing distance lines or
-      // rezising evenly
-      private saveOriginalState(e?: MouseEvent) {
-        this.originalState = {
-          mouseX: e?.x ?? 0,
-          mouseY: e?.y ?? 0,
-          height: this.clientHeight,
-          width: this.clientWidth,
-          left: this.offsetLeft,
-          top: this.offsetTop,
-          flippedX: this.classList.contains("flipped-w"),
-          flippedY: this.classList.contains("flipped-h"),
-          shiftKey: e?.shiftKey ?? false,
-        };
       }
     }
 
