@@ -25,8 +25,9 @@ export default class InfiniteListAnimation {
       idleDuration: options?.idleDuration ?? 20,
     };
 
-    this.extendListToFillContainer();
+    this.fillContainerWithItems();
     this.baseTween = this.getBaseTween();
+    this.keepContainerFilledWithItems();
   }
 
   play() {
@@ -79,7 +80,16 @@ export default class InfiniteListAnimation {
     return this.list.clientWidth + this.options.elementsMargin;
   }
 
-  private extendListToFillContainer(): void {
+  private keepContainerFilledWithItems(): void {
+    window.addEventListener("resize", () => {
+      const haveChanged = this.fillContainerWithItems();
+      if (haveChanged) {
+        this.recreateBaseTween();
+      }
+    });
+  }
+
+  private fillContainerWithItems(): boolean {
     const parentWidth = this.list.parentElement?.clientWidth ?? 0;
     const widestElement = Math.max(...this.items.map((i) => i.clientWidth));
 
@@ -93,6 +103,13 @@ export default class InfiniteListAnimation {
     }
 
     this.items = this.items.concat(extraItems);
+    return extraItems.length > 0;
+  }
+
+  private recreateBaseTween(): void {
+    this.baseTween.kill();
+    this.baseTween = this.getBaseTween();
+    this.baseTween.play();
   }
 
   private getBaseTween(): gsap.core.Tween {
@@ -130,7 +147,7 @@ export default class InfiniteListAnimation {
     return gsap.to(this.baseTween, {
       timeScale: 0,
       ease: "power3.out",
-      duration: 2,
+      duration: 1,
       overwrite: true,
       paused: true,
     });
