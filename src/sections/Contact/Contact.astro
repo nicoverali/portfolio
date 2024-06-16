@@ -1,51 +1,54 @@
 ---
 import Button from "@components/Button/Button.astro";
 import Footer from "@components/Footer/Footer.astro";
-import Column from "@components/Grid/Column.astro";
-import Row from "@components/Grid/Row.astro";
 import LinkButton from "@components/LinkButton/LinkButton.astro";
 ---
 
 <astro-contact class="container">
-  <Row>
-    <Column offset={{ md: 3 }}>
-      <div class="header">
-        <p>Got something great in mind ?</p>
-        <p>Let's build together.</p>
-      </div>
+  <div class="header">
+    <p>Got something great in mind ?</p>
+    <p>Let's build together.</p>
+  </div>
 
-      <div class="email">
-        <Button
-          ><span class="text">nicolasalevera98@gmail.com</span><span
-            class="hidden">Copied!</span
-          ></Button
-        >
-        <p class="sub">Click to copy</p>
-      </div>
+  <div class="email">
+    <div class="button-container">
+      <Button
+        ><span class="text">nicolasalevera98@gmail.com</span><span
+          class="hidden">Copied!</span
+        ></Button
+      >
+    </div>
+    <p class="sub">Click to copy</p>
+  </div>
 
-      <div class="links">
-        <LinkButton>CV</LinkButton>
-        <LinkButton>Github</LinkButton>
-        <LinkButton>LinkedIn</LinkButton>
-      </div>
+  <div class="links">
+    <LinkButton>CV</LinkButton>
+    <LinkButton>Github</LinkButton>
+    <LinkButton>LinkedIn</LinkButton>
+  </div>
 
-      <Footer />
-    </Column>
-  </Row>
+  <Footer />
 </astro-contact>
 
 <style lang="scss">
+  @import "../../styles/screens.scss";
+
   .container {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    padding-bottom: var(--spacing-lg);
   }
 
   .header {
+    margin-top: auto;
     font-size: var(--font-size-h1);
     font-weight: 500;
     line-height: 150%;
+
+    @media screen and (max-width: $screen-sm-min) {
+      margin-top: var(--spacing-4xl);
+    }
 
     p {
       text-wrap: balanced;
@@ -58,6 +61,10 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
     margin-top: var(--spacing-lg);
     font-size: var(--font-size-text);
     font-weight: 600;
+
+    .button-container {
+      overflow: hidden;
+    }
 
     .hidden {
       position: absolute;
@@ -74,7 +81,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
   }
 
   .links {
-    margin-top: var(--spacing-2xl);
+    margin-top: auto;
     margin-bottom: var(--spacing-xl);
     display: flex;
     flex-direction: row;
@@ -84,6 +91,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 
 <script>
   import { gsap } from "gsap";
+  import { copyToClipboard } from "@scripts/clipboard";
 
   class Contact extends HTMLElement {
     constructor() {
@@ -101,7 +109,7 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
       const animation = this.getShowHiddenTextAnimation(email, hiddenText);
 
       emailButton?.addEventListener("click", () => {
-        navigator.clipboard.writeText(email.innerHTML);
+        copyToClipboard(email.innerHTML);
         animation.restart();
       });
     }
