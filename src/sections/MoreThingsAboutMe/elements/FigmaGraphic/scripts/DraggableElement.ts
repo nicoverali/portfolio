@@ -13,6 +13,7 @@ export default class DraggableElement {
   private element: HTMLElement;
   private bounds: HTMLElement;
   private startState!: DraggableStartState;
+  private singleAxis: boolean = false;
 
   private dragStartListeners: OnDragCallback[] = [];
   private dragListeners: OnDragCallback[] = [];
@@ -26,6 +27,9 @@ export default class DraggableElement {
   }
 
   private setupListeners() {
+    document.addEventListener("keydown", (e) => (this.singleAxis = e.shiftKey));
+    document.addEventListener("keyup", (e) => (this.singleAxis = e.shiftKey));
+
     this.element.addEventListener("mousedown", (e: MouseEvent) => {
       if (e.target !== this.element) return;
 
@@ -59,8 +63,16 @@ export default class DraggableElement {
   private drag(e: MouseEvent) {
     const deltaX = e.x - this.startState.mouseX;
     const deltaY = e.y - this.startState.mouseY;
-    const newLeft = this.startState.left + deltaX;
-    const newTop = this.startState.top + deltaY;
+    const isDeltaXBigger = Math.abs(deltaX) > Math.abs(deltaY);
+
+    const newLeft =
+      this.singleAxis && !isDeltaXBigger
+        ? this.startState.left
+        : this.startState.left + deltaX;
+    const newTop =
+      this.singleAxis && isDeltaXBigger
+        ? this.startState.top
+        : this.startState.top + deltaY;
 
     const boundedLeft = Math.max(Math.min(newLeft, this.startState.maxLeft), 0);
     const boundedTop = Math.max(Math.min(newTop, this.startState.maxTop), 0);
