@@ -5,10 +5,18 @@ import { Icon } from "astro-icon/components";
 <div class="container">
   <astro-figma class="editable-container">
     <Icon name="skills/Figma" class="figma-icon" />
-    <div class="resize-handle topleft" data-resize-dir="topleft"></div>
-    <div class="resize-handle topright" data-resize-dir="topright"></div>
-    <div class="resize-handle bottomleft" data-resize-dir="bottomleft"></div>
-    <div class="resize-handle bottomright" data-resize-dir="bottomright"></div>
+    <div class="resize-handle topleft" data-resize-dir="topleft">
+      <div class="handle-ui"></div>
+    </div>
+    <div class="resize-handle topright" data-resize-dir="topright">
+      <div class="handle-ui"></div>
+    </div>
+    <div class="resize-handle bottomleft" data-resize-dir="bottomleft">
+      <div class="handle-ui"></div>
+    </div>
+    <div class="resize-handle bottomright" data-resize-dir="bottomright">
+      <div class="handle-ui"></div>
+    </div>
     <div class="size-tooltip">
       <span class="w">256</span>
       <span class="x">x</span>
@@ -44,6 +52,8 @@ import { Icon } from "astro-icon/components";
     }
 
     .editable-container {
+      touch-action: none;
+      -ms-touch-action: none;
       position: absolute;
       left: 50%;
       top: 50%;
@@ -87,8 +97,6 @@ import { Icon } from "astro-icon/components";
           transform: scale(-1, -1);
         }
       }
-
-      $handle-size: 8px;
 
       .size-tooltip {
         display: none;
@@ -147,32 +155,40 @@ import { Icon } from "astro-icon/components";
         }
       }
 
+      $handle-size: 8px;
+      $handle-touchable-padding: 8px;
+      $handle-total-size: $handle-size + $handle-touchable-padding * 2;
+
       .resize-handle {
         display: none;
         position: absolute;
-        width: $handle-size;
-        height: $handle-size;
-        background-color: white;
-        border: 1.5px solid var(--el-figma-editable-color);
+        padding: $handle-touchable-padding;
+
+        .handle-ui {
+          background-color: white;
+          border: 1.5px solid var(--el-figma-editable-color);
+          width: $handle-size;
+          height: $handle-size;
+        }
 
         &.topleft {
-          top: calc($handle-size / 2 * -1);
-          left: calc($handle-size / 2 * -1);
+          top: calc($handle-total-size / 2 * -1);
+          left: calc($handle-total-size / 2 * -1);
         }
 
         &.topright {
-          top: calc($handle-size / 2 * -1);
-          right: calc($handle-size / 2 * -1);
+          top: calc($handle-total-size / 2 * -1);
+          right: calc($handle-total-size / 2 * -1);
         }
 
         &.bottomleft {
-          bottom: calc($handle-size / 2 * -1);
-          left: calc($handle-size / 2 * -1);
+          bottom: calc($handle-total-size / 2 * -1);
+          left: calc($handle-total-size / 2 * -1);
         }
 
         &.bottomright {
-          bottom: calc($handle-size / 2 * -1);
-          right: calc($handle-size / 2 * -1);
+          bottom: calc($handle-total-size / 2 * -1);
+          right: calc($handle-total-size / 2 * -1);
         }
       }
     }
@@ -261,7 +277,7 @@ import { Icon } from "astro-icon/components";
           this.updateSize();
           this.updateMeasureTooltip();
         });
-        document.addEventListener("mousedown", (e) =>
+        document.addEventListener("pointerdown", (e) =>
           this.setEditionMode(this.isOnThis(e))
         );
 

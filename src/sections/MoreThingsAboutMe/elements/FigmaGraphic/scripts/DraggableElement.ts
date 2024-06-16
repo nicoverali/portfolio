@@ -30,17 +30,17 @@ export default class DraggableElement {
     document.addEventListener("keydown", (e) => (this.singleAxis = e.shiftKey));
     document.addEventListener("keyup", (e) => (this.singleAxis = e.shiftKey));
 
-    this.element.addEventListener("mousedown", (e: MouseEvent) => {
+    this.element.addEventListener("pointerdown", (e: MouseEvent) => {
       if (e.target !== this.element) return;
 
       this.saveStartState(e);
       this.dragStartListeners.forEach((cb) => cb(this.element));
       const cb = (e: MouseEvent) => this.drag(e);
-      document.addEventListener("mousemove", cb);
+      document.addEventListener("pointermove", cb);
       document.addEventListener(
-        "mouseup",
+        "pointerup",
         () => {
-          document.removeEventListener("mousemove", cb);
+          document.removeEventListener("pointermove", cb);
           this.dragEndListeners.forEach((cb) => cb(this.element));
         },
         { once: true }

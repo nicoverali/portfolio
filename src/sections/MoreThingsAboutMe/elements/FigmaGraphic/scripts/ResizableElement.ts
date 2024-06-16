@@ -81,18 +81,18 @@ export default class ResizableElement {
       }
 
       handler.addEventListener(
-        "mousedown",
+        "pointerdown",
         (e: MouseEvent) => {
           this.saveStartState(e, resizeOrigin);
           this.resizeStartListeners.forEach((cb) => cb(this.element));
           const cb = (e: MouseEvent) => {
             this.resize(e);
           };
-          document.addEventListener("mousemove", cb);
+          document.addEventListener("pointermove", cb);
           document.addEventListener(
-            "mouseup",
+            "pointerup",
             () => {
-              document.removeEventListener("mousemove", cb);
+              document.removeEventListener("pointermove", cb);
               this.resizeEndListeners.forEach((cb) => cb(this.element));
             },
             { once: true }
