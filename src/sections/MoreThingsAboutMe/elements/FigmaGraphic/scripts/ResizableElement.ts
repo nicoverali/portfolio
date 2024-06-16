@@ -160,8 +160,6 @@ export default class ResizableElement {
       this.startState.aspectRatio.getMatchingWidth(Math.abs(boundedHeight)) *
       (Math.sign(size.width) || 1);
 
-    console.log(boundedWidth, evenWidth, this.startState.minWidth);
-
     const evenBoundedWidth = Math.max(
       Math.min(evenWidth, this.startState.maxWidth),
       this.startState.minWidth
