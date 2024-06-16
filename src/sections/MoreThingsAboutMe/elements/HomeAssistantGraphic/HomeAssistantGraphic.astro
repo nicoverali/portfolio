@@ -48,7 +48,9 @@ import HomeButtonBox from "../HomeButtonBox/HomeButtonBox.astro";
   </div>
 </astro-home-assistant>
 
-<style>
+<style lang="scss">
+  @import "../../../../styles/screens.scss";
+
   .container {
     display: block;
     height: 100%;
@@ -73,6 +75,13 @@ import HomeButtonBox from "../HomeButtonBox/HomeButtonBox.astro";
       inset 24px 0 48px 16px var(--color-paper-on-background),
       inset 0 -24px 48px 16px var(--color-paper-on-background),
       inset 0 24px 48px 16px var(--color-paper-on-background);
+
+    @media screen and (max-width: $screen-sm-min) {
+      box-shadow:
+        inset -16px 0 32px 16px var(--color-paper-on-background),
+        inset 0px -16px 32px 16px var(--color-paper-on-background),
+        inset 0 16px 32px 8px var(--color-paper-on-background);
+    }
   }
 
   .list {

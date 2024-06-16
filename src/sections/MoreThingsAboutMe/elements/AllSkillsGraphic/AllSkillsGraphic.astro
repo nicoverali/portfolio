@@ -39,6 +39,8 @@ const rows = [
 </astro-all-skills>
 
 <style lang="scss">
+  @import "../../../../styles/screens.scss";
+
   .icons {
     position: relative;
     height: 100%;
@@ -58,6 +60,12 @@ const rows = [
       box-shadow:
         inset -24px 0 48px 16px var(--color-paper-on-background),
         inset 24px 0 48px 16px var(--color-paper-on-background);
+
+      @media screen and (max-width: $screen-sm-min) {
+        box-shadow:
+          inset -16px 0 32px 8px var(--color-paper-on-background),
+          inset 16px 0 32px 8px var(--color-paper-on-background);
+      }
     }
   }
   .list {
