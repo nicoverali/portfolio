@@ -102,6 +102,7 @@ import { Icon } from "astro-icon/components";
     &::after {
       content: "";
       position: absolute;
+      z-index: -1;
       inset: 0;
       border-radius: 50%;
       padding: var(--dash-width);
@@ -136,9 +137,9 @@ import { Icon } from "astro-icon/components";
 </style>
 
 <script>
-  import rotateCirclesBasedOnDraggable from "./scripts/rotateCirclesBasedOnDraggable";
-  import pushCirclesOnMouseEnter from "./scripts/pushCirclesOnMouseEnter";
-  import CircleRotationAnimation from "./scripts/CircleRotationAnimation";
+  import CircleAnimation from "./scripts/CircleAnimation";
+  import { Draggable } from "gsap/Draggable";
+  import { gsap } from "gsap";
 
   class MainSkillsContainer extends HTMLElement {
     private draggableElement: HTMLElement | null;
@@ -152,22 +153,61 @@ import { Icon } from "astro-icon/components";
     }
 
     private setupAnimations() {
-      if (!this.draggableElement) {
-        console.warn("Missing draggable element in MainSkillsContainer");
-        return;
-      }
-
-      const circlesAnim = this.circles.map(
-        (circle) =>
-          new CircleRotationAnimation(circle, {
-            maxRotation: 360,
-            pushRotation: 20,
-            speed: 1,
+      const anims = this.circles.map(
+        (circle, i) =>
+          new CircleAnimation(circle, {
+            friction: 0.6 + 0.05 * i,
+            speed: 2.5 + 0.05 * i,
           })
       );
 
-      pushCirclesOnMouseEnter(this, circlesAnim);
-      rotateCirclesBasedOnDraggable(this.draggableElement, circlesAnim);
+      const MAX_ROTATION = 360;
+
+      let baseRotation = 0;
+      let currentRotation = 0;
+
+      this.draggableElement?.addEventListener(
+        "mouseenter",
+        () => {
+          if (anims.some((anim) => !anim.isIdle())) return;
+          anims.forEach((anim) => anim.wiggle());
+        },
+        { once: true }
+      );
+      const draggable = Draggable.create(this.draggableElement, {
+        type: "rotation",
+        minimumMovement: 5,
+        dragResistance: 0.3,
+        edgeResistance: 0.9,
+        onClick: () => {
+          if (anims.some((anim) => !anim.isIdle())) return;
+          anims.forEach((anim) => anim.wiggle());
+        },
+        onDragStart: () => {
+          baseRotation = anims
+            .map((anim) => anim.getRotation())
+            .reduce((avg, rotation) => avg + rotation / anims.length, 0);
+
+          draggable[0].applyBounds({
+            minRotation: -MAX_ROTATION - baseRotation,
+            maxRotation: MAX_ROTATION - baseRotation,
+          });
+          anims.forEach((anim) => anim.grab());
+        },
+        onDrag: function () {
+          currentRotation = this.rotation;
+          console.log(currentRotation + baseRotation, baseRotation);
+          anims.forEach((anim) => {
+            anim.move(currentRotation + baseRotation);
+          });
+        },
+        onDragEnd: () => {
+          anims.forEach((anim) => anim.release());
+          baseRotation = draggable[0].rotation + baseRotation;
+          currentRotation = 0;
+          gsap.set(this.draggableElement, { rotation: 0 });
+        },
+      });
     }
   }
 
