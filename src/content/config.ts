@@ -11,6 +11,7 @@ const projectsCollection = defineCollection({
       demo: z.optional(z.string()),
       featured: z.object({
         image: image(),
+        order: z.optional(z.number()),
         color: z.optional(z.string()),
         colorDark: z.optional(z.string()),
         hasMockup: z.optional(z.boolean()),

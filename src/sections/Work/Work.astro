@@ -4,8 +4,19 @@ import { getCollection } from "astro:content";
 import SectionTitle from "@components/SectionTitle/SectionTitle.astro";
 import Row from "@components/Grid/Row.astro";
 import Column from "@components/Grid/Column.astro";
+import type { CollectionEntry } from "astro:content";
 
-const allProjects = await getCollection("projects");
+const sortProjects = (
+  a: CollectionEntry<"projects">,
+  b: CollectionEntry<"projects">
+) => {
+  // Sorts by order from less to greater. If unspecified will be at the end.
+  if (!a.data.featured.order) return 1;
+  if (!b.data.featured.order) return -1;
+  return a.data.featured.order - b.data.featured.order;
+};
+
+const allProjects = (await getCollection("projects")).sort(sortProjects);
 const evenProjects = allProjects.filter((_, i) => i % 2 == 0);
 const oddProjects = allProjects.filter((_, i) => i % 2 != 0);
 ---
@@ -17,7 +28,7 @@ const oddProjects = allProjects.filter((_, i) => i % 2 != 0);
     <Row class="double-col-row">
       <Column>
         {
-          oddProjects.map((project) => (
+          evenProjects.map((project) => (
             <div class="project-container">
               <FeaturedProject project={project} />
             </div>
@@ -26,7 +37,7 @@ const oddProjects = allProjects.filter((_, i) => i % 2 != 0);
       </Column>
       <Column>
         {
-          evenProjects.map((project) => (
+          oddProjects.map((project) => (
             <div class="project-container">
               <FeaturedProject project={project} />
             </div>
