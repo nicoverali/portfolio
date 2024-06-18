@@ -60,6 +60,7 @@ import { Icon } from "astro-icon/components";
       transform: translate(-50%, -50%);
       border: 0.5px solid transparent;
       width: 50%;
+      width: min(50%, 240px);
 
       &.dynamic {
         transform: none;
@@ -272,6 +273,9 @@ import { Icon } from "astro-icon/components";
           this.parent.classList.toggle("measure", e.altKey);
         });
         window.addEventListener("resize", () => {
+          if (!this.classList.contains("activated")) {
+            this.setupStyle();
+          }
           this.updateSize();
           this.updateMeasureTooltip();
         });
@@ -344,6 +348,7 @@ import { Icon } from "astro-icon/components";
       }
 
       private setEditionMode(active: boolean) {
+        this.classList.add("activated");
         this.classList.toggle("edit-mode", active);
       }
 
