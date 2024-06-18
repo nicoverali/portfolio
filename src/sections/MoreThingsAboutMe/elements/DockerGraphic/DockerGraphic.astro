@@ -2,22 +2,27 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<div class="container">
+<astro-docker class="container">
   <div class="small-container">
     <Icon name="docker/whale" class="whale" />
     <Icon name="docker/waves" class="waves" />
     <div class="sea"></div>
   </div>
-</div>
+</astro-docker>
 
 <style>
   .container {
+    --sea-color: #3a4d54;
+
+    color: var(--sea-color);
+
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: end;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .small-container {
@@ -41,11 +46,89 @@ import { Icon } from "astro-icon/components";
     z-index: 1;
   }
 
+  .waves {
+    position: relative;
+    top: 2px; /*Fixes gap between waves and sea*/
+  }
+
   .sea {
-    margin-top: -1px; /*Fixes gap between waves and sea*/
     width: 100%;
     flex: 1;
-    background-color: #3a4d54;
+    background-color: currentColor;
     border-radius: 0 0 var(--radius-md) var(--radius-md);
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import CustomEase from "gsap/CustomEase";
+  import WiggleEasing from "../MainSkillsGraphic/scripts/WiggleEasing";
+
+  class DockerAnimation extends HTMLElement {
+    private isUp = false;
+    private forwardAnimation = this.getForwardTimeline();
+    private backwardAnimation = this.getBackwardsTimeline();
+
+    constructor() {
+      super();
+
+      gsap.context(() => this.setupAnimation(), this);
+    }
+
+    private getForwardTimeline() {
+      const tl = gsap.timeline({ paused: true });
+
+      const rotationEase = CustomEase.create(
+        "",
+        "M0,0 C0,0 0.01,1.2 0.5,1.2 0.68,1.2 0.728,0.536 0.742,0.298 0.76,-0.04 1,-10 1,-10 "
+      );
+      const yEase = CustomEase.create(
+        "",
+        "M0,0 C0,0 0.058,-0.235 0.11,-0.039 0.149,0.112 0.233,1 0.5,1 0.858,1 1,-0.55 1,-0.55 "
+      );
+
+      tl.to(".whale", { duration: 1, rotation: -2, ease: rotationEase }, 0.2);
+
+      tl.to(".whale", { yPercent: 20, ease: yEase, duration: 1.2 }, 0);
+
+      tl.to(".whale", { ease: "power1.in", duration: 1.2, xPercent: -20 }, 0);
+
+      tl.add(this.getWavesAnimation(tl.totalDuration()), 0);
+
+      tl.to(".whale .prefix__eye", { duration: 0.3, x: 1, y: -1 });
+
+      return tl;
+    }
+
+    private getWavesAnimation(duration: number) {
+      return gsap.to(".waves", {
+        x: -50,
+        ease: WiggleEasing.create(0.4, 1),
+        duration,
+      });
+    }
+
+    private getBackwardsTimeline() {
+      const tl = gsap.timeline({ paused: true });
+
+      tl.to(".whale .prefix__eye", { duration: 0.3, x: 0, y: 0 });
+      tl.to(".whale", { rotation: 0, yPercent: 0, duration: 0.4 });
+      tl.to(".whale", { xPercent: 0, duration: 0.8 }, 0);
+      tl.add(this.getWavesAnimation(tl.totalDuration()), 0);
+
+      return tl;
+    }
+
+    private setupAnimation() {
+      this.addEventListener("click", () => {
+        if (!this.isUp && !this.forwardAnimation.isActive()) {
+          this.forwardAnimation.restart().then(() => (this.isUp = true));
+        } else if (this.isUp && !this.backwardAnimation.isActive()) {
+          this.backwardAnimation.restart().then(() => (this.isUp = false));
+        }
+      });
+    }
+  }
+
+  customElements.define("astro-docker", DockerAnimation);
+</script>

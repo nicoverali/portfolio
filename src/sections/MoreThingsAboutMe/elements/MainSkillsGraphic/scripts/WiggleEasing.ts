@@ -6,7 +6,6 @@ export default class WiggleEasing {
 
     if (!oscillations) {
       oscillations = this.calculateNumberOfOscillations(friction, 1);
-      console.log(oscillations);
     }
 
     let pathData = "M 0,0";
@@ -36,7 +35,7 @@ export default class WiggleEasing {
     friction: number,
     amplitude: number
   ): number {
-    return Math.ceil(Math.log(0.01 / amplitude) / Math.log(friction));
+    return Math.ceil(Math.log(0.01 / amplitude) / Math.log(1 - friction));
   }
 
   static create(friction?: number, oscillations?: number): gsap.EaseFunction {

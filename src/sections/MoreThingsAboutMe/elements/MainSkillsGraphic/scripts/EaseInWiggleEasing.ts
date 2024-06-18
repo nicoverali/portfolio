@@ -17,7 +17,6 @@ export default class EaseInWiggleEasing {
         friction,
         initialAmplitude
       );
-      console.log(oscillations);
     }
 
     let pathData = `M 0,0 C 0.05,0 0.264,-0.02 0.37,0.191 0.462,0.394 0.5,${
