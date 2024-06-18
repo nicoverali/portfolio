@@ -69,10 +69,17 @@ const oddProjects = allProjects.filter((_, i) => i % 2 != 0);
 
     .project-container:not(:first-child) {
       margin-top: var(--spacing-5xl);
+
+      @media screen and (max-width: $screen-md-min) {
+        margin-top: var(--spacing-3xl);
+      }
     }
 
     .double-col-row > *:nth-child(2) .project-container:first-child {
       margin-top: var(--spacing-5xl);
+      @media screen and (max-width: $screen-md-min) {
+        margin-top: var(--spacing-3xl);
+      }
     }
 
     .single-col-row {

@@ -37,6 +37,8 @@ const { featured, name, short, techs } = project.data;
     colorDark: featured.colorDark ?? featured.color,
   }}
 >
+  @import "../../../styles/screens.scss";
+
   .container {
     position: relative;
     flex: 1;
@@ -52,6 +54,10 @@ const { featured, name, short, techs } = project.data;
     border-radius: var(--radius-md);
     background-color: var(--color, #f1f1f1);
     padding: var(--spacing-3xl) var(--spacing-2xl);
+
+    @media screen and (max-width: $screen-sm-min) {
+      padding: var(--spacing-2xl) var(--spacing-lg);
+    }
 
     &:hover {
       background-color: var(--colorDark, #f1f1f1);
