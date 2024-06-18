@@ -30,6 +30,12 @@ import { Icon } from "astro-icon/components";
 
   <style lang="scss">
     .container {
+      cursor:
+        url("/media/cursor-@1x.svg") 4 4,
+        default;
+      cursor:
+        -webkit-image-set(url("/media/cursor-@2x.svg") 2x) 4 4,
+        default;
       height: 100%;
       width: 100%;
       position: relative;
@@ -68,6 +74,12 @@ import { Icon } from "astro-icon/components";
 
       &:hover,
       &.edit-mode {
+        cursor:
+          url("/media/cursor-@1x.svg") 4 4,
+          move;
+        cursor:
+          -webkit-image-set(url("/media/cursor-@2x.svg") 2x) 4 4,
+          move;
         box-shadow: inset 0 0 0 1px var(--el-figma-editable-color);
         border: 0.5px solid var(--el-figma-editable-color);
       }
@@ -173,21 +185,25 @@ import { Icon } from "astro-icon/components";
         }
 
         &.topleft {
+          cursor: nwse-resize;
           top: calc($handle-total-size / 2 * -1);
           left: calc($handle-total-size / 2 * -1);
         }
 
         &.topright {
+          cursor: nesw-resize;
           top: calc($handle-total-size / 2 * -1);
           right: calc($handle-total-size / 2 * -1);
         }
 
         &.bottomleft {
+          cursor: nesw-resize;
           bottom: calc($handle-total-size / 2 * -1);
           left: calc($handle-total-size / 2 * -1);
         }
 
         &.bottomright {
+          cursor: nwse-resize;
           bottom: calc($handle-total-size / 2 * -1);
           right: calc($handle-total-size / 2 * -1);
         }
