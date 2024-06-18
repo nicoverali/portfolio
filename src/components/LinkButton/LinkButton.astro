@@ -3,6 +3,7 @@ interface Props {
   href?: string;
   id?: string;
   size?: "text" | "caption" | "h2";
+  target?: HTMLAnchorElement["target"];
   [key: `data-${string}`]: string;
 }
 
