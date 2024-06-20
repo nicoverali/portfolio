@@ -1,9 +1,10 @@
 name: Billetito
-short: Expense tracking app
-description: ""
+description: Expense tracking app
 featured:
+  order: 2
   image: ../../assets/images/projects/billetito-featured.png
   color: "#64AE81"
+  colorDark: "#3e865a"
   hasMockup: true
 screenshots: []
 techs:

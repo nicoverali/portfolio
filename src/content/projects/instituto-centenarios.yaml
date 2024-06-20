@@ -1,13 +1,12 @@
 name: Instituto Centenarios
-short: High school static-website
-description: My high school used to have an outdated website, so I took the same content but redesigned it entirely to provide a better experience to visitors.
+description: High school static-website
 repository: https://github.com/nicoverali/Instituto-Centenarios
 demo: https://instituto-centenarios.com
 featured:
   image: ../../assets/images/projects/centenarios-featured.jpeg
-  order: 1
+  order: 4
   color: "#BA4138"
-  colorDark: "#BA4138"
+  colorDark: "#a73931"
 screenshots: []
 techs:
   - Jekyll

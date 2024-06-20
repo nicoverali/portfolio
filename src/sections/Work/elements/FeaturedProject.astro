@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { featured, name, short, techs, repository, demo } = project.data;
+const { featured, name, description, techs, repository, demo } = project.data;
 ---
 
 <astro-featured-project class="container">
@@ -26,7 +26,7 @@ const { featured, name, short, techs, repository, demo } = project.data;
   </div>
 
   <div class="bottom">
-    <h3>{short}</h3>
+    <h3>{description}</h3>
     <p class="techs">{techs.join(", ")}</p>
     <div class="links">
       {
@@ -72,12 +72,12 @@ const { featured, name, short, techs, repository, demo } = project.data;
     background-color: var(--color, #f1f1f1);
     padding: var(--spacing-3xl) var(--spacing-2xl);
 
-    @media screen and (max-width: $screen-sm-min) {
-      padding: var(--spacing-2xl) var(--spacing-lg);
+    &.dark {
+      background-color: var(--colorDark, #f1f1f1);
     }
 
-    &:hover {
-      background-color: var(--colorDark, #f1f1f1);
+    @media screen and (max-width: $screen-sm-min) {
+      padding: var(--spacing-2xl) var(--spacing-lg);
     }
 
     img {
@@ -123,49 +123,15 @@ const { featured, name, short, techs, repository, demo } = project.data;
 </style>
 
 <script>
-  import { gsap } from "gsap";
+  import { isDarkMode } from "@scripts/stores";
 
   class FeaturedProject extends HTMLElement {
     constructor() {
       super();
-
-      const cursor = this.querySelector<HTMLElement>(".project-cursor");
-      const thisRect = this.getBoundingClientRect();
-
-      if (!cursor) return;
-
-      gsap.context(() => {
-        gsap.set(cursor, { scale: 0, opacity: 0 });
-
-        this.addEventListener("mouseenter", () => {
-          gsap.to(cursor, {
-            scale: 1,
-            opacity: 1,
-            overwrite: "auto",
-            ease: "bounce.out",
-          });
-        });
-
-        const moveX = gsap.quickTo(cursor, "x", { duration: 0.2 });
-        const moveY = gsap.quickTo(cursor, "y", { duration: 0.2 });
-
-        this.addEventListener("mousemove", (e: MouseEvent) => {
-          const thisRect = this.getBoundingClientRect();
-          const cursorRect = cursor.getBoundingClientRect();
-          moveX(e.x - thisRect.left - cursorRect.width / 2);
-          moveY(e.y - thisRect.top - cursorRect.height / 2);
-        });
-
-        this.addEventListener("mouseleave", () => {
-          gsap.to(cursor, {
-            scale: 0,
-            opacity: 0,
-            duration: 0.1,
-            overwrite: "auto",
-            ease: "power3.in",
-          });
-        });
-      }, this);
+      const imageContainer = this.querySelector(".image-container");
+      isDarkMode.subscribe((isDarkMode) =>
+        imageContainer?.classList.toggle("dark", isDarkMode)
+      );
     }
   }
 

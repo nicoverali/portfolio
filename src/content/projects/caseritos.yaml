@@ -1,10 +1,11 @@
 name: Caseritos
-short: Homemade meals market
-description: A homemade meals market were users would have seller and buyer roles. Sellers can publish their meals, set its price, stock, description, etc. Buyers can search for published meals and make a purchase.
+description: Homemade meals market
 repository: https://github.com/nicoverali/caseritos
 featured:
+  order: 1
   image: ../../assets/images/projects/caseritos-featured.png
   color: "#C5BCB3"
+  colorDark: "#938c85" 
   hasMockup: false
 screenshots:
   - ../../assets/images/projects/caseritos-2.png
