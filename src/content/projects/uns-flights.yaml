@@ -5,7 +5,7 @@ repository: https://github.com/nicoverali/uns-flights
 featured:
   order: 5
   image: ../../assets/images/projects/unsflights-featured.jpeg
-  color: "#949fcb"
+  color: "#a4add2"
   colorDark: "#555d7e"
   hasMockup: false
 screenshots:
