@@ -2,13 +2,14 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BrowserMockup from "./BrowserMockup.astro";
+import LinkButton from "@components/LinkButton/LinkButton.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
-const { featured, name, short, techs } = project.data;
+const { featured, name, short, techs, repository, demo } = project.data;
 ---
 
 <astro-featured-project class="container">
@@ -27,6 +28,22 @@ const { featured, name, short, techs } = project.data;
   <div class="bottom">
     <h3>{short}</h3>
     <p class="techs">{techs.join(", ")}</p>
+    <div class="links">
+      {
+        demo && (
+          <LinkButton size="text-small" href={demo} target="_blank">
+            Visit Page
+          </LinkButton>
+        )
+      }
+      {
+        repository && (
+          <LinkButton size="text-small" href={repository} target="_blank">
+            View Repository
+          </LinkButton>
+        )
+      }
+    </div>
   </div>
 </astro-featured-project>
 
@@ -93,10 +110,15 @@ const { featured, name, short, techs } = project.data;
       font-weight: 400;
       opacity: 0.6;
     }
+  }
 
-    .links {
-      margin-top: var(--spacing-lg);
-    }
+  .links {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--spacing-md);
+    opacity: 0.6;
   }
 </style>
 

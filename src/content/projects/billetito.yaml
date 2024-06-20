@@ -1,7 +1,6 @@
 name: Billetito
 short: Expense tracking app
 description: ""
-repository: https://github.com/nicoverali/billetito
 featured:
   image: ../../assets/images/projects/billetito-featured.png
   color: "#64AE81"

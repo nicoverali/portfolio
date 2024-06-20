@@ -2,7 +2,7 @@
 interface Props {
   href?: string;
   id?: string;
-  size?: "text" | "caption" | "h2";
+  size?: "text" | "text-small" | "caption" | "h2";
   target?: HTMLAnchorElement["target"];
   [key: `data-${string}`]: string;
 }
@@ -15,11 +15,13 @@ const Button = href == null ? "button" : "a";
 const arrowSize = {
   caption: 14,
   text: 14,
+  "text-small": 14,
   h2: 20,
 };
 const arrowWeight = {
   caption: 2,
   text: 2,
+  "text-small": 2,
   h2: 3,
 };
 ---
@@ -48,6 +50,10 @@ const arrowWeight = {
 
     &.h2 {
       font-size: var(--font-size-h2);
+    }
+
+    &.text-small {
+      font-size: var(--font-size-text-small);
     }
 
     .arrow-container {
