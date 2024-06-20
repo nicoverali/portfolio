@@ -25,6 +25,7 @@ const ButtonElement = href ? "a" : "button";
 <style lang="scss">
   a,
   button {
+    text-decoration: none;
     position: relative;
     padding: var(--spacing-md);
     background-color: var(--color-text-on-background);
@@ -51,13 +52,12 @@ const ButtonElement = href ? "a" : "button";
     }
 
     &:hover {
-      text-decoration: underline;
       background-color: var(--color-secondary);
       color: var(--color-text-on-secondary);
     }
 
     &:active {
-      text-decoration: none;
+      opacity: 0.9;
     }
 
     &.outline {
