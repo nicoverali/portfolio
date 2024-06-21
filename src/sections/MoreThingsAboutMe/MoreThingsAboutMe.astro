@@ -62,6 +62,8 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
       </div>
     </GridCard>
   </astro-cards-grid>
+
+  <p class="hint">*Try interacting with each card</p>
 </div>
 
 <style lang="scss">
@@ -103,6 +105,13 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
 
   .sub-description {
     margin-top: var(--spacing-xs);
+    font-size: var(--font-size-caption);
+    opacity: 0.6;
+  }
+
+  .hint {
+    margin-top: var(--spacing-xl);
+    color: var(--color-text-on-background);
     font-size: var(--font-size-caption);
     opacity: 0.6;
   }
