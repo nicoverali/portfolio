@@ -8,7 +8,11 @@ interface Props {
 const { target } = Astro.props;
 ---
 
-<button class="scroll-down-button container" data-scroll-to={target}>
+<button
+  class="scroll-down-button container"
+  data-scroll-to={target}
+  aria-label="Scroll down"
+>
   <Arrow width={48} angle={90} animateTo={42} />
 </button>
 
