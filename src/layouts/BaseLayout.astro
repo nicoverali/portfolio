@@ -10,6 +10,7 @@ import "@styles/screens.scss";
 import "@styles/lenis.scss";
 import GoogleAnalytics from "@components/GoogleAnalytics/GoogleAnalytics.astro";
 import Hotjar from "@components/Hotjar/Hotjar.astro";
+import Smartlook from "@components/Smartlook/Smartlook.astro";
 
 const { title, description } = Astro.props;
 ---
@@ -19,6 +20,7 @@ const { title, description } = Astro.props;
   <head>
     <GoogleAnalytics />
     <Hotjar />
+    <Smartlook />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
