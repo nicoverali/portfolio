@@ -13,12 +13,30 @@ import Hotjar from "@components/Hotjar/Hotjar.astro";
 import Smartlook from "@components/Smartlook/Smartlook.astro";
 
 const { title, description } = Astro.props;
+const tagId = import.meta.env.GOOGLE_TAG_ID;
+if (!tagId) {
+  console.warn("Missing Google Analytics tag ID");
+}
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <GoogleAnalytics />
+    <!-- Google tag (gtag.js) -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${tagId}`}
+    ></script>
+    <script is:inline={true} define:vars={{ tagId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", tagId);
+
+      gtag("event", "CardInteraction");
+    </script>
+
     <Hotjar />
     <Smartlook />
     <meta charset="UTF-8" />
