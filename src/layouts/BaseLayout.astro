@@ -8,6 +8,7 @@ import "@styles/normalize.css";
 import "@styles/global.scss";
 import "@styles/screens.scss";
 import "@styles/lenis.scss";
+import GoogleAnalytics from "@components/GoogleAnalytics/GoogleAnalytics.astro";
 
 const { title, description } = Astro.props;
 ---
@@ -29,37 +30,41 @@ const { title, description } = Astro.props;
     />
     <meta name="theme-color" content="" />
   </head>
+  <GoogleAnalytics />
   <body>
     <slot />
   </body>
-</html>
 
-<style></style>
 
-<script>
-  import { setupGSAP } from "@scripts/gsap";
-  import { setupLenis, toggleScroll } from "@scripts/scroll";
-  import { isMobileNavOpen, isDarkMode } from "@scripts/stores";
+  <style></style>
 
-  setupGSAP();
-  setupLenis();
+  <script>
+    import { setupGSAP } from "@scripts/gsap";
+    import { setupLenis, toggleScroll } from "@scripts/scroll";
+    import { isMobileNavOpen, isDarkMode } from "@scripts/stores";
 
-  const root = document.documentElement;
-  const metaTag = document.querySelector("meta[name='theme-color']");
+    setupGSAP();
+    setupLenis();
 
-  isMobileNavOpen.subscribe(updateThemeColor);
-  isMobileNavOpen.subscribe((isMobileNavOpen) =>
-    toggleScroll(!isMobileNavOpen)
-  );
-  isDarkMode.subscribe(updateThemeColor);
+    const root = document.documentElement;
+    const metaTag = document.querySelector("meta[name='theme-color']");
 
-  function updateThemeColor() {
-    const style = getComputedStyle(root);
-    const backgroundColor = style.getPropertyValue("--color-background");
-    const mobileNavColor = style.getPropertyValue("--el-mobile-nav-background");
-    metaTag?.setAttribute(
-      "content",
-      isMobileNavOpen.get() ? mobileNavColor : backgroundColor
+    isMobileNavOpen.subscribe(updateThemeColor);
+    isMobileNavOpen.subscribe((isMobileNavOpen) =>
+      toggleScroll(!isMobileNavOpen)
     );
-  }
-</script>
+    isDarkMode.subscribe(updateThemeColor);
+
+    function updateThemeColor() {
+      const style = getComputedStyle(root);
+      const backgroundColor = style.getPropertyValue("--color-background");
+      const mobileNavColor = style.getPropertyValue(
+        "--el-mobile-nav-background"
+      );
+      metaTag?.setAttribute(
+        "content",
+        isMobileNavOpen.get() ? mobileNavColor : backgroundColor
+      );
+    }
+  </script>
+</html>
