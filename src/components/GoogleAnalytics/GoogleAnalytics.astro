@@ -1,16 +1,19 @@
 ---
-
+const tagId = import.meta.env.GOOGLE_TAG_ID;
+if (!tagId) {
+  console.warn("Missing Google Analytics tag ID");
+}
 ---
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HDJK7F10R7"
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${tagId}`}
 ></script>
-<script>
+<script define:vars={{ tagId }}>
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);
   }
   gtag("js", new Date());
 
-  gtag("config", "G-HDJK7F10R7");
+  gtag("config", tagId);
 </script>
