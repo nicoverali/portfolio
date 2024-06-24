@@ -12,10 +12,6 @@ import "@styles/screens.scss";
 import "@styles/lenis.scss";
 
 const { title, description, og } = Astro.props;
-const tagId = import.meta.env.GOOGLE_TAG_ID;
-if (!tagId) {
-  console.warn("Missing Google Analytics tag ID");
-}
 ---
 
 <!doctype html>
