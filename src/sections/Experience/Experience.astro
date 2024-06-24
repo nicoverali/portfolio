@@ -120,7 +120,7 @@ const allExperienceItems = await getCollection("experience");
 </style>
 
 <script>
-  import { triggerEvent } from "@scripts/analytics";
+  import { triggerEvent } from "@scripts/analytics/analytics";
 
   document.querySelector(".download-cv a")?.addEventListener("click", () => {
     triggerEvent("download-cv-out");

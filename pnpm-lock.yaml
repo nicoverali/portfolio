@@ -56,6 +56,9 @@ importers:
       remark-html:
         specifier: ^16.0.1
         version: 16.0.1
+      smartlook-client:
+        specifier: ^9.0.0
+        version: 9.0.0
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1838,6 +1841,9 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
+  smartlook-client@9.0.0:
+    resolution: {integrity: sha512-SvOUvwADQBCxIqGPApc4dxj3NzDYC2RXdgMb8pFtYTCROyXSjowBnfzbr4q9nyDmxoNJTyZ9TiWcWFQFmSdNyg==}
 
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
@@ -4241,6 +4247,8 @@ snapshots:
       is-arrayish: 0.3.2
 
   sisteransi@1.0.5: {}
+
+  smartlook-client@9.0.0: {}
 
   source-map-js@1.2.0: {}
 

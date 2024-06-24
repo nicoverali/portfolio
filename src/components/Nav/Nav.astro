@@ -102,7 +102,7 @@ const { nav } = Astro.props;
 <script>
   import { gsap } from "gsap";
   import { scrollTo } from "@scripts/scroll";
-  import { triggerEvent } from "@scripts/analytics";
+  import { triggerEvent } from "@scripts/analytics/analytics";
   import { isMobileNavOpen } from "@scripts/stores";
 
   const nav = document.querySelector("nav");

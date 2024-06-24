@@ -79,3 +79,27 @@ const nav = [
     padding-top: var(--spacing-4xl);
   }
 </style>
+
+<script>
+  import {
+    init,
+    triggerPageView,
+    triggerEvent,
+    addGlobalPayload,
+  } from "@scripts/analytics/analytics";
+  import { isDarkMode, isMobileNavOpen } from "@scripts/stores";
+
+  init({ theme: "light" });
+  triggerPageView();
+
+  isDarkMode.subscribe((isDarkMode, oldValue) => {
+    if (oldValue == null) return;
+    triggerEvent("theme-changed");
+    addGlobalPayload({ theme: isDarkMode ? "dark" : "light" });
+  });
+
+  isMobileNavOpen.subscribe((isMobileNavOpen, oldValue) => {
+    if (oldValue == null) return;
+    triggerEvent(isMobileNavOpen ? "mobile-nav-opened" : "mobile-nav-closed");
+  });
+</script>
