@@ -1,12 +1,13 @@
 ---
 interface Props {
   gridArea?: string;
+  "data-analytics"?: string;
 }
 
-const { gridArea } = Astro.props;
+const { gridArea, ...rest } = Astro.props;
 ---
 
-<div class="card">
+<div class="card" {...rest}>
   <div class="content">
     <slot name="content" />
   </div>

@@ -127,10 +127,17 @@ const { scrollDownTarget } = Astro.props;
 
 <script>
   import { isDarkMode } from "@scripts/stores";
+  import { triggerEvent } from "@scripts/analytics";
 
   const h1 = document.querySelectorAll<HTMLElement>("h1");
 
   isDarkMode.subscribe((isDarkMode) => {
     h1.forEach((el) => el.classList.toggle("dark", isDarkMode));
   });
+
+  document
+    .querySelector(".scroll-down-container button")
+    ?.addEventListener("click", () => {
+      triggerEvent("scroll-down-button-clicked");
+    });
 </script>

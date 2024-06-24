@@ -13,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@analytics/google-analytics": "^1.0.7",
     "@astrojs/react": "^3.3.2",
     "@gsap/react": "^2.1.1",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
+    "analytics": "^0.8.13",
     "astro": "^4.7.1",
     "astro-icon": "^1.1.0",
     "flexboxgrid": "^6.3.1",
