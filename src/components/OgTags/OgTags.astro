@@ -1,0 +1,18 @@
+---
+interface Props {
+  og?: OgProps;
+}
+
+const { og } = Astro.props;
+---
+
+<Fragment>
+  {og?.title && <meta property="og:title" content={og.title} />}
+  {
+    og?.description && (
+      <meta property="og:description" content={og.description} />
+    )
+  }
+  {og?.image && <meta property="og:image" content={og.image} />}
+  {og?.locale && <meta property="og:locale" content={og.locale} />}
+</Fragment>

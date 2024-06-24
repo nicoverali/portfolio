@@ -24,11 +24,20 @@ const nav = [
     target: ".footer-container",
   },
 ];
+
+const og: OgProps = {
+  title: "Nicolás Vera Personal Website",
+  description:
+    "Explore the work of Nicolás Vera, a Software Engineer focused on user-centered solutions.",
+  image: "/",
+  locale: "en_US",
+};
 ---
 
 <BaseLayout
   title="Nicolás Vera"
   description="Explore the work of Nicolás Vera, a Software Engineer focused on user-centered solutions. View his portfolio showcasing his projects, skills, and experience."
+  og={og}
 >
   <Container>
     <Header nav={nav} />
