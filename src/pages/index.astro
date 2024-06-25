@@ -96,10 +96,12 @@ const og: OgProps = {
     triggerEvent,
     addGlobalPayload,
   } from "@scripts/analytics/analytics";
+  import trackResizeEvent from "@scripts/analytics/resizeEvent";
   import { isDarkMode, isMobileNavOpen } from "@scripts/stores";
 
   init({ theme: "light" });
   triggerPageView();
+  trackResizeEvent();
 
   isDarkMode.subscribe((isDarkMode, oldValue) => {
     if (oldValue == null) return;
