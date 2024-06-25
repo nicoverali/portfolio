@@ -13,8 +13,8 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
   <div class="email">
     <div class="button-container">
       <Button
-        ><span class="text">hello@veranicolas.com</span><span class="hidden"
-          >Copied!</span
+        ><span class="text" translate="no">hello@veranicolas.com</span><span
+          class="hidden">Copied!</span
         ></Button
       >
     </div>
@@ -95,12 +95,31 @@ import LinkButton from "@components/LinkButton/LinkButton.astro";
 
 <script>
   import { gsap } from "gsap";
+  import { triggerEvent } from "@scripts/analytics/analytics";
   import { copyToClipboard } from "@scripts/clipboard";
 
   class Contact extends HTMLElement {
     constructor() {
       super();
       this.setupAnimations();
+      this.setupAnalytics();
+    }
+
+    private setupAnalytics() {
+      this.querySelector(".email")?.addEventListener("click", () => {
+        triggerEvent("email-copied");
+      });
+
+      this.querySelectorAll(".links a")?.forEach((link) => {
+        link.addEventListener("click", () => {
+          triggerEvent({
+            name: "contact-link-out",
+            payload: {
+              href: link.getAttribute("href") ?? "unknown",
+            },
+          });
+        });
+      });
     }
 
     private setupAnimations() {

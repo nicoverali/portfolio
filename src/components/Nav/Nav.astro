@@ -102,6 +102,7 @@ const { nav } = Astro.props;
 <script>
   import { gsap } from "gsap";
   import { scrollTo } from "@scripts/scroll";
+  import { triggerEvent } from "@scripts/analytics/analytics";
   import { isMobileNavOpen } from "@scripts/stores";
 
   const nav = document.querySelector("nav");
@@ -117,6 +118,10 @@ const { nav } = Astro.props;
 
     item.addEventListener("click", () => {
       scrollTo(target);
+    });
+
+    item.addEventListener("click", () => {
+      triggerEvent({ name: "nav-item-clicked", payload: { target } });
     });
   }
 

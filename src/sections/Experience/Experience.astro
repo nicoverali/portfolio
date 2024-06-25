@@ -118,3 +118,11 @@ const allExperienceItems = await getCollection("experience");
     margin-top: var(--spacing-3xl);
   }
 </style>
+
+<script>
+  import { triggerEvent } from "@scripts/analytics/analytics";
+
+  document.querySelector(".download-cv a")?.addEventListener("click", () => {
+    triggerEvent("download-cv-out");
+  });
+</script>

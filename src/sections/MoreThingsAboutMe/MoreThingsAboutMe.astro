@@ -13,14 +13,14 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
   <SectionTitle>A few more things about me</SectionTitle>
 
   <astro-cards-grid class="cards-grid">
-    <GridCard gridArea="main-sk">
+    <GridCard gridArea="main-sk" data-analytics="main-skills">
       <MainSkillsGraphic slot="content" />
       <div slot="description">
-        <p>React, Typescript and Java</p>
+        <p translate="no">React, Typescript and Java</p>
         <p class="sub-description">These are my primary skills.</p>
       </div>
     </GridCard>
-    <GridCard gridArea="all-sk">
+    <GridCard gridArea="all-sk" data-analytics="other-skills">
       <AllSkillsGraphic slot="content" />
       <div slot="description">
         <p>Other skills</p>
@@ -29,14 +29,14 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
         </p>
       </div>
     </GridCard>
-    <GridCard gridArea="cloud">
+    <GridCard gridArea="cloud" data-analytics="cloud">
       <CloudCertsGraphic slot="content" />
       <div slot="description">
         <p>I'm cloud certified</p>
         <p class="sub-description">Pursuing advanced certs.</p>
       </div>
     </GridCard>
-    <GridCard gridArea="docker">
+    <GridCard gridArea="docker" data-analytics="docker">
       <DockerGraphic slot="content" />
       <div slot="description">
         <p>I like containers</p>
@@ -45,14 +45,14 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
         </p>
       </div>
     </GridCard>
-    <GridCard gridArea="figma">
+    <GridCard gridArea="figma" data-analytics="figma">
       <FigmaGraphic slot="content" />
       <div slot="description">
         <p>I design with Figma</p>
         <p class="sub-description">I'm a developer with an eye for design.</p>
       </div>
     </GridCard>
-    <GridCard gridArea="ha">
+    <GridCard gridArea="ha" data-analytics="ha">
       <HomeAssistantGraphic slot="content" />
       <div slot="description">
         <p>I'm interested in the future of IoT</p>
@@ -63,7 +63,7 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
     </GridCard>
   </astro-cards-grid>
 
-  <p class="hint">*Try interacting with each card :)</p>
+  <p class="hint">*Try interacting with each card</p>
 </div>
 
 <style lang="scss">
@@ -119,33 +119,50 @@ import HomeAssistantGraphic from "./elements/HomeAssistantGraphic/HomeAssistantG
 
 <script>
   import { vhPercent } from "@scripts/utils/gsap";
+  import { triggerEvent } from "@scripts/analytics/analytics";
   import { gsap } from "gsap";
 
   class CardsGridContainer extends HTMLElement {
     constructor() {
       super();
 
-      gsap.context(
-        () => {
-          const cards = gsap.utils.toArray<HTMLElement>(".cards-grid > *");
-          cards.forEach((card) => {
-            gsap.from(card, {
-              scale: 0.85,
-              y: 10,
-              opacity: 0.8,
-              scrollTrigger: {
-                trigger: card,
-                start: "top " + vhPercent(95),
-                end: "bottom " + vhPercent(75),
-                scrub: true,
-                once: true,
-              },
-            });
-          });
-        },
+      gsap.context(() => this.setupAnimations(), this);
+      this.setupAnalytics();
+    }
 
-        this
-      );
+    private setupAnalytics() {
+      const cards = Array.from(this.children);
+      for (const card of cards) {
+        const analyticsName = (card as HTMLElement).dataset?.analytics;
+        card.addEventListener("click", (e) => {
+          triggerEvent({
+            name: "about-me-card-clicked",
+            payload: {
+              card: analyticsName ?? "unknown",
+              targetClass: (e.target as HTMLElement)?.className ?? "",
+              targetEl: (e.target as Element)?.tagName ?? "",
+            },
+          });
+        });
+      }
+    }
+
+    private setupAnimations() {
+      const cards = gsap.utils.toArray<HTMLElement>(".cards-grid > *");
+      cards.forEach((card) => {
+        gsap.from(card, {
+          scale: 0.85,
+          y: 10,
+          opacity: 0.8,
+          scrollTrigger: {
+            trigger: card,
+            start: "top " + vhPercent(95),
+            end: "bottom " + vhPercent(75),
+            scrub: true,
+            once: true,
+          },
+        });
+      });
     }
   }
 

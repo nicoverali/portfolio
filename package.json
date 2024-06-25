@@ -13,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@analytics/google-analytics": "^1.0.7",
     "@astrojs/react": "^3.3.2",
     "@gsap/react": "^2.1.1",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
+    "analytics": "^0.8.13",
     "astro": "^4.7.1",
     "astro-icon": "^1.1.0",
     "flexboxgrid": "^6.3.1",
@@ -27,6 +29,7 @@
     "react-dom": "^18.3.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "smartlook-client": "^9.0.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

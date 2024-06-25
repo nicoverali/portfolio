@@ -24,11 +24,20 @@ const nav = [
     target: ".footer-container",
   },
 ];
+
+const og: OgProps = {
+  title: "Nicolás Vera",
+  description:
+    "Explore the work of Nicolás Vera, a Software Engineer focused on user-centered solutions.",
+  image: "/og_image.jpg",
+  locale: "en_US",
+};
 ---
 
 <BaseLayout
   title="Nicolás Vera"
   description="Explore the work of Nicolás Vera, a Software Engineer focused on user-centered solutions. View his portfolio showcasing his projects, skills, and experience."
+  og={og}
 >
   <Container>
     <Header nav={nav} />
@@ -79,3 +88,27 @@ const nav = [
     padding-top: var(--spacing-4xl);
   }
 </style>
+
+<script>
+  import {
+    init,
+    triggerPageView,
+    triggerEvent,
+    addGlobalPayload,
+  } from "@scripts/analytics/analytics";
+  import { isDarkMode, isMobileNavOpen } from "@scripts/stores";
+
+  init({ theme: "light" });
+  triggerPageView();
+
+  isDarkMode.subscribe((isDarkMode, oldValue) => {
+    if (oldValue == null) return;
+    triggerEvent("theme-changed");
+    addGlobalPayload({ theme: isDarkMode ? "dark" : "light" });
+  });
+
+  isMobileNavOpen.subscribe((isMobileNavOpen, oldValue) => {
+    if (oldValue == null) return;
+    triggerEvent(isMobileNavOpen ? "mobile-nav-opened" : "mobile-nav-closed");
+  });
+</script>

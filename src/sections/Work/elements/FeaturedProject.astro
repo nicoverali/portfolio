@@ -12,7 +12,7 @@ const { project } = Astro.props;
 const { featured, name, description, techs, repository, demo } = project.data;
 ---
 
-<astro-featured-project class="container">
+<astro-featured-project class="container" data-analytics={name}>
   <div class="image-container">
     {
       featured.hasMockup ? (
@@ -27,7 +27,7 @@ const { featured, name, description, techs, repository, demo } = project.data;
 
   <div class="bottom">
     <h3>{description}</h3>
-    <p class="techs">{techs.join(", ")}</p>
+    <p class="techs" translate="no">{techs.join(", ")}</p>
     <div class="links">
       {
         demo && (
@@ -123,6 +123,7 @@ const { featured, name, description, techs, repository, demo } = project.data;
 </style>
 
 <script>
+  import { triggerEvent } from "@scripts/analytics/analytics";
   import { isDarkMode } from "@scripts/stores";
 
   class FeaturedProject extends HTMLElement {
@@ -132,6 +133,31 @@ const { featured, name, description, techs, repository, demo } = project.data;
       isDarkMode.subscribe((isDarkMode) =>
         imageContainer?.classList.toggle("dark", isDarkMode)
       );
+
+      this.setupAnalytics();
+    }
+
+    private setupAnalytics() {
+      const projectName = this.dataset.analytics ?? "unknown";
+
+      this.querySelectorAll(".links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          triggerEvent({
+            name: "project-link-out",
+            payload: {
+              href: link.getAttribute("href") ?? "",
+              project: projectName,
+            },
+          });
+        });
+      });
+
+      this.querySelector(".image-container")?.addEventListener("click", () => {
+        triggerEvent({
+          name: "project-image-clicked",
+          payload: { project: projectName },
+        });
+      });
     }
   }
 
