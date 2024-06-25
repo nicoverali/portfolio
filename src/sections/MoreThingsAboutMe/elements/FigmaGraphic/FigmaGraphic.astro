@@ -231,9 +231,12 @@ import { Icon } from "astro-icon/components";
       constructor() {
         super();
         this.parent = this.parentElement as HTMLElement;
-        this.setupStyle();
-        this.setupTooltips();
         this.setupEventListeners();
+
+        window.addEventListener("load", () => {
+          this.setupStyle();
+          this.setupTooltips();
+        });
       }
 
       private setupStyle() {
