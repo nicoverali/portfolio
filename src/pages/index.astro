@@ -25,12 +25,14 @@ const nav = [
   },
 ];
 
+const domainName = import.meta.env.DOMAIN_NAME;
 const og: OgProps = {
   title: "Nicolás Vera",
   description:
     "Explore the work of Nicolás Vera, a Software Engineer focused on user-centered solutions.",
-  image: "/og_image.jpg",
+  image: domainName ? `https://${domainName}/og_image.jpg` : "/og_image.jpg",
   locale: "en_US",
+  type: "website",
 };
 ---
 

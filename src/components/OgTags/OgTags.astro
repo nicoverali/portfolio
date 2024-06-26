@@ -23,4 +23,5 @@ const { og } = Astro.props;
     )
   }
   {og?.locale && <meta property="og:locale" content={og.locale} />}
+  {og?.type && <meta property="og:type" content={og.type} />}
 </Fragment>

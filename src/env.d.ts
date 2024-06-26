@@ -6,6 +6,7 @@ declare interface OgProps {
   description?: string;
   image?: string;
   locale?: string;
+  type?: "website";
 }
 
 declare const gsap: typeof import("gsap");
