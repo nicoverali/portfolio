@@ -52,6 +52,8 @@ export const scrollTo = (target: ScrollTarget) => {
 };
 
 export const toggleScroll = (active?: boolean) => {
+  if (!lenis) return;
+
   const shouldStart = active ?? lenis.isStopped;
 
   if (!shouldStart) {
