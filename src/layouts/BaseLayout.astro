@@ -43,7 +43,9 @@ const { title, description, og } = Astro.props;
       import { isMobileNavOpen, isDarkMode } from "@scripts/stores";
 
       setupGSAP();
-      setupLenis();
+
+      document.addEventListener("scroll", setupLenis, { once: true });
+      document.addEventListener("mousemove", setupLenis, { once: true });
 
       const root = document.documentElement;
       const metaTag = document.querySelector("meta[name='theme-color']");

@@ -13,6 +13,8 @@ export interface Scroll {
 }
 
 export const setupLenis = () => {
+  if (lenis != null) return;
+
   lenis = new Lenis();
   lenis.on("scroll", ScrollTrigger.update);
   gsap.ticker.add((time) => {
