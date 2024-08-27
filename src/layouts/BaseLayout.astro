@@ -44,8 +44,8 @@ const { title, description, og } = Astro.props;
 
       setupGSAP();
 
-      document.addEventListener("scroll", setupLenis, { once: true });
-      document.addEventListener("mousemove", setupLenis, { once: true });
+      document.addEventListener("wheel", setupLenis, { once: true });
+      document.addEventListener("pointermove", setupLenis, { once: true });
 
       const root = document.documentElement;
       const metaTag = document.querySelector("meta[name='theme-color']");
