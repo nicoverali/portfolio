@@ -13,7 +13,6 @@ export interface Scroll {
 }
 
 export const setupLenis = () => {
-  console.log("Setting up lenis");
   if (lenis != null) return;
 
   lenis = new Lenis();
